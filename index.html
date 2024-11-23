@@ -128,8 +128,9 @@
             .player-image-container img {
                 position: relative;
                 z-index: 2; /* Places the image above the background */
-                width: 100%; /* Ensures the image fits within the container */
-                height: auto;
+                max-width: 100%; /* Ensures the image scales within the container's width */
+                max-height: 100%; /* Ensures the image scales within the container's height */
+                object-fit: contain; /* Ensures the entire image is shown */
                 border-radius: 8px; /* Matches the container's corners */
             }
 
