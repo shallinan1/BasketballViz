@@ -93,6 +93,60 @@
             text-align: center;
             flex: 1;
         }
+
+        .player-image-section {
+            flex: 0 0 40%;
+            background-color: black;
+            position: relative;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        
+        .player-image-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(white 10%, transparent 10%) black;
+            background-size: 10px 10px;
+            z-index: 1;
+        }
+        
+        .player-image-section img {
+            width: 100%;
+            max-width: 150px;
+            border-radius: 8px;
+            position: relative;
+            z-index: 2; /* Ensures image is above the dots */
+        }
+        
+        .player-position {
+            display: inline-block;
+            background-color: black;
+            color: white;
+            padding: 5px 10px;
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .player-stats {
+            font-size: 14px;
+            color: white;
+            margin-top: 10px;
+            line-height: 1.5;
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
     </style>
 </head>
 <body>
@@ -148,7 +202,7 @@
                 weight: "180 lbs",
                 age: 24,
                 season: 4,
-                image: "https://via.placeholder.com/150", // Placeholder image URL
+                image: "images/ming.png", // Placeholder image URL
                 description: "Elite rebounder with a knack for bold, clever passes that keep defenses guessing -- and teammates on their toes.",
                 icons: ["Positional Versatility", "Athleticism", "On-Ball Defense", "Finisher"]
             }
@@ -160,29 +214,29 @@
             .forEach(player => {
                 const card = document.createElement('div');
                 card.classList.add('player-card');
-
-                card.innerHTML = `
-                    <div class="player-image-section">
-                        <img src="${player.image}" alt="${player.name}">
-                        <div class="player-position">${player.position}</div>
-                        <div class="player-stats">
-                            Height: ${player.height} <br>
-                            Weight: ${player.weight} <br>
-                            Age: ${player.age} <br>
-                            Season: ${player.season}
-                        </div>
+            
+            card.innerHTML = `
+                <div class="player-image-section">
+                    <img src="${player.image}" alt="${player.name}">
+                    <div class="player-position">${player.position}</div>
+                    <div class="player-stats">
+                        Height: ${player.height} <br>
+                        Weight: ${player.weight} <br>
+                        Age: ${player.age} <br>
+                        Season: ${player.season}
                     </div>
-                    <div class="player-content">
-                        <div class="player-header">
-                            <h2 class="player-name">${player.name}</h2>
-                            <span class="player-team">${player.team}</span>
-                        </div>
-                        <p class="player-description">${player.description}</p>
-                        <div class="player-icons">
-                            ${player.icons.map(icon => `<div class="player-icon">${icon}</div>`).join('')}
-                        </div>
+                </div>
+                <div class="player-content">
+                    <div class="player-header">
+                        <h2 class="player-name">${player.name}</h2>
+                        <span class="player-team">${player.team}</span>
                     </div>
-                `;
+                    <p class="player-description">${player.description}</p>
+                    <div class="player-icons">
+                        ${player.icons.map(icon => `<div class="player-icon">${icon}</div>`).join('')}
+                    </div>
+                </div>
+            `;
 
                 playerList.appendChild(card);
             });
