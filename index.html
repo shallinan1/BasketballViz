@@ -89,15 +89,28 @@
 }
 
 .player-stats {
-    font-size: 14px;
-    color: #333;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two flexible columns */
+    gap: 10px; /* Add space between rows */
+    font-size: 16px;
+    color: black;
+    padding: 10px;
     margin-top: 10px;
-    line-height: 1.5;
-    text-align: center;
-    position: relative;
-    z-index: 2;
 }
 
+.player-stat {
+    text-align: left; /* Align all text to the left */
+}
+
+.player-stat span.title {
+    font-weight: bold; /* Bold for titles */
+    text-transform: uppercase; /* Titles in uppercase */
+}
+
+.player-stat span.value {
+    font-weight: normal; /* Normal weight for values */
+    text-transform: none; /* Values in normal case */
+}
 .player-content {
     flex: 1;
     padding: 20px;
@@ -214,12 +227,12 @@
                         <img src="${player.image}" alt="${player.name}">
                     </div>
                     <div class="player-position">${player.position}</div>
-                    <div class="player-stats">
-                        Height: ${player.height} <br>
-                        Weight: ${player.weight} <br>
-                        Age: ${player.age} <br>
-                        Season: ${player.season}
-                    </div>
+                <div class="player-stats">
+                    <div class="player-stat"><span class="title">HEIGHT</span> <span class="value">${player.height}</span></div>
+                    <div class="player-stat"><span class="title">WEIGHT</span> <span class="value">${player.weight}</span></div>
+                    <div class="player-stat"><span class="title">AGE</span> <span class="value">${player.age}</span></div>
+                    <div class="player-stat"><span class="title">SEASON</span> <span class="value">${player.season}</span></div>
+                </div>
                 </div>
                 <div class="player-content">
                     <div class="player-header">
