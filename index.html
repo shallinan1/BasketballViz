@@ -5,180 +5,141 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Player Rankings</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
-            margin: 0;
-            padding: 0;
-        }
-        .player-list {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-        }
-        .player-card {
-            display: flex;
-            background-color: white;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        .player-image-section {
-            flex: 0 0 40%;
-            background-color: #f8f8f8;
-            text-align: center;
-            padding: 20px;
-            border-right: 1px solid #ddd;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .player-image-section img {
-            width: 100%;
-            max-width: 150px;
-            border-radius: 8px;
-        }
-        .player-position {
-            display: inline-block;
-            background-color: black;
-            color: white;
-            padding: 5px 10px;
-            margin-top: 10px;
-            font-size: 14px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-        .player-stats {
-            font-size: 14px;
-            color: #333;
-            margin-top: 10px;
-            line-height: 1.5;
-            text-align: center;
-        }
-        .player-content {
-            flex: 1;
-            padding: 20px;
-        }
-        .player-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .player-name {
-            font-size: 24px;
-            font-weight: bold;
-            margin: 0;
-        }
-        .player-team {
-            font-size: 16px;
-            color: #777;
-        }
-        .player-description {
-            margin: 15px 0;
-            font-size: 14px;
-            color: #555;
-        }
-        .player-icons {
-            display: flex;
-            gap: 10px;
-        }
-        .player-icon {
-            background-color: #f0f0f0;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: bold;
-            text-align: center;
-            flex: 1;
-        }
+       body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+}
 
-        .player-image-section {
-            flex: 0 0 40%;
-            background-color: black;
-            position: relative;
-            text-align: center;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
-        
-        .player-image-container {
-            position: relative;
-            display: inline-block;
-            width: fit-content;
-            margin: 0 auto;
-        }
-        
-        .player-image-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(white 10%, transparent 10%) black;
-            background-size: 10px 10px;
-            z-index: 1;
-            border-radius: 8px;
-            width: 150px; /* Adjust width of the rectangle */
-            height: 150px; /* Adjust height of the rectangle */
-            margin: auto;
-        }
-        
-        .player-image-container img {
-            position: relative;
-            z-index: 2; /* Ensures the image appears above the background */
-            width: 150px;
-            height: auto;
-            border-radius: 8px;
-        }
+.player-list {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+}
 
-        
-        .player-image-section::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(white 10%, transparent 10%) black;
-            background-size: 10px 10px;
-            z-index: 1;
-        }
-        
-        .player-image-section img {
-            width: 100%;
-            max-width: 150px;
-            border-radius: 8px;
-            position: relative;
-            z-index: 2; /* Ensures image is above the dots */
-        }
-        
-        .player-position {
-            display: inline-block;
-            background-color: black;
-            color: white;
-            padding: 5px 10px;
-            margin-top: 10px;
-            font-size: 14px;
-            font-weight: bold;
-            z-index: 2;
-            position: relative;
-        }
-        
-        .player-stats {
-            font-size: 14px;
-            color: white;
-            margin-top: 10px;
-            line-height: 1.5;
-            text-align: center;
-            z-index: 2;
-            position: relative;
-        }
+.player-card {
+    display: flex;
+    background-color: white;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
 
+.player-image-section {
+    flex: 0 0 40%;
+    text-align: center;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f8f8;
+    position: relative;
+}
+
+.player-image-container {
+    position: relative;
+    width: 150px; /* Matches the width of the image */
+    height: 150px; /* Matches the height of the image */
+    margin: 0 auto; /* Centers the container */
+    display: flex;
+    align-items: flex-end; /* Ensures the content is aligned to the bottom */
+    justify-content: center;
+}
+
+.player-image-container::before {
+    content: "";
+    position: absolute;
+    bottom: 0; /* Aligns the background with the bottom of the container */
+    left: 0;
+    width: 100%; /* Covers the full width of the container */
+    height: 50%; /* Covers the bottom 65% of the container */
+    background: radial-gradient(rgb(0, 0, 0) 10%, transparent 20%) rgb(255, 255, 255);
+    background-size: 10px 10px;
+    z-index: 1; /* Ensures the background is behind the image */
+    border-radius: 0 0 0px 0px; /* Matches the bottom corners of the container */
+    border: 2px solid #000;
+}
+
+.player-image-container img {
+    position: relative;
+    z-index: 2; /* Places the image above the background */
+    width: 100%; /* Ensures the image fits within the container */
+    height: auto;
+    border-radius: 8px; /* Matches the container's corners */
+}
+
+
+
+
+.player-position {
+    display: inline-block;
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+}
+
+.player-stats {
+    font-size: 14px;
+    color: #333;
+    margin-top: 10px;
+    line-height: 1.5;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.player-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.player-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.player-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.player-team {
+    font-size: 16px;
+    color: #777;
+}
+
+.player-description {
+    margin: 15px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.player-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.player-icon {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    flex: 1;
+}
     </style>
 </head>
 <body>
@@ -236,7 +197,7 @@
                 season: 4,
                 image: "images/ming.png", // Placeholder image URL
                 description: "Elite rebounder with a knack for bold, clever passes that keep defenses guessing -- and teammates on their toes.",
-                icons: ["Positional Versatility", "Athleticism", "On-Ball Defense", "Finisher"]
+                icons: ["Positional Versatility", "Passing Virtuoso", "Finisher", "Injury Concerns"]
             }
         ];
 
