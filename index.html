@@ -105,6 +105,38 @@
             justify-content: flex-end;
         }
         
+        .player-image-container {
+            position: relative;
+            display: inline-block;
+            width: fit-content;
+            margin: 0 auto;
+        }
+        
+        .player-image-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(white 10%, transparent 10%) black;
+            background-size: 10px 10px;
+            z-index: 1;
+            border-radius: 8px;
+            width: 150px; /* Adjust width of the rectangle */
+            height: 150px; /* Adjust height of the rectangle */
+            margin: auto;
+        }
+        
+        .player-image-container img {
+            position: relative;
+            z-index: 2; /* Ensures the image appears above the background */
+            width: 150px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        
         .player-image-section::before {
             content: "";
             position: absolute;
@@ -217,7 +249,9 @@
             
             card.innerHTML = `
                 <div class="player-image-section">
-                    <img src="${player.image}" alt="${player.name}">
+                    <div class="player-image-container">
+                        <img src="${player.image}" alt="${player.name}">
+                    </div>
                     <div class="player-position">${player.position}</div>
                     <div class="player-stats">
                         Height: ${player.height} <br>
