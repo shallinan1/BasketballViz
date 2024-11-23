@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Rankings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+        .player-list {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .player-card {
+            display: flex;
+            background-color: white;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .player-image-section {
+            flex: 0 0 40%;
+            background-color: #f8f8f8;
+            text-align: center;
+            padding: 20px;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .player-image-section img {
+            width: 100%;
+            max-width: 150px;
+            border-radius: 8px;
+        }
+        .player-position {
+            display: inline-block;
+            background-color: black;
+            color: white;
+            padding: 5px 10px;
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .player-stats {
+            font-size: 14px;
+            color: #333;
+            margin-top: 10px;
+            line-height: 1.5;
+            text-align: center;
+        }
+        .player-content {
+            flex: 1;
+            padding: 20px;
+        }
+        .player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .player-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .player-team {
+            font-size: 16px;
+            color: #777;
+        }
+        .player-description {
+            margin: 15px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        .player-icons {
+            display: flex;
+            gap: 10px;
+        }
+        .player-icon {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="player-list" id="player-list"></div>
+
+    <script>
+        const players = [
+            {
+                number: 1,
+                name: "Nikola Jokic",
+                team: "Denver Nuggets",
+                position: "Big",
+                height: "6'11\"",
+                weight: "254 lbs",
+                age: 29,
+                season: 9,
+                image: "https://via.placeholder.com/150", // Placeholder image URL
+                description: "The unquestioned best player in the world, armed with an unstoppable combination of size, skill, and IQ.",
+                icons: ["Passing Virtuoso", "Post Moves", "Float Game", "Horse Guy"]
+            },
+            {
+                number: 2,
+                name: "Luka Doncic",
+                team: "Dallas Mavericks",
+                position: "Guard",
+                height: "6'7\"",
+                weight: "230 lbs",
+                age: 25,
+                season: 6,
+                image: "https://via.placeholder.com/150", // Placeholder image URL
+                description: "God-tier playmaker who sees the full cause-and-effect chain of every move he makes.",
+                icons: ["Passing Virtuoso", "Pull-up Threat", "Clutch Gene", "Human Highlight"]
+            },
+            {
+                number: 3,
+                name: "Giannis Antetokounmpo",
+                team: "Milwaukee Bucks",
+                position: "Big",
+                height: "7'0\"",
+                weight: "243 lbs",
+                age: 29,
+                season: 11,
+                image: "https://via.placeholder.com/150", // Placeholder image URL
+                description: "The league’s preeminent two-way player, whose titanic frame and athleticism paint a modern portrait of physical dominance.",
+                icons: ["Positional Versatility", "Finisher", "Human Highlight", "Off-Ball Defense"]
+            },
+            {
+                number: 4,
+                name: "Jayson Tatum",
+                team: "Boston Celtics",
+                position: "Forward",
+                height: "6'8\"",
+                weight: "210 lbs",
+                age: 26,
+                season: 7,
+                image: "https://via.placeholder.com/150", // Placeholder image URL
+                description: "Reigning champion in his prime, but still in need of redemption after a rotten summer in Paris.",
+                icons: ["Positional Versatility", "Athleticism", "On-Ball Defense", "Finisher"]
+            }
+        ];
+
+        const playerList = document.getElementById('player-list');
+        players
+            .sort((a, b) => a.number - b.number) // Sort by player number
+            .forEach(player => {
+                const card = document.createElement('div');
+                card.classList.add('player-card');
+
+                card.innerHTML = `
+                    <div class="player-image-section">
+                        <img src="${player.image}" alt="${player.name}">
+                        <div class="player-position">${player.position}</div>
+                        <div class="player-stats">
+                            Height: ${player.height} <br>
+                            Weight: ${player.weight} <br>
+                            Age: ${player.age} <br>
+                            Season: ${player.season}
+                        </div>
+                    </div>
+                    <div class="player-content">
+                        <div class="player-header">
+                            <h2 class="player-name">${player.name}</h2>
+                            <span class="player-team">${player.team}</span>
+                        </div>
+                        <p class="player-description">${player.description}</p>
+                        <div class="player-icons">
+                            ${player.icons.map(icon => `<div class="player-icon">${icon}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+
+                playerList.appendChild(card);
+            });
+    </script>
+</body>
+</html>
