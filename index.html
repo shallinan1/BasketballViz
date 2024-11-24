@@ -225,6 +225,17 @@
                 text-align: center;
                 flex: 1;
             }
+
+            .player-shades {
+                margin-top: 10px;
+                font-size: 1em;
+                color: #333;
+            }
+            .player-shades strong {
+                font-weight: bold;
+                color: #555;
+            }
+
         </style>
     </head>
     <body>    
@@ -273,12 +284,18 @@
                 <p class="player-description">${player.description}</p>
                 <div class="player-icons">
                     ${player.icons.map(icon => `<div class="player-icon">${icon}</div>`).join('')}
-                </div>
+                </div><br>
+                ${
+                    player.shades_of
+                        ? `<div class="player-shades"><strong>SHADES OF:</strong> ${player.shades_of.join(', ')}</div>`
+                        : ''
+                }
             </div>
         `;
 
         playerList.appendChild(card);
     });
+
 
         </script>
     </body>

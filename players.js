@@ -2,7 +2,7 @@
 export const players = [
 
     {
-        number: 4,
+        number: 6,
         name: "Isaac Araki",
         team: "Unknown",
         position: "Big",
@@ -12,7 +12,8 @@ export const players = [
         season: 3,
         image: "images/isaac.png", // Placeholder image URL
         description: "<b>A raw, floor-stretching big with boundless hustle</b>, still finding his footing and defensive identity.",
-        icons: ["Spacer", "Ridiculous Upside"]
+        icons: ["Spacer", "Ridiculous Upside"],
+        shades_of: ["Karl-Anthony Towns", "Mo Bamba"]
     },
     {
         number: 1,
@@ -65,9 +66,24 @@ export const players = [
         weight: "175 lbs",
         age: 24,
         season: 4,
-        image: "images/minpng", // Placeholder image URL
+        image: "images/gavin.png", // Placeholder image URL
         description: "<b>A crafty playmaker</b> sporting a silky crossover, with a knack for defending the perimeter.",
-        icons: ["Passing Virtuoso", "Positional Versatility", "Shot Blocker"]
+        icons: ["Passing Virtuoso", "Positional Versatility", "Shot Blocker"],
+        shades_of: ["Kevin Durant"]
     },
-    
+    {
+        number: 5,
+        name: "Declan Edgecombe",
+        team: "Golden State Warriors",
+        position: "Guard",
+        height: "5'9\"",
+        weight: "150 lbs",
+        age: 25,
+        season: 5,
+        image: "images/declan.png", // Placeholder image URL
+        description: "<b>High-energy point guard</b> who thrives on speed, constant movement, and creative shot-making.",
+        icons: ["Passing Virtuoso", "Speed Demon"],
+        shades_of: ["Trae Young", "Tyus Jones"]
+    },
+
 ];
