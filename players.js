@@ -11,21 +11,22 @@ export const players = [
         age: 22,
         season: 3,
         image: "images/isaac.png", // Placeholder image URL
-        description: "A raw, floor-stretching big with boundless hustle, still finding his footing as he sharpens his defense and polishes his game.",
+        description: "<b>A raw, floor-stretching big with boundless hustle</b>, still finding his footing and defensive identity.",
         icons: ["Spacer", "Ridiculous Upside"]
     },
     {
         number: 1,
         name: "Paul Rosiak",
-        team: "Milwaukee Bucks",
-        position: "Wing",
+        team: "Golden State Warriors",
+        position: "Forward",
         height: "6'0\"",
         weight: "175 lbs",
-        age: 33,
+        age: 32,
         season: 5,
-        image: "https://via.placeholder.com/150", // Placeholder image URL
-        description: "An on-ball menace with elite instincts for steals, paired with smooth, fundamental offense which prizes efficiency over flair.",
-        icons: ["Positional Versatility", "Finisher", "On-Ball Defense"]
+        image: "images/paul.png", // Placeholder image URL
+        description: "<b>An on-ball menace with elite instincts</b>, paired with smooth and fundamental offense which prizes efficiency over flair.",
+        icons: ["Positional Versatility", "Finisher", "On-Ball Defense"],
+        shades_of: ["Dyson Daniels"]
     },
     {
         number: 3,
@@ -37,8 +38,9 @@ export const players = [
         age: 24,
         season: 4,
         image: "images/ming.png", // Placeholder image URL
-        description: "Elite rebounder with a knack for bold, clever passes that keep defenses guessing -- and teammates on their toes.",
-        icons: ["Rebounding", "Positional Versatility", "Passing Virtuoso", ]
+        description: "<b>Elite rebounder</b> with a knack for bold, clever passes that keep defenses guessing -- and fellow teammates too.",
+        icons: ["Rebounding", "Positional Versatility", "Passing Virtuoso", ],
+        shades_of: ["Josh Hart", "Scottie Barnes", "Bismack Biyombo"]
     },
     {
         number: 3,
@@ -51,7 +53,8 @@ export const players = [
         season: 4,
         image: "images/lance.png", // Placeholder image URL
         description: "Relentless on-ball defender with grit and a team-first mentality, with occasional flashes of a serviceable three-point touch.",
-        icons: ["On-Ball Defense", "Hustle"]
+        icons: ["On-Ball Defense", "Hustle"],
+        shades_of: ["Jose Alvarado", "Dennis Schroeder"]
     },
     {
         number: 2,
@@ -63,7 +66,7 @@ export const players = [
         age: 24,
         season: 4,
         image: "images/minpng", // Placeholder image URL
-        description: "A crafty playmaker sporting a silky crossover, with a knack for defending the perimeter with his impressive reach.",
+        description: "<b>A crafty playmaker</b> sporting a silky crossover, with a knack for defending the perimeter.",
         icons: ["Passing Virtuoso", "Positional Versatility", "Shot Blocker"]
     },
     
