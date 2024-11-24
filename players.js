@@ -49,8 +49,8 @@ export const players = [
         weight: "150 lbs",
         age: 24,
         season: 4,
-        image: "images/minpng", // Placeholder image URL
-        description: "Relentless on-ball defender with grit, heart, and a team-first mentality, occasionally flashing a serviceable three-point touch.",
+        image: "images/lance.png", // Placeholder image URL
+        description: "Relentless on-ball defender with grit and a team-first mentality, with occasional flashes of a serviceable three-point touch.",
         icons: ["On-Ball Defense", "Hustle"]
     },
     {
