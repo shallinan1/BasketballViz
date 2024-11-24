@@ -26,7 +26,7 @@ export const players = [
         season: 5,
         image: "images/paul.png", // Placeholder image URL
         description: "<b>An on-ball menace with elite instincts</b>, paired with smooth and fundamental offense which prizes efficiency over flair.",
-        icons: ["Positional Versatility", "Finisher", "On-Ball Defense"],
+        icons: ["Positional Versatility", "Finisher", "On-Ball Defense", "Injury Concerns"],
         shades_of: ["Dyson Daniels"]
     },
     {
@@ -84,6 +84,21 @@ export const players = [
         description: "<b>High-energy point guard</b> who thrives on speed, constant movement, and creative shot-making.",
         icons: ["Passing Virtuoso", "Speed Demon"],
         shades_of: ["Trae Young", "Tyus Jones"]
+    },
+
+    {
+        number: 100,
+        name: "Byron Shirley",
+        team: "LA Clippers",
+        position: "Forward",
+        height: "5'10\"",
+        weight: "180 lbs",
+        age: 40,
+        season: 5,
+        image: "images/byron.png", // Placeholder image URL
+        description: "<b>Ageless hustle machine</b> defying father time with relentless effort, scrappy defense, and fearless dives.",
+        icons: ["Hustle", "Ridiculous Upside", "Injury Concerns"],
+        shades_of: ["Killian Hayes", "Udonis Haslem"]
     },
 
 ];
