@@ -54,7 +54,7 @@ export const players = [
         season: 4,
         image: "images/lance.png", // Placeholder image URL
         description: "<b>Relentless on-ball defender</b> with occasional flashes of a serviceable three-point touch.",
-        icons: ["On-Ball Defense", "Hustle"],
+        icons: ["On-Ball Defense", "Hustle", "Off-Ball Defense", "Got That Dog in Him"],
         shades_of: ["Jose Alvarado", "Dennis Schroeder"]
     },
     {
@@ -174,5 +174,20 @@ export const players = [
         description: "<b>Unpredictable, athletic spark plug</b> whose shooting streaks can ignite a team.",
         icons: ["Positional Versatility", "Athleticism", "Pull Up Threat", "Spacer"],
         shades_of: ["Michael Porter Jr.", "Klay Thompson"]
+    },
+
+    {
+        number: 1.9,
+        name: "Jason Roberts",
+        team: "Golden State Warriors",
+        position: "Forward",
+        height: "5'8\"",
+        weight: "165 lbs",
+        age: 26,
+        season: 3,
+        image: "images/jason.png", // Placeholder image URL
+        description: "<b>Jack-of-all-trades</b> guard who attacks the rim at will and can lock your favorite player up.",
+        icons: ["On-Ball Defense", "Finisher", "Hustle", "Speed Demon"],
+        shades_of: ["T.J. McConnell", "Alex Caruso"]
     },
 ];
