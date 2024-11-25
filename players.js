@@ -30,7 +30,7 @@ export const players = [
         shades_of: ["Dyson Daniels"]
     },
     {
-        number: 3,
+        number: 2.7,
         name: "Mingma Sherpa",
         team: "Los Angeles Lakers",
         position: "Forward",
@@ -41,7 +41,7 @@ export const players = [
         image: "images/ming.png", // Placeholder image URL
         description: "<b>Elite rebounder</b> with a knack for bold, clever passes that keep defenses guessing -- and fellow teammates too.",
         icons: ["Rebounding", "Positional Versatility", "Passing Virtuoso", "Feel For the Game" ],
-        shades_of: ["Josh Hart", "Scottie Barnes", "Bismack Biyombo"]
+        shades_of: ["Josh Hart", "Scottie Barnes"]
     },
     {
         number: 3,
@@ -113,7 +113,7 @@ export const players = [
         image: "images/elliot.png", // Placeholder image URL
         description: "<b>High-usage scorer</b> whose strength and deliberate pace enable a versatile scoring package.",
         icons: ["Positional Versatility", "Pull Up Threat", "Off-Ball Defense"],
-        shades_of: ["Demar Derozan", "Desmond Bane",]
+        shades_of: ["Julius Randle", "Desmond Bane",]
     },
 
     {
@@ -132,7 +132,7 @@ export const players = [
     },
 
     {
-        number: 2.5,
+        number: 2.71,
         name: "Victor Hyunh",
         team: "Los Angeles Lakers",
         position: "Guard",
@@ -159,5 +159,20 @@ export const players = [
         description: "<b>The prototypical modern power forward</b>, blending perimeter-stifling lateral quickness and strength with a dependable stroke from deep.",
         icons: ["On-Ball Defense", "Positional Versatility", "Spacer", "Hustle"],
         shades_of: ["Kawhi Leonard", "Tobias Harris"]
+    },
+
+    {
+        number: 2.8,
+        name: "Kevin Zhou",
+        team: "Golden State Warriors",
+        position: "Forward",
+        height: "6'0\"",
+        weight: "175 lbs",
+        age: 31,
+        season: 4,
+        image: "images/kevin.png", // Placeholder image URL
+        description: "<b>Unpredictable, athletic spark plug</b> whose shooting streaks can ignite a team.",
+        icons: ["Positional Versatility", "Athleticism", "Pull Up Threat", "Spacer"],
+        shades_of: ["Michael Porter Jr.", "Klay Thompson"]
     },
 ];
