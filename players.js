@@ -2,7 +2,7 @@
 export const players = [
 
     {
-        number: 6,
+        number: 8,
         name: "Isaac Araki",
         team: "Unknown",
         position: "Big",
@@ -82,7 +82,7 @@ export const players = [
         season: 5,
         image: "images/declan.png", // Placeholder image URL
         description: "<b>High-energy point guard</b> who thrives on speed, constant movement, and creative shot-making.",
-        icons: ["Passing Virtuoso", "Speed Demon"],
+        icons: ["Passing Virtuoso", "Speed Demon", "Fast and Loose"],
         shades_of: ["Trae Young", "Tyus Jones"]
     },
 
@@ -98,7 +98,52 @@ export const players = [
         image: "images/byron.png", // Placeholder image URL
         description: "<b>Ageless hustle machine</b> defying father time with relentless effort, scrappy defense, and fearless dives.",
         icons: ["Hustle", "Ridiculous Upside", "Injury Concerns"],
-        shades_of: ["Killian Hayes", "Udonis Haslem"]
+        shades_of: ["Killian Hayes", "Udonis Haslem", "Sh*t Stirrer"]
     },
+
+    {
+        number: 1,
+        name: "Elliot",
+        team: "Los Angeles Lakers",
+        position: "Forward",
+        height: "5'10\"",
+        weight: "190 lbs",
+        age: 31,
+        season: 5,
+        image: "images/elliot.png", // Placeholder image URL
+        description: "<b>High-usage scorer</b> who leverages his strength and deliberate pace to score, both outside and inside",
+        icons: ["Positional Versatility", "Pull Up Threat"],
+        shades_of: ["Demar Derozan", "Desmond Bane",]
+    },
+
+    {
+        number: 7,
+        name: "Robby",
+        team: "Los Angeles Lakers",
+        position: "Big",
+        height: "5'10\"",
+        weight: "190 lbs",
+        age: 31,
+        season: 5,
+        image: "images/robby.png", // Placeholder image URL
+        description: "<b>An old-school center</b> whose strength and spacing make up for a lack of size.",
+        icons: ["Spacer", "Shot Blocker"],
+        shades_of: ["Chuck Hayes", "Kevon Looney"]
+    },
+
+    // {
+    //     number: 7,
+    //     name: "Victor Hyunh",
+    //     team: "Los Angeles Lakers",
+    //     position: "Guard",
+    //     height: "5'10\"",
+    //     weight: "170 lbs",
+    //     age: 31,
+    //     season: 5,
+    //     image: "images/robb.png", // Placeholder image URL
+    //     description: "<b>Fierce competitor</b> who excels at creating his own shot off-the-dribble.",
+    //     icons: ["Pull Up Threat", "Float Game"],
+    //     shades_of: ["Chuck Hayes", "Kevon Looney"]
+    // },
 
 ];
