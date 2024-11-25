@@ -25,7 +25,7 @@ export const players = [
         age: 32,
         season: 5,
         image: "images/paul.png", // Placeholder image URL
-        description: "<b>An on-ball menace with elite instincts</b>, paired with smooth and fundamental offense which prizes efficiency over flair.",
+        description: "<b>An on-ball menace with elite instincts</b>, paired with a smooth offense that prizes efficiency over flair.",
         icons: ["Positional Versatility", "Finisher", "On-Ball Defense", "Injury Concerns"],
         shades_of: ["Dyson Daniels"]
     },
@@ -40,7 +40,7 @@ export const players = [
         season: 4,
         image: "images/ming.png", // Placeholder image URL
         description: "<b>Elite rebounder</b> with a knack for bold, clever passes that keep defenses guessing -- and fellow teammates too.",
-        icons: ["Rebounding", "Positional Versatility", "Passing Virtuoso", ],
+        icons: ["Rebounding", "Positional Versatility", "Passing Virtuoso", "Feel For the Game" ],
         shades_of: ["Josh Hart", "Scottie Barnes", "Bismack Biyombo"]
     },
     {
@@ -68,7 +68,7 @@ export const players = [
         season: 4,
         image: "images/gavin.png", // Placeholder image URL
         description: "<b>A crafty playmaker</b> sporting a silky crossover, with a knack for defending the perimeter.",
-        icons: ["Passing Virtuoso", "Positional Versatility", "Shot Blocker"],
+        icons: ["Passing Virtuoso", "Positional Versatility", "Shot Blocker", "Floor General"],
         shades_of: ["Kevin Durant"]
     },
     {
@@ -82,7 +82,7 @@ export const players = [
         season: 5,
         image: "images/declan.png", // Placeholder image URL
         description: "<b>High-energy point guard</b> who thrives on speed, constant movement, and creative shot-making.",
-        icons: ["Passing Virtuoso", "Speed Demon", "Fast and Loose"],
+        icons: ["Passing Virtuoso", "Speed Demon", "Fast and Loose", "Floor General"],
         shades_of: ["Trae Young", "Tyus Jones"]
     },
 
@@ -97,8 +97,8 @@ export const players = [
         season: 5,
         image: "images/byron.png", // Placeholder image URL
         description: "<b>Ageless hustle machine</b> defying father time with relentless effort, scrappy defense, and fearless dives.",
-        icons: ["Hustle", "Ridiculous Upside", "Injury Concerns"],
-        shades_of: ["Killian Hayes", "Udonis Haslem", "Sh*t Stirrer"]
+        icons: ["Hustle", "Ridiculous Upside", "Injury Concerns", "Sh*t Stirrer"],
+        shades_of: ["Killian Hayes", "Udonis Haslem",]
     },
 
     {
@@ -111,8 +111,8 @@ export const players = [
         age: 31,
         season: 5,
         image: "images/elliot.png", // Placeholder image URL
-        description: "<b>High-usage scorer</b> who leverages his strength and deliberate pace to score, both outside and inside",
-        icons: ["Positional Versatility", "Pull Up Threat"],
+        description: "<b>High-usage scorer</b> whose strength and deliberate pace enable a versatile scoring package.",
+        icons: ["Positional Versatility", "Pull Up Threat", "Off-Ball Defense"],
         shades_of: ["Demar Derozan", "Desmond Bane",]
     },
 
@@ -131,19 +131,33 @@ export const players = [
         shades_of: ["Chuck Hayes", "Kevon Looney"]
     },
 
-    // {
-    //     number: 7,
-    //     name: "Victor Hyunh",
-    //     team: "Los Angeles Lakers",
-    //     position: "Guard",
-    //     height: "5'10\"",
-    //     weight: "170 lbs",
-    //     age: 31,
-    //     season: 5,
-    //     image: "images/robb.png", // Placeholder image URL
-    //     description: "<b>Fierce competitor</b> who excels at creating his own shot off-the-dribble.",
-    //     icons: ["Pull Up Threat", "Float Game"],
-    //     shades_of: ["Chuck Hayes", "Kevon Looney"]
-    // },
+    {
+        number: 2.5,
+        name: "Victor Hyunh",
+        team: "Los Angeles Lakers",
+        position: "Guard",
+        height: "5'10\"",
+        weight: "170 lbs",
+        age: 31,
+        season: 5,
+        image: "images/victor.png", // Placeholder image URL
+        description: "<b>Fierce competitor</b> who excels at creating his own shot off-the-dribble.",
+        icons: ["Pull Up Threat", "Float Game", "Got That Dog in Him"],
+        shades_of: ["Tyler Herro", "Kobe Bryant", ]
+    },
 
+    {
+        number: 1.4,
+        name: "Tyler",
+        team: "San Antonio Spurs",
+        position: "Wing",
+        height: "5'10\"",
+        weight: "185 lbs",
+        age: 22,
+        season: 3,
+        image: "images/tyler.png", // Placeholder image URL
+        description: "<b>The prototypical modern power forward</b>, blending perimeter-stifling lateral quickness and strength with a dependable stroke from deep.",
+        icons: ["On-Ball Defense", "Positional Versatility", "Spacer", "Hustle"],
+        shades_of: ["Kawhi Leonard", "Tobias Harris"]
+    },
 ];
