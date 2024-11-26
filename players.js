@@ -30,7 +30,7 @@ export const players = [
         shades_of: ["Dyson Daniels"]
     },
     {
-        number: 2.7,
+        number: 2.8,
         name: "Mingma Sherpa",
         team: "Los Angeles Lakers",
         position: "Forward",
@@ -44,7 +44,7 @@ export const players = [
         shades_of: ["Josh Hart", "Scottie Barnes"]
     },
     {
-        number: 3,
+        number: 3.5,
         name: "Lance Muchina",
         team: "Los Angeles Lakers",
         position: "Guard",
@@ -72,7 +72,7 @@ export const players = [
         shades_of: ["Kevin Durant"]
     },
     {
-        number: 5,
+        number: 3,
         name: "Declan Edgecombe",
         team: "Golden State Warriors",
         position: "Guard",
@@ -189,5 +189,34 @@ export const players = [
         description: "<b>Jack-of-all-trades</b> guard who attacks the rim at will and can lock your favorite player up.",
         icons: ["On-Ball Defense", "Finisher", "Hustle", "Speed Demon"],
         shades_of: ["T.J. McConnell", "Alex Caruso"]
+    },
+    {
+        number: 14,
+        name: "Logan Mar",
+        team: "Boston Celtics",
+        position: "Guard",
+        height: "5'7\"",
+        weight: "165 lbs",
+        age: 23,
+        season: 3,
+        image: "images/logan.png", // Placeholder image URL
+        description: "<b>Silent offensive machine</b> with an arsenal of moves.",
+        icons: ["Spacer"],
+        shades_of: ["Kyle Anderson"]
+    },
+
+    {
+        number: 1000,
+        name: "Chris White",
+        team: "Washington Wizards",
+        position: "Guard",
+        height: "5'9\"",
+        weight: "200 lbs",
+        age: 25,
+        season: "Retired",
+        image: "images/chris.png", // Placeholder image URL
+        description: "<b>Unpredictable loose cannon</b> whose creativity hurts as much as it helps.",
+        icons: ["Fast and Loose"],
+        shades_of: ["Kevin Porter Jr."]
     },
 ];
