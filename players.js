@@ -65,7 +65,7 @@ export const players = [
         height: "6'2\"",
         weight: "175 lbs",
         age: 24,
-        season: 4,
+        season: "Retired",
         image: "images/gavin.png", // Placeholder image URL
         description: "<b>A crafty playmaker</b> sporting a silky crossover, with a knack for defending the perimeter.",
         icons: ["Passing Virtuoso", "Positional Versatility", "Shot Blocker", "Floor General"],
@@ -124,7 +124,7 @@ export const players = [
         height: "5'10\"",
         weight: "190 lbs",
         age: 31,
-        season: 5,
+        season: 2,
         image: "images/robby.png", // Placeholder image URL
         description: "<b>An old-school center</b> whose strength and spacing make up for a lack of size.",
         icons: ["Spacer", "Shot Blocker"],
@@ -201,7 +201,7 @@ export const players = [
         season: 3,
         image: "images/logan.png", // Placeholder image URL
         description: "<b>Silent offensive machine</b> with an arsenal of moves.",
-        icons: ["Spacer"],
+        icons: ["Spacer", "Float Game"],
         shades_of: ["Kyle Anderson"]
     },
 
@@ -233,4 +233,33 @@ export const players = [
         icons: ["Pull Up Threat", "Spacer", "Finisher"],
         shades_of: ["David Roddy"]
     },
+    {
+        number: 2.9,
+        name: "Allen",
+        team: "Unknown",
+        position: "Big",
+        height: "6'0\"",
+        weight: "220 lbs",
+        age: 27,
+        season: "2",
+        image: "images/allen.png", // Placeholder image URL
+        description: "<b>Relentless enforcer</b> with elite help instincts and a smooth touch to match his grit.",
+        icons: ["Shot Blocker", "Off-Ball Defense", "Hustle", "Ridiculous Upside"],
+        shades_of: ["Brook Lopez", 'Myles Turner']
+    },
+    {
+        number: 2.6,
+        name: "Josh",
+        team: "Unknown",
+        position: "Guard",
+        height: "5'8\"",
+        weight: "160 lbs",
+        age: 26,
+        season: "4",
+        image: "images/josh.png", // Placeholder image URL
+        description: "<b>Blistering guard</b> who thrives in transition and punishes defenses from deep.",
+        icons: ["Speed Demon", "Pull Up Threat", "Fast and Loose", "Spacer"],
+        shades_of: ["Tyrese Maxey", "Immanuel Quickley"],
+    },
+
 ];
