@@ -8,7 +8,7 @@ export const players = [
         position: "Big",
         height: "6'3\"",
         weight: "220lbs",
-        age: 22,
+        age: 21,
         season: 3,
         image: "images/isaac.png", // Placeholder image URL
         description: "<b>A raw, floor-stretching big with boundless hustle</b>, still finding his footing and defensive identity.",
@@ -30,7 +30,7 @@ export const players = [
         shades_of: ["Dyson Daniels"]
     },
     {
-        number: 2.8,
+        number: 2.9,
         name: "Mingma Sherpa",
         team: "Los Angeles Lakers",
         position: "Forward",
@@ -72,7 +72,7 @@ export const players = [
         shades_of: ["Kevin Durant"]
     },
     {
-        number: 3,
+        number: 2.87,
         name: "Declan Edgecombe",
         team: "Golden State Warriors",
         position: "Guard",
@@ -138,7 +138,7 @@ export const players = [
         position: "Guard",
         height: "5'10\"",
         weight: "170 lbs",
-        age: 31,
+        age: 28,
         season: 5,
         image: "images/victor.png", // Placeholder image URL
         description: "<b>Fierce competitor</b> who excels at creating his own shot off-the-dribble.",
@@ -162,7 +162,7 @@ export const players = [
     },
 
     {
-        number: 2.8,
+        number: 3,
         name: "Kevin Zhou",
         team: "Golden State Warriors",
         position: "Forward",
@@ -181,7 +181,7 @@ export const players = [
         name: "Jason Roberts",
         team: "Golden State Warriors",
         position: "Forward",
-        height: "5'8\"",
+        height: "5'7\"",
         weight: "165 lbs",
         age: 26,
         season: 3,
@@ -191,7 +191,7 @@ export const players = [
         shades_of: ["T.J. McConnell", "Alex Caruso"]
     },
     {
-        number: 14,
+        number: 7,
         name: "Logan Mar",
         team: "Boston Celtics",
         position: "Guard",
@@ -218,5 +218,19 @@ export const players = [
         description: "<b>Unpredictable loose cannon</b> whose creativity hurts as much as it helps.",
         icons: ["Fast and Loose"],
         shades_of: ["Kevin Porter Jr."]
+    },
+    {
+        number: 6.9,
+        name: "Justine",
+        team: "Los Angeles Lakers",
+        position: "Guard",
+        height: "5'9\"",
+        weight: "190 lbs",
+        age: 28,
+        season: "2",
+        image: "images/chrs.png", // Placeholder image URL
+        description: "<b>Offensive talent</b> with the size to take it inside and the skill to shoot from way downtown.",
+        icons: ["Pull Up Threat", "Spacer", "Finisher"],
+        shades_of: ["David Roddy"]
     },
 ];
