@@ -6,18 +6,18 @@
         <title>Player Rankings</title>
         <style>
             body {
-                    font-family: Arial, sans-serif;
-                    background-color: #f8f8f8;
-                    margin: 0;
-                    padding: 0;
-                }
-
+                font-family: Arial, sans-serif;
+                background-color: #f8f8f8;
+                margin: 0;
+                padding: 0;
+            }
+        
             body, html {
-                        margin: 0;
-                        padding: 0;
-                        font-family: Arial, sans-serif;
-                    }
-
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+            }
+        
             /* Fullscreen Title Section */
             .title-section {
                 height: 100vh;
@@ -29,39 +29,38 @@
                 text-align: center;
                 position: relative;
             }
-
+        
             .title-section img {
                 max-width: 100%;
                 height: auto;
                 position: absolute;
                 z-index: 1;
-                opacity: 0.2; /* Adjust background transparency */
+                opacity: 0.2;
             }
-
+        
             .title-content {
                 z-index: 2;
             }
-
+        
             .title-content h1 {
                 font-size: 5rem;
                 margin: 0;
                 padding: 20px 40px;
                 display: inline-block;
-                color: #FF6600; /* Orange text */
-                border: 3px solid #FF6600; /* Orange border for rectangle */
+                color: #FF6600;
+                border: 3px solid #FF6600;
                 border-radius: 5px;
                 text-transform: uppercase;
                 font-weight: bold;
-                background-color: transparent; /* Transparent background */
+                background-color: transparent;
             }
-
+        
             .title-content p {
                 margin-top: 10px;
                 font-size: 1.5rem;
                 color: white;
             }
-
-            /* Scroll Indicator */
+        
             .scroll-indicator {
                 position: absolute;
                 bottom: 20px;
@@ -71,14 +70,13 @@
                 color: #ccc;
                 z-index: 2;
             }
-
-
+        
             .player-list {
                 max-width: 50em;
                 margin: 20px auto;
                 padding: 20px;
             }
-
+        
             .player-card {
                 display: flex;
                 background-color: white;
@@ -87,7 +85,7 @@
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 overflow: hidden;
             }
-
+        
             .player-image-section {
                 flex: 0 0 30%;
                 text-align: center;
@@ -100,122 +98,123 @@
                 background-color: #f8f8f8;
                 position: relative;
             }
-
+        
             .player-image-container {
                 position: relative;
-                width: 200px; /* Matches the width of the image */
-                height: 200px; /* Matches the height of the image */
-                margin: 0 auto; /* Centers the container */
+                width: 200px;
+                height: 200px;
+                margin: 0 auto;
                 display: flex;
-                align-items: flex-end; /* Ensures the content is aligned to the bottom */
+                align-items: flex-end;
                 justify-content: center;
             }
-
+        
             .player-image-container::before {
                 content: "";
                 position: absolute;
-                bottom: 0; /* Aligns the background with the bottom of the container */
+                bottom: 0;
                 left: 0;
-                width: 100%; /* Covers the full width of the container */
-                height: 50%; /* Covers the bottom 65% of the container */
+                width: 100%;
+                height: 50%;
                 background: radial-gradient(rgb(0, 0, 0) 10%, transparent 20%) rgb(255, 255, 255);
                 background-size: 10px 10px;
-                z-index: 1; /* Ensures the background is behind the image */
-                border-radius: 0 0 0px 0px; /* Matches the bottom corners of the container */
+                z-index: 1;
+                border-radius: 0 0 0px 0px;
                 border: 2px solid #000;
             }
-
+        
             .player-image-container img {
                 position: relative;
-                z-index: 2; /* Places the image above the background */
-                max-width: 100%; /* Ensures the image scales within the container's width */
-                max-height: 100%; /* Ensures the image scales within the container's height */
-                object-fit: contain; /* Ensures the entire image is shown */
-                border-radius: 8px; /* Matches the container's corners */
+                z-index: 2;
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+                border-radius: 8px;
             }
-
+        
             .player-number {
                 position: absolute;
-                top: 10px; /* Adjust vertical position */
+                top: 10px;
                 left: 50%;
                 transform: translateX(-50%);
                 font-size: 1.5rem;
                 font-weight: bold;
-                text-decoration: underline; /* Adds the underline */
-                color: #000; /* Use black for better visibility */
-                z-index: 3; /* Ensure it appears above other elements */
+                text-decoration: underline;
+                color: #000;
+                z-index: 3;
             }
-
+        
             .player-position {
-                position: absolute; /* Position relative to .player-image-container */
-                bottom: 5px; /* Align 5px above the bottom edge of the image */
-                left: 5px; /* Align 5px from the left edge of the image */
-                background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
-                color: white; /* White text for contrast */
-                padding: 5px 10px; /* Padding for aesthetics */
+                position: absolute;
+                bottom: 5px;
+                left: 5px;
+                background-color: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 5px 10px;
                 font-size: 14px;
                 font-weight: bold;
-                text-transform: uppercase; /* Uppercase for emphasis */
-                border-radius: 3px; /* Rounded corners for style */
-                z-index: 2; /* Ensure it appears on top of the image */
+                text-transform: uppercase;
+                border-radius: 3px;
+                z-index: 2;
             }
-
+        
             .player-stats {
                 display: grid;
-                grid-template-columns: 1fr 1fr; /* Two flexible columns */
-                gap: 10px; /* Add space between rows */
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
                 font-size: 16px;
                 color: black;
                 padding: 10px;
                 margin-top: 10px;
             }
-
+        
             .player-stat {
-                text-align: left; /* Align all text to the left */
+                text-align: left;
             }
-
+        
             .player-stat span.title {
-                font-weight: bold; /* Bold for titles */
-                text-transform: uppercase; /* Titles in uppercase */
+                font-weight: bold;
+                text-transform: uppercase;
             }
-
+        
             .player-stat span.value {
-                font-weight: normal; /* Normal weight for values */
-                text-transform: none; /* Values in normal case */
+                font-weight: normal;
+                text-transform: none;
             }
+        
             .player-content {
                 flex: 1;
                 padding: 20px;
             }
-
+        
             .player-header {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
             }
-
+        
             .player-name {
                 font-size: 24px;
                 font-weight: bold;
                 margin: 0;
             }
-
+        
             .player-team {
                 font-size: 16px;
                 color: #777;
             }
-
+        
             .player-description {
                 margin: 15px 0;
                 font-size: 1.3em;
                 color: #555;
             }
-
+        
             .player-icons {
                 display: flex;
                 gap: 10px;
             }
-
+        
             .player-icon {
                 background-color: #f0f0f0;
                 padding: 10px;
@@ -225,18 +224,76 @@
                 text-align: center;
                 flex: 1;
             }
-
+        
             .player-shades {
                 margin-top: 10px;
                 font-size: 1em;
                 color: #333;
             }
+        
             .player-shades strong {
                 font-weight: bold;
                 color: #555;
             }
-
+        
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .title-section {
+                    height: auto;
+                    padding: 20px;
+                }
+        
+                .title-content h1 {
+                    font-size: 2.5rem;
+                    padding: 10px 20px;
+                }
+        
+                .title-content p {
+                    font-size: 1rem;
+                }
+        
+                .player-list {
+                    max-width: 100%;
+                    padding: 10px;
+                }
+        
+                .player-card {
+                    flex-direction: column;
+                }
+        
+                .player-image-section {
+                    width: 100%;
+                    padding: 10px;
+                }
+        
+                .player-content {
+                    padding: 10px;
+                }
+        
+                .player-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+        
+                .player-name {
+                    font-size: 1.5rem;
+                }
+        
+                .player-description {
+                    font-size: 1rem;
+                }
+        
+                .player-icons {
+                    flex-wrap: wrap;
+                }
+        
+                .player-icon {
+                    flex: 1 1 calc(50% - 10px);
+                    margin-bottom: 10px;
+                }
+            }
         </style>
+        
     </head>
     <body>    
         <!-- Fullscreen Title Section -->
