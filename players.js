@@ -41,7 +41,7 @@ export const players = [
         image: "images/ming.png", // Placeholder image URL
         description: "<b>Elite rebounder</b> with a knack for bold, clever passes that keep defenses guessing -- and fellow teammates too.",
         icons: ["Rebounding", "Positional Versatility", "Passing Virtuoso", "Feel For the Game" ],
-        shades_of: ["Josh Hart", "Scottie Barnes"]
+        shades_of: ["Josh Hart", "Sct Brn"]
     },
     {
         number: 3.5,
@@ -55,7 +55,7 @@ export const players = [
         image: "images/lance.png", // Placeholder image URL
         description: "<b>Relentless on-ball defender</b> with occasional flashes of a serviceable three-point touch.",
         icons: ["On-Ball Defense", "Hustle", "Off-Ball Defense", "Got That Dog in Him"],
-        shades_of: ["Jose Alvarado", "Dennis Schroeder"]
+        shades_of: ["Jose Alvarado", "Dennis Schroeder", "Gary Payton II"]
     },
     {
         number: 2,
@@ -228,8 +228,8 @@ export const players = [
         weight: "190 lbs",
         age: 28,
         season: "2",
-        image: "images/chrs.png", // Placeholder image URL
-        description: "<b>Offensive talent</b> with the size to take it inside and the skill to shoot from way downtown.",
+        image: "images/justine.png", // Placeholder image URL
+        description: "<b>Offensive talent</b> with the size to take it inside and the skill to shoot from way outside.",
         icons: ["Pull Up Threat", "Spacer", "Finisher"],
         shades_of: ["David Roddy"]
     },
@@ -260,6 +260,34 @@ export const players = [
         description: "<b>Blistering guard</b> who thrives in transition and punishes defenses from deep.",
         icons: ["Speed Demon", "Pull Up Threat", "Fast and Loose", "Spacer"],
         shades_of: ["Tyrese Maxey", "Immanuel Quickley"],
+    },
+    {
+        number: 6.91,
+        name: "Anup Rao",
+        team: "Unknown",
+        position: "Guard",
+        height: "5'9\"",
+        weight: "155 lbs",
+        age: 43,
+        season: "2",
+        image: "images/anup.png", // Placeholder image URL
+        description: "<b>Confident shooter</b> whose endurance is unmatched.",
+        icons: ["Pull Up Threat", "Spacer"],
+        shades_of: ["Kevin Huerter"],
+    },
+    {
+        number: 2.91,
+        name: "Sean Ly",
+        team: "Golden State Warriors",
+        position: "Guard",
+        height: "5'6\"",
+        weight: "160 lbs",
+        age: 29,
+        season: "3",
+        image: "images/sean.png", // Placeholder image URL
+        description: "<b>Small but steady guard</b> with a dependable mid-range and three game.",
+        icons: ["Spacer", "Feel For the Game"],
+        shades_of: ["De'Anthony Melton"],
     },
 
 ];
