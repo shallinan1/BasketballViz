@@ -23,11 +23,11 @@ export const players = [
         height: "6'0\"",
         weight: "175 lbs",
         age: 32,
-        season: 5,
+        season: 3,
         image: "images/paul.png", // Placeholder image URL
         description: "<b>An on-ball menace with elite instincts</b>, paired with a smooth offense that prizes efficiency over flair.",
         icons: ["Positional Versatility", "Finisher", "On-Ball Defense", "Injury Concerns"],
-        shades_of: ["Dyson Daniels"]
+        shades_of: ["Dyson Daniels", "Trey Murphy"]
     },
     {
         number: 2.9,
@@ -41,7 +41,7 @@ export const players = [
         image: "images/ming.png", // Placeholder image URL
         description: "<b>Elite rebounder</b> with a knack for bold, clever passes that keep defenses guessing -- and fellow teammates too.",
         icons: ["Rebounding", "Positional Versatility", "Passing Virtuoso", "Feel For the Game" ],
-        shades_of: ["Josh Hart", "Sct Brn"]
+        shades_of: ["Josh Hart", "Scottie Barnes"]
     },
     {
         number: 3.5,
@@ -65,7 +65,7 @@ export const players = [
         height: "6'2\"",
         weight: "175 lbs",
         age: 24,
-        season: "Retired",
+        season: "4 (Retired)",
         image: "images/gavin.png", // Placeholder image URL
         description: "<b>A crafty playmaker</b> sporting a silky crossover, with a knack for defending the perimeter.",
         icons: ["Passing Virtuoso", "Positional Versatility", "Shot Blocker", "Floor General"],
@@ -94,7 +94,7 @@ export const players = [
         height: "5'10\"",
         weight: "180 lbs",
         age: 40,
-        season: 5,
+        season: 3,
         image: "images/byron.png", // Placeholder image URL
         description: "<b>Ageless hustle machine</b> defying father time with relentless effort, scrappy defense, and fearless dives.",
         icons: ["Hustle", "Ridiculous Upside", "Injury Concerns", "Sh*t Stirrer"],
@@ -102,18 +102,18 @@ export const players = [
     },
 
     {
-        number: 1,
+        number: 1.5,
         name: "Elliot",
         team: "Los Angeles Lakers",
         position: "Forward",
         height: "5'10\"",
         weight: "190 lbs",
         age: 31,
-        season: 5,
+        season: 3,
         image: "images/elliot.png", // Placeholder image URL
         description: "<b>High-usage scorer</b> whose strength and deliberate pace enable a versatile scoring package.",
         icons: ["Positional Versatility", "Pull Up Threat", "Off-Ball Defense"],
-        shades_of: ["Julius Randle", "Desmond Bane",]
+        shades_of: ["Julius Randle", "LeBron James",]
     },
 
     {
@@ -147,7 +147,7 @@ export const players = [
     },
 
     {
-        number: 1.4,
+        number: 1.6,
         name: "Tyler",
         team: "San Antonio Spurs",
         position: "Wing",
@@ -200,7 +200,7 @@ export const players = [
         age: 23,
         season: 3,
         image: "images/logan.png", // Placeholder image URL
-        description: "<b>Silent offensive machine</b> with an arsenal of moves.",
+        description: "<b>Silent scoring option</b> with an arsenal of moves.",
         icons: ["Spacer", "Float Game"],
         shades_of: ["Kyle Anderson"]
     },
@@ -213,7 +213,7 @@ export const players = [
         height: "5'9\"",
         weight: "200 lbs",
         age: 25,
-        season: "Retired",
+        season: "2 (Retired)",
         image: "images/chris.png", // Placeholder image URL
         description: "<b>Unpredictable loose cannon</b> whose creativity hurts as much as it helps.",
         icons: ["Fast and Loose"],
@@ -273,7 +273,7 @@ export const players = [
         image: "images/anup.png", // Placeholder image URL
         description: "<b>Confident shooter</b> whose endurance is unmatched.",
         icons: ["Pull Up Threat", "Spacer"],
-        shades_of: ["Kevin Huerter"],
+        shades_of: ["Kevin Huerter", "Joe Harris"],
     },
     {
         number: 2.91,
@@ -285,9 +285,36 @@ export const players = [
         age: 29,
         season: "3",
         image: "images/sean.png", // Placeholder image URL
-        description: "<b>Small but steady guard</b> with a dependable mid-range and three game.",
+        description: "<b>Steady small guard</b> who quietly cashes in from mid-range and beyond.",
         icons: ["Spacer", "Feel For the Game"],
         shades_of: ["De'Anthony Melton"],
     },
-
+    {
+        number: 8.1,
+        name: "Daniel",
+        team: "Unknown",
+        position: "Guard",
+        height: "5'9\"",
+        weight: "160lbs",
+        age: 23,
+        season: "4 (Retired)",
+        image: "images/daniel.png", // Placeholder image URL
+        description: "<b>Decisive driver</b> still searching for a rhythm from beyond the arc.",
+        icons: ["Fast and Loose", "Ridiculous Upside"],
+        shades_of: ["Russell Westbrook"]
+    },
+    {
+        number: 1.1,
+        name: "Alexis Dominguez",
+        team: "Unknown",
+        position: "Guard",
+        height: "5'11\"",
+        weight: "170lbs",
+        age: 25,
+        season: "4 (Retired)",
+        image: "images/alexis.png", // Placeholder image URL
+        description: "<b>A highly coveted two-way wing</b>, equally gifted at playmaking on offense and on defense.",
+        icons: ["Pull-up Threat", "Passing Virtuoso", "Positional Versatility", "On-Ball Defense"],
+        shades_of: ["Paul George", "D'Angelo Russell"]
+    },
 ];
