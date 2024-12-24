@@ -150,7 +150,7 @@ export const players = [
         number: 1.6,
         name: "Tyler",
         team: "San Antonio Spurs",
-        position: "Wing",
+        position: "Forward",
         height: "5'10\"",
         weight: "185 lbs",
         age: 22,
