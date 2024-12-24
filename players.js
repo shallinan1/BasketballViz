@@ -10,7 +10,7 @@ export const players = [
         weight: "220lbs",
         age: 21,
         season: 3,
-        image: "images/isaac.png", // Placeholder image URL
+        image: "images/isaac.png", 
         description: "<b>A raw, floor-stretching big with boundless hustle</b>, still finding his footing and defensive identity.",
         icons: ["Spacer", "Ridiculous Upside"],
         shades_of: ["Karl-Anthony Towns", "Mo Bamba"]
@@ -24,7 +24,7 @@ export const players = [
         weight: "175 lbs",
         age: 32,
         season: 3,
-        image: "images/paul.png", // Placeholder image URL
+        image: "images/paul.png", 
         description: "<b>An on-ball menace with elite instincts</b>, paired with a smooth offense that prizes efficiency over flair.",
         icons: ["Positional Versatility", "Finisher", "On-Ball Defense", "Injury Concerns"],
         shades_of: ["Dyson Daniels", "Trey Murphy"]
@@ -38,7 +38,7 @@ export const players = [
         weight: "180 lbs",
         age: 24,
         season: 4,
-        image: "images/ming.png", // Placeholder image URL
+        image: "images/ming.png", 
         description: "<b>Elite rebounder</b> with a knack for bold, clever passes that keep defenses guessing -- and fellow teammates too.",
         icons: ["Rebounding", "Positional Versatility", "Passing Virtuoso", "Feel For the Game" ],
         shades_of: ["Josh Hart", "Scottie Barnes"]
@@ -52,21 +52,21 @@ export const players = [
         weight: "150 lbs",
         age: 24,
         season: 4,
-        image: "images/lance.png", // Placeholder image URL
-        description: "<b>Relentless on-ball defender</b> with occasional flashes of a serviceable three-point touch.",
+        image: "images/lance.png", 
+        description: "<b>Relentless on-ball defender</b> with occasional flashes of a three-point touch.",
         icons: ["On-Ball Defense", "Hustle", "Off-Ball Defense", "Got That Dog in Him"],
         shades_of: ["Jose Alvarado", "Dennis Schroeder", "Gary Payton II"]
     },
     {
         number: 2,
-        name: "Gavin Pereria",
+        name: "Gavin Pereira",
         team: "Golden State Warriors",
         position: "Guard",
         height: "6'2\"",
         weight: "175 lbs",
         age: 24,
         season: "4 (Retired)",
-        image: "images/gavin.png", // Placeholder image URL
+        image: "images/gavin.png", 
         description: "<b>A crafty playmaker</b> sporting a silky crossover, with a knack for defending the perimeter.",
         icons: ["Passing Virtuoso", "Positional Versatility", "Shot Blocker", "Floor General"],
         shades_of: ["Kevin Durant"]
@@ -80,14 +80,14 @@ export const players = [
         weight: "150 lbs",
         age: 25,
         season: 5,
-        image: "images/declan.png", // Placeholder image URL
+        image: "images/declan.png", 
         description: "<b>High-energy point guard</b> who thrives on speed, constant movement, and creative shot-making.",
         icons: ["Passing Virtuoso", "Speed Demon", "Fast and Loose", "Floor General"],
         shades_of: ["Trae Young", "Tyus Jones"]
     },
 
     {
-        number: 100,
+        number: 8.4,
         name: "Byron Shirley",
         team: "LA Clippers",
         position: "Forward",
@@ -95,7 +95,7 @@ export const players = [
         weight: "180 lbs",
         age: 40,
         season: 3,
-        image: "images/byron.png", // Placeholder image URL
+        image: "images/byron.png", 
         description: "<b>Ageless hustle machine</b> defying father time with relentless effort, scrappy defense, and fearless dives.",
         icons: ["Hustle", "Ridiculous Upside", "Injury Concerns", "Sh*t Stirrer"],
         shades_of: ["Killian Hayes", "Udonis Haslem",]
@@ -103,16 +103,16 @@ export const players = [
 
     {
         number: 1.5,
-        name: "Elliot",
-        team: "Los Angeles Lakers",
+        name: "Elliot Rosenberg",
+        team: "Los Angeles Lakers", 
         position: "Forward",
-        height: "5'10\"",
+        height: "5'11\"",
         weight: "190 lbs",
-        age: 31,
+        age: 33,
         season: 3,
-        image: "images/elliot.png", // Placeholder image URL
+        image: "images/elliot.png", 
         description: "<b>High-usage scorer</b> whose strength and deliberate pace enable a versatile scoring package.",
-        icons: ["Positional Versatility", "Pull Up Threat", "Off-Ball Defense"],
+        icons: ["Positional Versatility", "Pull Up Threat", "Off-Ball Defense", "Floor General"],
         shades_of: ["Julius Randle", "LeBron James",]
     },
 
@@ -125,7 +125,7 @@ export const players = [
         weight: "190 lbs",
         age: 31,
         season: 2,
-        image: "images/robby.png", // Placeholder image URL
+        image: "images/robby.png", 
         description: "<b>An old-school center</b> whose strength and spacing make up for a lack of size.",
         icons: ["Spacer", "Shot Blocker"],
         shades_of: ["Chuck Hayes", "Kevon Looney"]
@@ -140,7 +140,7 @@ export const players = [
         weight: "170 lbs",
         age: 28,
         season: 5,
-        image: "images/victor.png", // Placeholder image URL
+        image: "images/victor.png", 
         description: "<b>Fierce competitor</b> who excels at creating his own shot off-the-dribble.",
         icons: ["Pull Up Threat", "Float Game", "Got That Dog in Him"],
         shades_of: ["Tyler Herro", "Kobe Bryant", ]
@@ -155,7 +155,7 @@ export const players = [
         weight: "185 lbs",
         age: 22,
         season: 3,
-        image: "images/tyler.png", // Placeholder image URL
+        image: "images/tyler.png", 
         description: "<b>The prototypical modern power forward</b>, blending perimeter-stifling lateral quickness and strength with a dependable stroke from deep.",
         icons: ["On-Ball Defense", "Positional Versatility", "Spacer", "Hustle"],
         shades_of: ["Kawhi Leonard", "Tobias Harris"]
@@ -170,7 +170,7 @@ export const players = [
         weight: "175 lbs",
         age: 31,
         season: 4,
-        image: "images/kevin.png", // Placeholder image URL
+        image: "images/kevin.png", 
         description: "<b>Unpredictable, athletic spark plug</b> whose shooting streaks can ignite a team.",
         icons: ["Positional Versatility", "Athleticism", "Pull Up Threat", "Spacer"],
         shades_of: ["Michael Porter Jr.", "Klay Thompson"]
@@ -185,8 +185,8 @@ export const players = [
         weight: "165 lbs",
         age: 26,
         season: 3,
-        image: "images/jason.png", // Placeholder image URL
-        description: "<b>Jack-of-all-trades</b> guard who attacks the rim at will and can lock your favorite player up.",
+        image: "images/jason.png", 
+        description: "<b>Jack-of-all-trades</b> guard on who attacks the rim at will and can lock your favorite player up.",  // on a meteoric rise
         icons: ["On-Ball Defense", "Finisher", "Hustle", "Speed Demon"],
         shades_of: ["T.J. McConnell", "Alex Caruso"]
     },
@@ -199,7 +199,7 @@ export const players = [
         weight: "165 lbs",
         age: 23,
         season: 3,
-        image: "images/logan.png", // Placeholder image URL
+        image: "images/logan.png", 
         description: "<b>Silent scoring option</b> with an arsenal of moves.",
         icons: ["Spacer", "Float Game"],
         shades_of: ["Kyle Anderson"]
@@ -214,7 +214,7 @@ export const players = [
         weight: "200 lbs",
         age: 25,
         season: "2 (Retired)",
-        image: "images/chris.png", // Placeholder image URL
+        image: "images/chris.png", 
         description: "<b>Unpredictable loose cannon</b> whose creativity hurts as much as it helps.",
         icons: ["Fast and Loose"],
         shades_of: ["Kevin Porter Jr."]
@@ -228,7 +228,7 @@ export const players = [
         weight: "190 lbs",
         age: 28,
         season: "2",
-        image: "images/justine.png", // Placeholder image URL
+        image: "images/justine.png", 
         description: "<b>Offensive talent</b> with the size to take it inside and the skill to shoot from way outside.",
         icons: ["Pull Up Threat", "Spacer", "Finisher"],
         shades_of: ["David Roddy"]
@@ -242,7 +242,7 @@ export const players = [
         weight: "220 lbs",
         age: 27,
         season: "2",
-        image: "images/allen.png", // Placeholder image URL
+        image: "images/allen.png", 
         description: "<b>Relentless enforcer</b> with elite help instincts and a smooth touch to match his grit.",
         icons: ["Shot Blocker", "Off-Ball Defense", "Hustle", "Ridiculous Upside"],
         shades_of: ["Brook Lopez", 'Myles Turner']
@@ -256,7 +256,7 @@ export const players = [
         weight: "160 lbs",
         age: 26,
         season: "4",
-        image: "images/josh.png", // Placeholder image URL
+        image: "images/josh.png", 
         description: "<b>Blistering guard</b> who thrives in transition and punishes defenses from deep.",
         icons: ["Speed Demon", "Pull Up Threat", "Fast and Loose", "Spacer"],
         shades_of: ["Tyrese Maxey", "Immanuel Quickley"],
@@ -270,7 +270,7 @@ export const players = [
         weight: "155 lbs",
         age: 43,
         season: "2",
-        image: "images/anup.png", // Placeholder image URL
+        image: "images/anup.png", 
         description: "<b>Confident shooter</b> whose endurance is unmatched.",
         icons: ["Pull Up Threat", "Spacer"],
         shades_of: ["Kevin Huerter", "Joe Harris"],
@@ -284,13 +284,13 @@ export const players = [
         weight: "160 lbs",
         age: 29,
         season: "3",
-        image: "images/sean.png", // Placeholder image URL
+        image: "images/sean.png", 
         description: "<b>Steady small guard</b> who quietly cashes in from mid-range and beyond.",
         icons: ["Spacer", "Feel For the Game"],
         shades_of: ["De'Anthony Melton"],
     },
     {
-        number: 8.1,
+        number: 8.5,
         name: "Daniel",
         team: "Unknown",
         position: "Guard",
@@ -298,7 +298,7 @@ export const players = [
         weight: "160lbs",
         age: 23,
         season: "4 (Retired)",
-        image: "images/daniel.png", // Placeholder image URL
+        image: "images/daniel.png", 
         description: "<b>Decisive driver</b> still searching for a rhythm from beyond the arc.",
         icons: ["Fast and Loose", "Ridiculous Upside"],
         shades_of: ["Russell Westbrook"]
@@ -312,9 +312,54 @@ export const players = [
         weight: "170lbs",
         age: 25,
         season: "4 (Retired)",
-        image: "images/alexis.png", // Placeholder image URL
+        image: "images/alexis.png", 
         description: "<b>A highly coveted two-way wing</b>, equally gifted at playmaking on offense and on defense.",
         icons: ["Pull-up Threat", "Passing Virtuoso", "Positional Versatility", "On-Ball Defense"],
         shades_of: ["Paul George", "D'Angelo Russell"]
+    },
+
+    {
+        number: 6.92,
+        name: "Mo",
+        team: "Unknown",
+        position: "Guard",
+        height: "5'10\"",
+        weight: "170lbs",
+        age: 23,
+        season: "3 (Retired)",
+        image: "images/mo.png", 
+        description: "<b>Unabashed tough-shot maker</b> able to take over a game", // whether he's hot or not
+        icons: ["Pull-up Threat", "Spacer", "Fast and Loose"],
+        shades_of: ["Norman Powell"]
+    },
+
+    {
+        number: 2.86,
+        name: "Minghui \"Lu\"",
+        team: "Rockets",
+        position: "Center",
+        height: "5'10\"",
+        weight: "185 lbs",
+        age: 32,
+        season: "5 (Semi-Retired)",
+        image: "images/lu.png", 
+        description: "<b>Creative offensive playmaker</b> who dominates the post with savvy veteran moves.", // whether he's hot or not
+        icons: ["Passing Virtuoso", "Feel For the Game", "Floor General"],
+        shades_of: ["Alperen Sengun", "Nikola Jokic", "Domantis Sabonis"]
+    },
+
+    {
+        number: 2.85,
+        name: "Kevin Ly",
+        team: "Unknown",
+        position: "Guard",
+        height: "5'8\"",
+        weight: "185 lbs",
+        age: 32,
+        season: "5 (Retired)",
+        image: "images/ogkevin.png", 
+        description: "<b>An almost unfathomably accurate shooter</b>, making him an unquestionably valuable addition for any team.",
+        icons: ["Spacer", "Feel For the Game"],
+        shades_of: ["Eric Gordon",]
     },
 ];
