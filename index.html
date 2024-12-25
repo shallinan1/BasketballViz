@@ -313,47 +313,84 @@
             import { players } from './players.js';
             
             const playerList = document.getElementById('player-list');
+        
+            // Map of icon names to their corresponding file paths
+            const iconMap = {
+                'Athleticism': 'icons/athleticism.png',
+                'Clutch Gene': 'icons/clutch_gene.png',
+                'Feel For The Game': 'icons/feel_for_the_game.png',
+                'Finisher': 'icons/finisher.png',
+                'Human Highlight': 'icons/human_highlight.png',
+                'On-Ball Defense': 'icons/on_ball_defense.png',
+                'Off-Ball Defense': 'icons/off_ball_defense.png',
+                'Positional Versatility': 'icons/positional_versatility.png',
+                'Injury Concerns': 'icons/injury_concerns.png',
+                'Passing Virtuoso': 'icons/passing_virtuoso.png',
+                'Post Moves': 'icons/post_moves.png',
+                'Spacer': 'icons/spacer.png',
+                'Hustle': 'icons/hustle.png',
+                'Pull-up Threat': 'icons/pullup_threat.png',
+                'Float Game': 'icons/float_game.png',
+                'Fast and Loose': 'icons/fast_and_loose.png',
+                'Movement Shooter': 'icons/movement_shooter.png',
+                'Speed Demon': 'icons/speed_demon.png',
+                'Floor General': 'icons/floor_general.png',
+                'Got That Dog In Him': 'icons/got_that_dog_in_him.png',
+                'Ridiculous Upside': 'icons/ridiculous_upside.png',
+                'Lightning Rod': 'icons/lightning_rod.png',
+                "Sh*t Stirrer": 'icons/shit_stirrer.png',
+                'Rebounding': 'icons/rebounding.png',
+                'Ballhandling': 'icons/ballhandling.png',
+                'Shot Blocking': 'icons/shot_blocking.png'
+            };
+        
+            const getIconPath = (icon) => {
+                const normalizedIcon = icon.toLowerCase().replace(/ /g, '_');
+                const key = Object.keys(iconMap).find(k => k.toLowerCase().replace(/ /g, '_') === normalizedIcon);
+                return key ? iconMap[key] : '';
+            };
+            
             players
-    .sort((a, b) => a.number - b.number) // Sort by player number if needed
-    .forEach((player, index) => {
-        const card = document.createElement('div');
-        card.classList.add('player-card');
-    
-        card.innerHTML = `
-            <div class="player-image-section">
-                <div class="player-number">${String(index + 1).padStart(2, '0')}</div> <!-- Number formatted as 01, 02 -->
-                <div class="player-image-container">
-                    <img src="${player.image}" alt="${player.name}">
-                    <div class="player-position">${player.position}</div>
-                </div>
-                <div class="player-stats">
-                    <div class="player-stat"><span class="title">HEIGHT</span> <span class="value">${player.height}</span></div>
-                    <div class="player-stat"><span class="title">WEIGHT</span> <span class="value">${player.weight}</span></div>
-                    <div class="player-stat"><span class="title">AGE</span> <span class="value">${player.age}</span></div>
-                    <div class="player-stat"><span class="title">SEASON</span> <span class="value">${player.season}</span></div>
-                </div>
-            </div>
-            <div class="player-content">
-                <div class="player-header">
-                    <h2 class="player-name">${player.name}</h2>
-                    <span class="player-team">${player.team}</span>
-                </div>
-                <p class="player-description">${player.description}</p>
-                <div class="player-icons">
-                    ${player.icons.map(icon => `<div class="player-icon">${icon}</div>`).join('')}
-                </div><br>
-                ${
-                    player.shades_of
-                        ? `<div class="player-shades"><strong>SHADES OF:</strong> ${player.shades_of.join(', ')}</div>`
-                        : ''
-                }
-            </div>
-        `;
-
-        playerList.appendChild(card);
-    });
-
-
+                .sort((a, b) => a.number - b.number)
+                .forEach((player, index) => {
+                    const card = document.createElement('div');
+                    card.classList.add('player-card');
+        
+                    card.innerHTML = `
+                        <div class="player-image-section">
+                            <div class="player-number">${String(index + 1).padStart(2, '0')}</div>
+                            <div class="player-image-container">
+                                <img src="${player.image}" alt="${player.name}">
+                                <div class="player-position">${player.position}</div>
+                            </div>
+                            <div class="player-stats">
+                                <div class="player-stat"><span class="title">HEIGHT</span> <span class="value">${player.height}</span></div>
+                                <div class="player-stat"><span class="title">WEIGHT</span> <span class="value">${player.weight}</span></div>
+                                <div class="player-stat"><span class="title">AGE</span> <span class="value">${player.age}</span></div>
+                                <div class="player-stat"><span class="title">SEASON</span> <span class="value">${player.season}</span></div>
+                            </div>
+                        </div>
+                        <div class="player-content">
+                            <div class="player-header">
+                                <h2 class="player-name">${player.name}</h2>
+                                <span class="player-team">${player.team}</span>
+                            </div>
+                            <p class="player-description">${player.description}</p>
+                            <div class="player-icons">
+                                ${player.icons.map(icon => `
+                                    <div class="player-icon">
+                                        <img src="${getIconPath(icon)}" alt="${icon}" style="width: 40px; height: 40px; margin-bottom: 5px;">
+                                        <div>${icon}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            ${player.shades_of ? `<div class="player-shades"><strong>SHADES OF:</strong> ${player.shades_of.join(', ')}</div>` : ''}
+                        </div>
+                    `;
+        
+                    playerList.appendChild(card);
+                });
         </script>
+        
     </body>
     </html>

@@ -40,7 +40,7 @@ export const players = [
         season: 4,
         image: "images/ming.png", 
         description: "<b>Elite rebounder</b> with a knack for bold, clever passes that keep defenses guessing -- and fellow teammates too.",
-        icons: ["Rebounding", "Positional Versatility", "Passing Virtuoso", "Feel For the Game" ],
+        icons: ["Rebounding", "Clutch Gene", "Passing Virtuoso", "Feel For the Game" ],
         shades_of: ["Josh Hart", "Scottie Barnes"]
     },
     {
@@ -68,7 +68,7 @@ export const players = [
         season: "4 (Retired)",
         image: "images/gavin.png", 
         description: "<b>A crafty playmaker</b> sporting a silky crossover, with a knack for defending the perimeter.",
-        icons: ["Passing Virtuoso", "Positional Versatility", "Shot Blocker", "Floor General"],
+        icons: ["Passing Virtuoso", "Ballhandling", "Shot Blocking", "Pull-Up Threat"],
         shades_of: ["Kevin Durant"]
     },
     {
@@ -82,7 +82,7 @@ export const players = [
         season: 5,
         image: "images/declan.png", 
         description: "<b>High-energy point guard</b> who thrives on speed, constant movement, and creative shot-making.",
-        icons: ["Passing Virtuoso", "Speed Demon", "Fast and Loose", "Floor General"],
+        icons: ["Lightning Rod", "Speed Demon", "Fast and Loose", "Floor General"],
         shades_of: ["Trae Young", "Tyus Jones"]
     },
 
@@ -112,7 +112,7 @@ export const players = [
         season: 3,
         image: "images/elliot.png", 
         description: "<b>High-usage scorer</b> whose strength and deliberate pace enable a versatile scoring package.",
-        icons: ["Positional Versatility", "Pull Up Threat", "Off-Ball Defense", "Floor General"],
+        icons: ["Pull-up Threat", "Off-Ball Defense", "Post Moves", "Got That Dog In Him"],
         shades_of: ["Julius Randle", "LeBron James",]
     },
 
@@ -127,7 +127,7 @@ export const players = [
         season: 2,
         image: "images/robby.png", 
         description: "<b>An old-school center</b> whose strength and spacing make up for a lack of size.",
-        icons: ["Spacer", "Shot Blocker"],
+        icons: ["Spacer", "Shot Blocking"],
         shades_of: ["Chuck Hayes", "Kevon Looney"]
     },
 
@@ -142,7 +142,7 @@ export const players = [
         season: 5,
         image: "images/victor.png", 
         description: "<b>Fierce competitor</b> who excels at creating his own shot off-the-dribble.",
-        icons: ["Pull Up Threat", "Float Game", "Got That Dog in Him"],
+        icons: ["Pull-up Threat", "Clutch Gene", "Float Game", "Got That Dog in Him"],
         shades_of: ["Tyler Herro", "Kobe Bryant", ]
     },
 
@@ -158,7 +158,7 @@ export const players = [
         image: "images/tyler.png", 
         description: "<b>The prototypical modern power forward</b>, blending perimeter-stifling lateral quickness and strength with a dependable stroke from deep.",
         icons: ["On-Ball Defense", "Positional Versatility", "Spacer", "Hustle"],
-        shades_of: ["Kawhi Leonard", "Tobias Harris"]
+        shades_of: ["Kawhi Leonard", "OG Anunoby"]
     },
 
     {
@@ -172,7 +172,7 @@ export const players = [
         season: 4,
         image: "images/kevin.png", 
         description: "<b>Unpredictable, athletic spark plug</b> whose shooting streaks can ignite a team.",
-        icons: ["Positional Versatility", "Athleticism", "Pull Up Threat", "Spacer"],
+        icons: ["Athleticism", "Pull-up Threat", "Spacer", "Lightning Rod"],
         shades_of: ["Michael Porter Jr.", "Klay Thompson"]
     },
 
@@ -216,7 +216,7 @@ export const players = [
         season: "2 (Retired)",
         image: "images/chris.png", 
         description: "<b>Unpredictable loose cannon</b> whose creativity hurts as much as it helps.",
-        icons: ["Fast and Loose"],
+        icons: ["Fast and Loose", "Human Highlight"],
         shades_of: ["Kevin Porter Jr."]
     },
     {
@@ -230,7 +230,7 @@ export const players = [
         season: "2",
         image: "images/justine.png", 
         description: "<b>Offensive talent</b> with the size to take it inside and the skill to shoot from way outside.",
-        icons: ["Pull Up Threat", "Spacer", "Finisher"],
+        icons: ["Ballhandling", "Pull-up Threat", "Spacer", "Finisher"],
         shades_of: ["David Roddy"]
     },
     {
@@ -244,7 +244,7 @@ export const players = [
         season: "2",
         image: "images/allen.png", 
         description: "<b>Relentless enforcer</b> with elite help instincts and a smooth touch to match his grit.",
-        icons: ["Shot Blocker", "Off-Ball Defense", "Hustle", "Ridiculous Upside"],
+        icons: ["Shot Blocking", "Off-Ball Defense", "Sh*t Stirrer", "Ridiculous Upside"],
         shades_of: ["Brook Lopez", 'Myles Turner']
     },
     {
@@ -258,7 +258,7 @@ export const players = [
         season: "4",
         image: "images/josh.png", 
         description: "<b>Blistering guard</b> who thrives in transition and punishes defenses from deep.",
-        icons: ["Speed Demon", "Pull Up Threat", "Fast and Loose", "Spacer"],
+        icons: ["Speed Demon", "Pull-up Threat", "Fast and Loose", "Human Highlight"],
         shades_of: ["Tyrese Maxey", "Immanuel Quickley"],
     },
     {
@@ -272,7 +272,7 @@ export const players = [
         season: "2",
         image: "images/anup.png", 
         description: "<b>Confident shooter</b> whose endurance is unmatched.",
-        icons: ["Pull Up Threat", "Spacer"],
+        icons: ["Pull-up Threat", "Spacer"],
         shades_of: ["Kevin Huerter", "Joe Harris"],
     },
     {
@@ -329,7 +329,7 @@ export const players = [
         season: "3 (Retired)",
         image: "images/mo.png", 
         description: "<b>Unabashed tough-shot maker</b> able to take over a game", // whether he's hot or not
-        icons: ["Pull-up Threat", "Spacer", "Fast and Loose"],
+        icons: ["Movement Shooter", "Pull-up Threat", "Spacer", "Fast and Loose"],
         shades_of: ["Norman Powell"]
     },
 
@@ -344,7 +344,7 @@ export const players = [
         season: "5 (Semi-Retired)",
         image: "images/lu.png", 
         description: "<b>Creative offensive playmaker</b> who dominates the post with savvy veteran moves.", // whether he's hot or not
-        icons: ["Passing Virtuoso", "Feel For the Game", "Floor General"],
+        icons: ["Post Moves", "Passing Virtuoso", "Feel For the Game", "Floor General"],
         shades_of: ["Alperen Sengun", "Nikola Jokic", "Domantis Sabonis"]
     },
 
@@ -359,7 +359,7 @@ export const players = [
         season: "5 (Retired)",
         image: "images/ogkevin.png", 
         description: "<b>An almost unfathomably accurate shooter</b>, making him an unquestionably valuable addition for any team.",
-        icons: ["Spacer", "Feel For the Game"],
+        icons: ["Clutch Gene", "Spacer", "Feel For the Game"],
         shades_of: ["Eric Gordon",]
     },
 ];
