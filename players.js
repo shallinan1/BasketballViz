@@ -25,7 +25,7 @@ export const players = [
         age: 32,
         season: 3,
         image: "images/paul.png", 
-        description: "<b>An on-ball menace with elite instincts</b>, paired with a smooth offense that prizes efficiency over flair.",
+        description: "<b>An on-ball menace with elite instincts</b>, paired with smooth offense that prizes efficiency over flair.",
         icons: ["Positional Versatility", "Finisher", "On-Ball Defense", "Injury Concerns"],
         shades_of: ["Dyson Daniels", "Trey Murphy"]
     },
@@ -186,7 +186,7 @@ export const players = [
         age: 26,
         season: 3,
         image: "images/jason.png", 
-        description: "<b>Jack-of-all-trades</b> guard on who attacks the rim at will and can lock your favorite player up.",  // on a meteoric rise
+        description: "<b>Jack-of-all-trades</b> guard who attacks the rim at will and can lock your favorite player up.",  // on a meteoric rise
         icons: ["On-Ball Defense", "Finisher", "Hustle", "Speed Demon"],
         shades_of: ["T.J. McConnell", "Alex Caruso"]
     },
@@ -272,7 +272,7 @@ export const players = [
         season: "2",
         image: "images/anup.png", 
         description: "<b>Confident shooter</b> whose endurance is unmatched.",
-        icons: ["Pull-up Threat", "Spacer"],
+        icons: ["Pull-up Threat", "Spacer", "Movement Shooter"],
         shades_of: ["Kevin Huerter", "Joe Harris"],
     },
     {
