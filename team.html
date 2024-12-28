@@ -127,17 +127,15 @@
             function enforceUniquePlayers() {
                 const selectedIds = new Set();
                 
-                // Collect the src of images already in slots
                 document.querySelectorAll('.slot img').forEach(img => {
                     selectedIds.add(img.src);
                 });
 
-                // Hide images that match the selected src
                 document.querySelectorAll('#player-list img').forEach(img => {
                     if (selectedIds.has(img.src)) {
-                        img.style.visibility = 'hidden';
+                        img.style.display = 'none';
                     } else {
-                        img.style.visibility = 'visible';
+                        img.style.display = 'inline-block';
                     }
                 });
             }
