@@ -5,64 +5,175 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Basketball Team Picker</title>
     <style>
+        /* General Reset & Body */
+        * {
+          box-sizing: border-box;
+        }
+        
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background: #f4f4f4;
+          color: #333;
+        }
+      
+        h1 {
+          text-align: center;
+          margin: 20px 0;
+          font-size: 2.2em;
+          letter-spacing: 1px;
+        }
+      
+        h2 {
+          font-size: 1.5em;
+          margin: 15px 0 5px;
+          color: #555;
+        }
+      
+        /* Container */
         .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 20px;
+          width: 90%;
+          max-width: 1000px;
+          margin-left: auto;
+          margin-right: auto;
         }
+      
+        /* Teams Section */
         .teams {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            margin-bottom: 30px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+          margin-bottom: 30px;
         }
+      
         .team {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
+          background: #fff;
+          border-radius: 8px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          padding: 15px 20px;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 15px;
+          margin-bottom: 20px;
+          width: 100%;
+          max-width: 800px;
         }
-        .player-list {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
+      
+        .team h2 {
+          width: 100%;
+          text-align: center;
+          margin-bottom: 10px;
+          color: #333;
         }
-        .player-list img, .slot img {
-            width: 100px;
-            height: 100px;
-            margin: 10px;
-            cursor: pointer;
-        }
+      
+        /* Slots */
         .slot {
-            border: 2px dashed #999;
-            width: 100px;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+          border: 2px dashed #999;
+          width: 100px;
+          height: 100px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #fafafa;
+          border-radius: 6px;
+          transition: border-color 0.3s ease, background-color 0.3s ease;
+          cursor: pointer;
         }
+      
+        .slot:hover {
+          border-color: #666;
+          background-color: #f0f0f0;
+        }
+      
+        /* When a player is selected */
         .selected {
-            border: 3px solid #4CAF50;
+          border: 3px solid #4CAF50 !important;
         }
+      
+        /* Player List Section */
+        .players {
+          margin-top: 40px;
+          width: 100%;
+          max-width: 800px;
+        }
+      
+        .player-list {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 15px;
+          background: #fff;
+          border-radius: 8px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          padding: 15px;
+          margin-top: 10px;
+        }
+      
+        .player-list img,
+        .slot img {
+          width: 100px;
+          height: 100px;
+          cursor: pointer;
+          border-radius: 6px;
+          transition: transform 0.2s ease;
+          object-fit: cover;
+        }
+      
+        .player-list img:hover,
+        .slot img:hover {
+          transform: scale(1.05);
+        }
+      
+        /* Clear and Randomize Buttons */
         .clear-buttons {
-            margin-top: 20px;
+          margin-top: 20px;
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+          justify-content: center;
         }
-
+      
+        button {
+          background-color: #4CAF50;
+          color: #fff;
+          border: none;
+          padding: 10px 15px;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 1rem;
+          transition: background-color 0.3s ease;
+          outline: none;
+        }
+      
+        button:hover {
+          background-color: #43a047;
+        }
+      
+        /* Responsive */
         @media (max-width: 600px) {
-            .slot {
-                width: 80px;
-                height: 80px;
-            }
-            .team h2 {
-                width: 100%;
-                text-align: center;
-            }
+          .slot {
+            width: 80px;
+            height: 80px;
+            margin: 5px 0;
+          }
+          .player-list img,
+          .slot img {
+            width: 80px;
+            height: 80px;
+          }
+          .team h2 {
+            font-size: 1.2em;
+          }
         }
-    </style>
+      </style>
+      
     <script type="module">
         import { players } from './players.js';
 
