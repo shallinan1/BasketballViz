@@ -48,6 +48,9 @@
         .selected {
             border: 3px solid #4CAF50;
         }
+        .clear-buttons {
+            margin-top: 20px;
+        }
     </style>
     <script type="module">
         import { players } from './players.js';
@@ -92,6 +95,18 @@
                     }
                 });
             });
+
+            document.getElementById('clear-team1').addEventListener('click', () => {
+                document.querySelectorAll('[data-slot^="team1"]').forEach(slot => {
+                    slot.innerHTML = slot.getAttribute('data-slot').split('-')[1];
+                });
+            });
+
+            document.getElementById('clear-team2').addEventListener('click', () => {
+                document.querySelectorAll('[data-slot^="team2"]').forEach(slot => {
+                    slot.innerHTML = slot.getAttribute('data-slot').split('-')[1];
+                });
+            });
         });
     </script>
 </head>
@@ -118,6 +133,11 @@
             </div>
         </div>
         
+        <div class="clear-buttons">
+            <button id="clear-team1">Clear Team 1</button>
+            <button id="clear-team2">Clear Team 2</button>
+        </div>
+
         <div class="players">
             <h2>Players</h2>
             <div class="player-list" id="player-list"></div>
