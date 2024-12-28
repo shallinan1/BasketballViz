@@ -67,52 +67,82 @@
         import { players } from './players.js';
 
         window.addEventListener('DOMContentLoaded', () => {
-            const playerList = document.getElementById('player-list');
-            let selectedPlayer = null;
-            let selectedImg = null;
+        const playerList = document.getElementById('player-list');
+        let selectedPlayer = null;
+        let selectedImg = null;
 
-            players.sort((a, b) => a.number - b.number);
+        players.sort((a, b) => a.number - b.number);
 
-            players.forEach(player => {
-                const img = document.createElement('img');
-                img.src = player.image;
-                img.alt = player.name;
-                img.title = player.description;
-                img.dataset.id = player.id;
-                img.addEventListener('click', () => {
-                    if (selectedImg) {
-                        selectedImg.classList.remove('selected');
-                    }
-                    if (selectedPlayer === player) {
-                        selectedPlayer = null;
-                        selectedImg = null;
-                    } else {
-                        selectedPlayer = player;
-                        img.classList.add('selected');
-                        selectedImg = img;
-                    }
-                });
-                playerList.appendChild(img);
+        players.forEach(player => {
+            const playerDiv = document.createElement('div');
+            playerDiv.style.position = 'relative';
+            playerDiv.style.textAlign = 'center';
+            playerDiv.style.display = 'inline-block';
+
+            const firstName = player.name.split(' ')[0].toUpperCase();
+
+            const nameLabelBottom = document.createElement('div');
+            nameLabelBottom.innerText = firstName;
+            nameLabelBottom.style.position = 'absolute';
+            nameLabelBottom.style.bottom = '0';
+            nameLabelBottom.style.width = '100%';
+            nameLabelBottom.style.background = 'rgba(0, 0, 0, 0.5)';
+            nameLabelBottom.style.color = 'white';
+            nameLabelBottom.style.padding = '5px 0';
+
+            const img = document.createElement('img');
+            img.src = player.image;
+            img.alt = player.name;
+            img.title = player.description;
+            img.dataset.id = player.id;
+            img.style.display = 'block';
+            img.style.width = '100px';
+            img.style.height = '100px';
+            img.addEventListener('click', () => {
+                if (selectedImg) {
+                    selectedImg.classList.remove('selected');
+                }
+                if (selectedPlayer === player) {
+                    selectedPlayer = null;
+                    selectedImg = null;
+                } else {
+                    selectedPlayer = player;
+                    img.classList.add('selected');
+                    selectedImg = img;
+                }
             });
 
-            document.querySelectorAll('.slot').forEach(slot => {
-                slot.addEventListener('click', () => {
-                    if (selectedPlayer) {
-                        slot.innerHTML = `<img src="${selectedPlayer.image}" 
+            playerDiv.appendChild(img);
+            playerDiv.appendChild(nameLabelBottom);
+
+            playerList.appendChild(playerDiv);
+        });
+
+        document.querySelectorAll('.slot').forEach(slot => {
+            slot.addEventListener('click', () => {
+                if (selectedPlayer) {
+                    slot.innerHTML = `<div style="position: relative; text-align: center; display: inline-block;">
+                        <img src="${selectedPlayer.image}" 
                             alt="${selectedPlayer.name}" 
                             title="${selectedPlayer.description}" 
-                            data-id="${selectedPlayer.id}">`;
-                        selectedPlayer = null;
-                        if (selectedImg) {
-                            selectedImg.classList.remove('selected');
-                            selectedImg = null;
-                        }
-                        if (document.getElementById('unique-player').checked) {
-                            enforceUniquePlayers();
-                        }
+                            data-id="${selectedPlayer.id}" 
+                            style="display: block; width: 100px; height: 100px;">
+                        <div style="position: absolute; bottom: 0; width: 100%; background: rgba(0, 0, 0, 0.5); color: white; padding: 5px 0;">
+                            ${selectedPlayer.name.split(' ')[0].toUpperCase()}
+                        </div>
+                    </div>`;
+                    selectedPlayer = null;
+                    if (selectedImg) {
+                        selectedImg.classList.remove('selected');
+                        selectedImg = null;
                     }
-                });
+                    if (document.getElementById('unique-player').checked) {
+                        enforceUniquePlayers();
+                    }
+                }
             });
+        });
+
 
             document.getElementById('clear-team1').addEventListener('click', () => {
                 clearTeamSlots('team1');
@@ -165,10 +195,17 @@
                     if (!slot.querySelector('img')) {
                         const player = availablePlayers.shift();
                         if (player) {
-                            slot.innerHTML = `<img src="${player.image}" 
+                            slot.innerHTML = `<div style="position: relative; text-align: center; display: inline-block;">
+                            <img src="${player.image}" 
                                 alt="${player.name}" 
                                 title="${player.description}" 
-                                data-id="${player.id}">`;
+                                data-id="${player.id}" 
+                                style="display: block; width: 100px; height: 100px;">
+                            <div style="position: absolute; bottom: 0; width: 100%; background: rgba(0, 0, 0, 0.5); color: white; padding: 5px 0;">
+                                ${player.name.split(' ')[0].toUpperCase()}
+                            </div>
+                        </div>`;
+
                         }
                     }
                 });
