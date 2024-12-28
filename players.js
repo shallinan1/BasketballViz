@@ -2,7 +2,7 @@
 export const players = [
 
     {
-        number: 8,
+        number: 8.5,
         name: "Isaac Araki",
         team: "Unknown",
         position: "Big",
@@ -53,9 +53,9 @@ export const players = [
         age: 24,
         season: 4,
         image: "images/lance.png", 
-        description: "<b>Relentless on-ball defender</b> with occasional flashes of a three-point touch.",
+        description: "<b>Relentless on-ball defender</b> a consistent offense away from superstardom.",
         icons: ["On-Ball Defense", "Hustle", "Off-Ball Defense", "Got That Dog in Him"],
-        shades_of: ["Jose Alvarado", "Dennis Schroeder", "Gary Payton II"]
+        shades_of: ["Dennis Schroeder", "Gary Payton II","Jose Alvarado", ]
     },
     {
         number: 2,
@@ -67,7 +67,7 @@ export const players = [
         age: 24,
         season: "4 (Retired)",
         image: "images/gavin.png", 
-        description: "<b>A crafty playmaker</b> sporting a silky crossover, with a knack for defending the perimeter.",
+        description: "<b>Crafty playmaker</b> sporting a silky crossover, with a knack for defending the perimeter.",
         icons: ["Passing Virtuoso", "Ballhandling", "Shot Blocking", "Pull-Up Threat"],
         shades_of: ["Kevin Durant"]
     },
@@ -117,7 +117,7 @@ export const players = [
     },
 
     {
-        number: 7,
+        number: 7.01,
         name: "Robby",
         team: "Los Angeles Lakers",
         position: "Big",
@@ -276,7 +276,7 @@ export const players = [
         shades_of: ["Kevin Huerter", "Joe Harris"],
     },
     {
-        number: 2.91,
+        number: 3.51,
         name: "Sean Ly",
         team: "Golden State Warriors",
         position: "Guard",
@@ -319,7 +319,7 @@ export const players = [
     },
 
     {
-        number: 6.92,
+        number: 3.01,
         name: "Mo",
         team: "Unknown",
         position: "Guard",
@@ -362,4 +362,102 @@ export const players = [
         icons: ["Clutch Gene", "Spacer", "Feel For the Game"],
         shades_of: ["Eric Gordon",]
     },
+    {
+        number: 2.61,
+        name: "Mitch Ly",
+        team: "Golden State Warriors",
+        position: "Guard",
+        height: "5'8\"",
+        weight: "170 lbs",
+        age: 22,
+        season: "2 (Retired)",
+        image: "images/mitch.png", 
+        description: "<b>A dynamic sharpshooter</b> with slick footwork and crafty finishes at the rim—when his shoulder lets him play. ",
+        icons: ["Ballhandling", "Pull-up Threat", "Finisher",  "Injury Concerns"],
+        shades_of: ["Ty Jerome", "Payton Pritchard"]
+    },
+    {
+        number: 2.99,
+        name: "Eric Pham",
+        team: "Unknown",
+        position: "Guard",
+        height: "5'9\"",
+        weight: "185 lbs",
+        age: 21,
+        season: "3",
+        image: "images/eric.png", 
+        description: "<b>Outspoken floor general</b> who leverages his muscle on both ends.",
+        icons: ["Floor General", "Pull-up Threat", "Sh*t Stirrer", "Injury Concerns"],
+        shades_of: ["Eric Bledsoe"]
+    },
+    {
+        number: 6.911,
+        name: "Phil",
+        team: "Unknown",
+        position: "Guard",
+        height: "6'1\"",
+        weight: "175 lbs",
+        age: 60,
+        season: "Unknown",
+        image: "images/phil.png", 
+        description: "<b>Veteran sharpshooter</b> who haunts the perimeter, but is too often a ghost on defense.",
+        icons: ["Pull-up Threat", "Spacer", "Artist"],
+        shades_of: [""]
+    },
+    {
+        number: 2.01,
+        name: "Lorne (Loren?)",
+        team: "Unknown",
+        position: "Guard",
+        height: "5'10\"",
+        weight: "160 lbs",
+        age: 50,
+        season: "Unknown",
+        image: "images/lorne.png", 
+        description: "<b>Unlikely scoring savant</b> equipped with surprising athleticism and timely outside shooting.",
+        icons: ["Pull-up Threat", "Feel For the Game", "Clutch Gene", "Movement Shooter"],
+        shades_of: ["Stephen Curry"]
+    },
+    {
+        number: 3.51,
+        name: "Steve",
+        team: "Unknown",
+        position: "Center",
+        height: "6'2\"",
+        weight: "190 lbs",
+        age: 50,
+        season: "Unknown",
+        image: "images/steve.png", 
+        description: "<b>Brusising backdown punisher</b> who also makes the right reads in the two-man game.",
+        icons: ["Post Moves", "Shot Blocking"],
+        shades_of: ["Bobby Portis", "Aaron Gordon"]
+    },
+    // {
+    //     number: 8.6,
+    //     name: "Leonard",
+    //     team: "Unknown",
+    //     position: "Guard",
+    //     height: "5'10\"",
+    //     weight: "180 lbs",
+    //     age: 55,
+    //     season: "Unknown",
+    //     image: "images/leonard.png", 
+    //     description: "",
+    //     icons: [""],
+    //     shades_of: []
+    // },
+    // {
+    //     number: 6.9101,
+    //     name: "Anish",
+    //     team: "Unknown",
+    //     position: "Guard",
+    //     height: "5'9\"",
+    //     weight: "175 lbs",
+    //     age: 21,
+    //     season: "Unknown",
+    //     image: "images/anish.png", 
+    //     description: "",
+    //     icons: [""],
+    //     shades_of: []
+    // },
 ];
