@@ -7,13 +7,26 @@
     <style>
         .container {
             display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
-        .team, .players {
-            display: flex;
             flex-direction: column;
             align-items: center;
+            margin-top: 20px;
+        }
+        .teams {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        .team {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+        .player-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         .player-list img, .slot img {
             width: 100px;
@@ -25,7 +38,6 @@
             border: 2px dashed #999;
             width: 100px;
             height: 100px;
-            margin: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -42,10 +54,8 @@
             let selectedPlayer = null;
             let selectedImg = null;
 
-            // Sort players by number in ascending order
             players.sort((a, b) => a.number - b.number);
 
-            // Display players
             players.forEach(player => {
                 const img = document.createElement('img');
                 img.src = player.image;
@@ -67,7 +77,6 @@
                 playerList.appendChild(img);
             });
 
-            // Slot assignment
             document.querySelectorAll('.slot').forEach(slot => {
                 slot.addEventListener('click', () => {
                     if (selectedPlayer) {
@@ -87,27 +96,28 @@
     <h1>Basketball Team Picker</h1>
     
     <div class="container">
+        <div class="teams">
+            <div class="team">
+                <h2>Team 1</h2>
+                <div class="slot" data-slot="team1-PG">PG</div>
+                <div class="slot" data-slot="team1-SG">SG</div>
+                <div class="slot" data-slot="team1-SF">SF</div>
+                <div class="slot" data-slot="team1-PF">PF</div>
+                <div class="slot" data-slot="team1-C">C</div>
+            </div>
+            <div class="team">
+                <h2>Team 2</h2>
+                <div class="slot" data-slot="team2-PG">PG</div>
+                <div class="slot" data-slot="team2-SG">SG</div>
+                <div class="slot" data-slot="team2-SF">SF</div>
+                <div class="slot" data-slot="team2-PF">PF</div>
+                <div class="slot" data-slot="team2-C">C</div>
+            </div>
+        </div>
+        
         <div class="players">
             <h2>Players</h2>
             <div class="player-list" id="player-list"></div>
-        </div>
-
-        <div class="team">
-            <h2>Team 1</h2>
-            <div class="slot" data-slot="team1-PG">PG</div>
-            <div class="slot" data-slot="team1-SG">SG</div>
-            <div class="slot" data-slot="team1-SF">SF</div>
-            <div class="slot" data-slot="team1-PF">PF</div>
-            <div class="slot" data-slot="team1-C">C</div>
-        </div>
-
-        <div class="team">
-            <h2>Team 2</h2>
-            <div class="slot" data-slot="team2-PG">PG</div>
-            <div class="slot" data-slot="team2-SG">SG</div>
-            <div class="slot" data-slot="team2-SF">SF</div>
-            <div class="slot" data-slot="team2-PF">PF</div>
-            <div class="slot" data-slot="team2-C">C</div>
         </div>
     </div>
 </body>
