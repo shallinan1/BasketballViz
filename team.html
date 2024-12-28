@@ -154,15 +154,27 @@
             // Randomize team slots with shuffled players
             function randomizeTeamSlots(team) {
                 const teamSlots = document.querySelectorAll(`[data-slot^="${team}"]`);
-                const shuffledPlayers = [...players].sort(() => 0.5 - Math.random()).slice(0, 5);
-                teamSlots.forEach((slot, index) => {
-                    slot.innerHTML = `<img src="${shuffledPlayers[index].image}" 
-                        alt="${shuffledPlayers[index].name}" 
-                        title="${shuffledPlayers[index].description}" 
-                        data-id="${shuffledPlayers[index].id}">`;
+                const shuffledPlayers = [...players].sort(() => 0.5 - Math.random());
+
+                let availablePlayers = shuffledPlayers.filter(player => {
+                    return !Array.from(document.querySelectorAll('.slot img')).some(img => img.dataset.id == player.id);
+                });
+
+                teamSlots.forEach(slot => {
+                    // Check if the slot already has a player
+                    if (!slot.querySelector('img')) {
+                        const player = availablePlayers.shift();
+                        if (player) {
+                            slot.innerHTML = `<img src="${player.image}" 
+                                alt="${player.name}" 
+                                title="${player.description}" 
+                                data-id="${player.id}">`;
+                        }
+                    }
                 });
                 enforceUniquePlayers();
             }
+
         });
     </script>
 </head>
