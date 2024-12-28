@@ -62,11 +62,13 @@
 
             players.sort((a, b) => a.number - b.number);
 
+            // Create player list with unique data-id for each image
             players.forEach(player => {
                 const img = document.createElement('img');
                 img.src = player.image;
                 img.alt = player.name;
                 img.title = player.description;
+                img.dataset.id = player.id;  // Add unique player ID
                 img.addEventListener('click', () => {
                     if (selectedImg) {
                         selectedImg.classList.remove('selected');
@@ -83,30 +85,84 @@
                 playerList.appendChild(img);
             });
 
+            // Allow placing player images into slots
             document.querySelectorAll('.slot').forEach(slot => {
                 slot.addEventListener('click', () => {
                     if (selectedPlayer) {
-                        slot.innerHTML = `<img src="${selectedPlayer.image}" alt="${selectedPlayer.name}" title="${selectedPlayer.description}">`;
+                        slot.innerHTML = `<img src="${selectedPlayer.image}" 
+                            alt="${selectedPlayer.name}" 
+                            title="${selectedPlayer.description}" 
+                            data-id="${selectedPlayer.id}">`;
                         selectedPlayer = null;
                         if (selectedImg) {
                             selectedImg.classList.remove('selected');
                             selectedImg = null;
                         }
+                        if (document.getElementById('unique-player').checked) {
+                            enforceUniquePlayers();
+                        }
                     }
                 });
             });
 
+            // Clear team slots
             document.getElementById('clear-team1').addEventListener('click', () => {
-                document.querySelectorAll('[data-slot^="team1"]').forEach(slot => {
-                    slot.innerHTML = slot.getAttribute('data-slot').split('-')[1];
-                });
+                clearTeamSlots('team1');
             });
 
             document.getElementById('clear-team2').addEventListener('click', () => {
-                document.querySelectorAll('[data-slot^="team2"]').forEach(slot => {
+                clearTeamSlots('team2');
+            });
+
+            // Randomize teams
+            document.getElementById('randomize-team1').addEventListener('click', () => {
+                randomizeTeamSlots('team1');
+            });
+
+            document.getElementById('randomize-team2').addEventListener('click', () => {
+                randomizeTeamSlots('team2');
+            });
+
+            // Ensure unique player selection by hiding used players
+            function enforceUniquePlayers() {
+                const selectedIds = new Set();
+                
+                // Collect the src of images already in slots
+                document.querySelectorAll('.slot img').forEach(img => {
+                    selectedIds.add(img.src);
+                });
+
+                // Hide images that match the selected src
+                document.querySelectorAll('#player-list img').forEach(img => {
+                    if (selectedIds.has(img.src)) {
+                        img.style.visibility = 'hidden';
+                    } else {
+                        img.style.visibility = 'visible';
+                    }
+                });
+            }
+
+
+            // Clear specific team slots
+            function clearTeamSlots(team) {
+                document.querySelectorAll(`[data-slot^="${team}"]`).forEach(slot => {
                     slot.innerHTML = slot.getAttribute('data-slot').split('-')[1];
                 });
-            });
+                enforceUniquePlayers();
+            }
+
+            // Randomize team slots with shuffled players
+            function randomizeTeamSlots(team) {
+                const teamSlots = document.querySelectorAll(`[data-slot^="${team}"]`);
+                const shuffledPlayers = [...players].sort(() => 0.5 - Math.random()).slice(0, 5);
+                teamSlots.forEach((slot, index) => {
+                    slot.innerHTML = `<img src="${shuffledPlayers[index].image}" 
+                        alt="${shuffledPlayers[index].name}" 
+                        title="${shuffledPlayers[index].description}" 
+                        data-id="${shuffledPlayers[index].id}">`;
+                });
+                enforceUniquePlayers();
+            }
         });
     </script>
 </head>
@@ -114,6 +170,9 @@
     <h1>Basketball Team Picker</h1>
     
     <div class="container">
+        <label>
+            <input type="checkbox" id="unique-player" checked> Enforce Unique Players per Team
+        </label>
         <div class="teams">
             <div class="team">
                 <h2>Team 1</h2>
@@ -132,10 +191,12 @@
                 <div class="slot" data-slot="team2-C">C</div>
             </div>
         </div>
-        
+
         <div class="clear-buttons">
             <button id="clear-team1">Clear Team 1</button>
             <button id="clear-team2">Clear Team 2</button>
+            <button id="randomize-team1">Randomize Team 1</button>
+            <button id="randomize-team2">Randomize Team 2</button>
         </div>
 
         <div class="players">
