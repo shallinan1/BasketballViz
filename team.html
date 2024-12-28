@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basketball Team Picker</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .team, .players {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .player-list img, .slot img {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .slot {
+            border: 2px dashed #999;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .selected {
+            border: 3px solid #4CAF50;
+        }
+    </style>
+    <script type="module">
+        import { players } from './players.js';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const playerList = document.getElementById('player-list');
+            let selectedPlayer = null;
+            let selectedImg = null;
+
+            // Sort players by number in ascending order
+            players.sort((a, b) => a.number - b.number);
+
+            // Display players
+            players.forEach(player => {
+                const img = document.createElement('img');
+                img.src = player.image;
+                img.alt = player.name;
+                img.title = player.description;
+                img.addEventListener('click', () => {
+                    if (selectedImg) {
+                        selectedImg.classList.remove('selected');
+                    }
+                    if (selectedPlayer === player) {
+                        selectedPlayer = null;
+                        selectedImg = null;
+                    } else {
+                        selectedPlayer = player;
+                        img.classList.add('selected');
+                        selectedImg = img;
+                    }
+                });
+                playerList.appendChild(img);
+            });
+
+            // Slot assignment
+            document.querySelectorAll('.slot').forEach(slot => {
+                slot.addEventListener('click', () => {
+                    if (selectedPlayer) {
+                        slot.innerHTML = `<img src="${selectedPlayer.image}" alt="${selectedPlayer.name}" title="${selectedPlayer.description}">`;
+                        selectedPlayer = null;
+                        if (selectedImg) {
+                            selectedImg.classList.remove('selected');
+                            selectedImg = null;
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Basketball Team Picker</h1>
+    
+    <div class="container">
+        <div class="players">
+            <h2>Players</h2>
+            <div class="player-list" id="player-list"></div>
+        </div>
+
+        <div class="team">
+            <h2>Team 1</h2>
+            <div class="slot" data-slot="team1-PG">PG</div>
+            <div class="slot" data-slot="team1-SG">SG</div>
+            <div class="slot" data-slot="team1-SF">SF</div>
+            <div class="slot" data-slot="team1-PF">PF</div>
+            <div class="slot" data-slot="team1-C">C</div>
+        </div>
+
+        <div class="team">
+            <h2>Team 2</h2>
+            <div class="slot" data-slot="team2-PG">PG</div>
+            <div class="slot" data-slot="team2-SG">SG</div>
+            <div class="slot" data-slot="team2-SF">SF</div>
+            <div class="slot" data-slot="team2-PF">PF</div>
+            <div class="slot" data-slot="team2-C">C</div>
+        </div>
+    </div>
+</body>
+</html>
