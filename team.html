@@ -263,8 +263,9 @@
               clearSelections();
             } else {
               if (selectedSlot) {
-                swapPlayers(selectedSlot, slot);
-                clearSelections();
+                const previouslySelectedSlot = selectedSlot; // Store the reference
+                clearSelections(); // Clear all selections first
+                swapPlayers(previouslySelectedSlot, slot);
               } else {
                 selectSlot(slot);
               }
@@ -272,6 +273,7 @@
           }
         });
       });
+
 
       document.addEventListener('click', (e) => {
         if (!e.target.closest('.slot') && !e.target.closest('.player-list')) {
@@ -340,9 +342,6 @@
             });
           }
         });
-
-        // Clear selections after swap
-        clearSelections();
 
         if (document.getElementById('unique-player').checked) {
           enforceUniquePlayers();
