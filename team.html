@@ -341,6 +341,9 @@
           }
         });
 
+        // Clear selections after swap
+        clearSelections();
+
         if (document.getElementById('unique-player').checked) {
           enforceUniquePlayers();
         }
@@ -405,31 +408,18 @@
           );
         });
 
-        // Shuffle the available players
-        const shuffledPlayers = availablePlayers.sort(() => Math.random() - 0.5);
-
         teamSlots.forEach(slot => {
-          // Only fill empty slots
-          if (!slot.querySelector('img')) {
-            const player = shuffledPlayers.shift();
-            if (player) {
-              const playerId = player.image.split('/').pop().replace('.png', '');
-              slot.innerHTML = `<div style="position: relative; text-align: center; display: inline-block;">
-                    <img src="${player.image}" 
-                        alt="${player.name}" 
-                        title="${player.description}" 
-                        data-id="${playerId}" 
-                        style="display: block; width: 100px; height: 100px;">
-                    <div style="position: absolute; bottom: 0; width: 100%; background: rgba(0, 0, 0, 0.5); color: white; padding: 5px 0;">
-                        ${player.name.split(' ')[0].toUpperCase()}
-                    </div>
-                </div>`;
-            }
+          // Only randomize if the slot is empty (doesn't contain an img element)
+          if (!slot.querySelector('img') && availablePlayers.length > 0) {
+            const randomIndex = Math.floor(Math.random() * availablePlayers.length);
+            const player = availablePlayers.splice(randomIndex, 1)[0];
+            placePlayerInSlot(slot, player);
           }
         });
 
-        // Run enforce unique players after randomization
-        enforceUniquePlayers();
+        if (document.getElementById('unique-player').checked) {
+          enforceUniquePlayers();
+        }
       }
 
       // Make sure these event listeners are properly attached
