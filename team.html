@@ -5,10 +5,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Basketball Team Picker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Righteous&display=swap"
+    rel="stylesheet">
   <style>
     /* General Reset & Body */
     * {
       box-sizing: border-box;
+    }
+
+    .team:nth-child(1) h2 {
+      font-family: 'Orbitron', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #2c3e50;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .team:nth-child(1) .slot {
+      font-family: 'Orbitron', sans-serif;
+      border-color: #3498db;
+    }
+
+    .team:nth-child(2) h2 {
+      font-family: 'Righteous', cursive;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #c0392b;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .team:nth-child(2) .slot {
+      font-family: 'Righteous', cursive;
+      border-color: #e74c3c;
     }
 
     body {
@@ -471,7 +499,7 @@
     function computeTeamStats(team) {
       let offenseSum = 0;
       let defenseSum = 0;
-      let aggressiveSum = 0;
+      let balanceSum = 0;
       const teamSlots = document.querySelectorAll(`[data-slot^="${team}"] img`);
 
       teamSlots.forEach(img => {
@@ -481,7 +509,7 @@
         if (player) {
           offenseSum += player.offense || 0;
           defenseSum += player.defense || 0;
-          aggressiveSum += player.aggressive || 0;
+          balanceSum += player.aggressive || 0;
         }
       });
 
@@ -494,7 +522,7 @@
         <p>
           <b>Offense</b>: <span style="color: ${offenseRating.color};">${offenseRating.label}</span> (${offenseSum.toFixed(2)})
           <b>Defense</b>: <span style="color: ${defenseRating.color};">${defenseRating.label}</span> (${defenseSum.toFixed(2)})
-          <b>Aggressiveness</b>: (${aggressiveSum.toFixed(2)})
+          <b>Balance</b>: (${balanceSum.toFixed(2)})
         </p>
     `;
 
@@ -540,7 +568,7 @@
     </label>
     <div class="teams">
       <div class="team">
-        <h2>Team 1</h2>
+        <h2>Ringers</h2>
         <div class="slot" data-slot="team1-PG">PG</div>
         <div class="slot" data-slot="team1-SG">SG</div>
         <div class="slot" data-slot="team1-SF">SF</div>
@@ -548,7 +576,7 @@
         <div class="slot" data-slot="team1-C">C</div>
       </div>
       <div class="team">
-        <h2>Team 2</h2>
+        <h2>Ballers</h2>
         <div class="slot" data-slot="team2-PG">PG</div>
         <div class="slot" data-slot="team2-SG">SG</div>
         <div class="slot" data-slot="team2-SF">SF</div>
