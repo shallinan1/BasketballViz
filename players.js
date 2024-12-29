@@ -67,7 +67,7 @@ export const players = [
         shades_of: ["Dennis Schroeder", "Gary Payton II","Jose Alvarado", ],
         offense: 0.35,
         defense: 0.8,
-        aggressive: 0.7,
+        aggressive: 0.6,
     },
     {
         number: 2,
@@ -83,7 +83,7 @@ export const players = [
         icons: ["Passing Virtuoso", "Ballhandling", "Shot Blocking", "Pull-Up Threat"],
         shades_of: ["Kevin Durant"],
         offense: 0.8,
-        defense: 0.7,
+        defense: 0.65,
         aggressive: 0.6
     },
     {
@@ -101,7 +101,7 @@ export const players = [
         shades_of: ["Trae Young", "Tyus Jones"],
         offense: 0.65,
         defense: 0.6,
-        aggressive: 0.6
+        aggressive: 0.65
     },
 
     {
@@ -118,7 +118,7 @@ export const players = [
         icons: ["Hustle", "Ridiculous Upside", "Injury Concerns", "Sh*t Stirrer"],
         shades_of: ["Killian Hayes", "Udonis Haslem",],
         offense: 0.2,
-        defense: 0.65,
+        defense: 0.6,
         aggressive: 0.9
     },
 
@@ -172,8 +172,8 @@ export const players = [
         icons: ["Pull-up Threat", "Clutch Gene", "Float Game", "Got That Dog in Him"],
         shades_of: ["Tyler Herro", "Kobe Bryant", ],
         offense: 0.8,
-        defense: 0.35,
-        aggressive: 0.85
+        defense: 0.4,
+        aggressive: 0.8
     },
 
     {
@@ -191,7 +191,7 @@ export const players = [
         shades_of: ["Kawhi Leonard", "OG Anunoby"],
         offense: 0.75,
         defense: 0.85,
-        aggressive: 0.3
+        aggressive: 0.4
     },
 
     {
@@ -225,7 +225,7 @@ export const players = [
         description: "<b>Jack-of-all-trades</b> guard who attacks the rim at will and can lock your favorite player up.",  // on a meteoric rise
         icons: ["On-Ball Defense", "Finisher", "Hustle", "Speed Demon"],
         shades_of: ["T.J. McConnell", "Alex Caruso"],
-        offense: 100,
+        offense: 0.8,
         defense: 0.85,
         aggressive: 0.85
     },
@@ -279,13 +279,13 @@ export const players = [
         shades_of: ["David Roddy"],
         offense: 0.6,
         defense: 0.5,
-        aggressive: 0.25
+        aggressive: 0.45
     },
     {
         number: 2.9,
         name: "Allen",
         team: "Unknown",
-        position: "Big",
+        position: "Center",
         height: "6'0\"",
         weight: "220 lbs",
         age: 27,
@@ -295,8 +295,8 @@ export const players = [
         icons: ["Shot Blocking", "Off-Ball Defense", "Sh*t Stirrer", "Ridiculous Upside"],
         shades_of: ["Brook Lopez", 'Myles Turner'],
         offense: 0.65,
-        defense: 0.8,
-        aggressive: 0.55
+        defense: 0.75,
+        aggressive: 0.45
     },
     {
         number: 2.6,
@@ -328,7 +328,7 @@ export const players = [
         description: "<b>Confident shooter</b> whose endurance is unmatched.",
         icons: ["Pull-up Threat", "Spacer", "Movement Shooter"],
         shades_of: ["Kevin Huerter", "Joe Harris"],
-        offense: 0.6,
+        offense: 0.55,
         defense: 0.55,
         aggressive: 0.5
     },
@@ -345,7 +345,7 @@ export const players = [
         description: "<b>Steady small guard</b> who quietly cashes in from mid-range and beyond.",
         icons: ["Spacer", "Feel For the Game"],
         shades_of: ["De'Anthony Melton"],
-        offense: 0.7,
+        offense: 0.65,
         defense: 0.35,
         aggressive: 0.3
     },
@@ -363,7 +363,7 @@ export const players = [
         icons: ["Fast and Loose", "Ridiculous Upside"],
         shades_of: ["Russell Westbrook"],
         offense: 0.3,
-        defense: 0.4,
+        defense: 0.3,
         aggressive: 0.75
     },
     {
@@ -379,9 +379,9 @@ export const players = [
         description: "<b>A highly coveted two-way wing</b>, equally gifted at playmaking on offense and on defense.",
         icons: ["Pull-up Threat", "Passing Virtuoso", "Positional Versatility", "On-Ball Defense"],
         shades_of: ["Paul George", "D'Angelo Russell"],
-        offense: 0.85,
+        offense: 0.9,
         defense: 0.8,
-        aggressive: 0.4
+        aggressive: 0.5
     },
 
     {
@@ -397,7 +397,7 @@ export const players = [
         description: "<b>Unabashed tough-shot maker</b> able to take over a game", // whether he's hot or not
         icons: ["Movement Shooter", "Pull-up Threat", "Spacer", "Fast and Loose"],
         shades_of: ["Norman Powell"],
-        offense: 0.7,
+        offense: 0.75,
         defense: 0.65,
         aggressive: 0.9
     },
@@ -416,8 +416,8 @@ export const players = [
         icons: ["Post Moves", "Passing Virtuoso", "Feel For the Game", "Floor General"],
         shades_of: ["Alperen Sengun", "Nikola Jokic", "Domantis Sabonis"],
         offense: 0.75,
-        defense: 0.55,
-        aggressive: 0.7
+        defense: 0.5,
+        aggressive: 0.75
     },
 
     {
@@ -435,7 +435,7 @@ export const players = [
         shades_of: ["Eric Gordon",],
         offense: 0.75,
         defense: 0.6,
-        aggressive: 0.3
+        aggressive: 0.25
     },
     {
         number: 2.61,
@@ -451,7 +451,7 @@ export const players = [
         icons: ["Ballhandling", "Pull-up Threat", "Finisher",  "Injury Concerns"],
         shades_of: ["Ty Jerome", "Payton Pritchard"],
         offense: 0.8,
-        defense: 0.5,
+        defense: 0.4,
         aggressive: 0.3
     },
     {
@@ -467,7 +467,7 @@ export const players = [
         description: "<b>Outspoken floor general</b> who leverages his muscle on both ends.",
         icons: ["Floor General", "Pull-up Threat", "Sh*t Stirrer", "Injury Concerns"],
         shades_of: ["Eric Bledsoe"],
-        offense: 0.65,
+        offense: 0.7,
         defense: 0.7,
         aggressive: 0.8
     },
@@ -502,7 +502,7 @@ export const players = [
         icons: ["Pull-up Threat", "Feel For the Game", "Clutch Gene", "Movement Shooter"],
         shades_of: ["Stephen Curry"],
         offense: 0.85,
-        defense: 0.7,
+        defense: 0.6,
         aggressive: 0.5
     },
     {
