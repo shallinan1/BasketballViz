@@ -194,10 +194,12 @@
         playerDiv.style.textAlign = 'center';
         playerDiv.style.display = 'inline-block';
 
-        const firstName = player.name.split(' ')[0].toUpperCase();
-
         // Create an ID from the image path
         const playerId = player.image.split('/').pop().replace('.png', '');
+        // Add data-id to the container div
+        playerDiv.dataset.id = playerId;
+
+        const firstName = player.name.split(' ')[0].toUpperCase();
 
         const nameLabelBottom = document.createElement('div');
         nameLabelBottom.innerText = firstName;
@@ -212,7 +214,7 @@
         img.src = player.image;
         img.alt = player.name;
         img.title = player.description;
-        img.dataset.id = playerId;  // Set the ID based on image filename
+        img.dataset.id = playerId;
         img.style.display = 'block';
         img.style.width = '100px';
         img.style.height = '100px';
@@ -270,11 +272,11 @@
           selectedIds.add(img.dataset.id);
         });
 
-        document.querySelectorAll('#player-list img').forEach(img => {
-          if (selectedIds.has(img.dataset.id)) {
-            img.style.display = 'none';
+        document.querySelectorAll('#player-list > div').forEach(playerDiv => {
+          if (selectedIds.has(playerDiv.dataset.id)) {
+            playerDiv.style.display = 'none';
           } else {
-            img.style.display = 'inline-block';
+            playerDiv.style.display = 'inline-block';
           }
         });
       }
@@ -329,20 +331,16 @@
       // Keep all previous code the same, but update the clearTeamSlots function:
 
       function clearTeamSlots(team) {
-        // Select all slots for the specified team
         document.querySelectorAll(`[data-slot^="${team}"]`).forEach(slot => {
-          // Get the position label (PG, SG, etc.) from the data-slot attribute
           const position = slot.getAttribute('data-slot').split('-')[1];
-          // Reset the slot to show just the position
           slot.innerHTML = position;
         });
 
-        // Make all players visible again after clearing
-        document.querySelectorAll('#player-list img').forEach(img => {
-          img.style.display = 'inline-block';
+        // Make all player divs visible again
+        document.querySelectorAll('#player-list > div').forEach(playerDiv => {
+          playerDiv.style.display = 'inline-block';
         });
 
-        // Run enforce unique players to update visibility based on remaining players
         if (document.getElementById('unique-player').checked) {
           enforceUniquePlayers();
         }
