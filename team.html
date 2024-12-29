@@ -157,6 +157,18 @@
       background-color: #43a047;
     }
 
+    .player-container {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .player-actions {
+      z-index: 100;
+    }
+
+    .player-actions button:hover {
+      opacity: 0.9;
+    }
+
     /* Responsive */
     @media (max-width: 600px) {
       .slot {
@@ -184,6 +196,8 @@
       const playerList = document.getElementById('player-list');
       let selectedPlayer = null;
       let selectedImg = null;
+      let selectedSlot = null;
+      let selectedSlotImg = null;
 
       players.sort((a, b) => a.number - b.number);
 
@@ -240,29 +254,128 @@
       // Update the slot click handler to use the new ID:
       document.querySelectorAll('.slot').forEach(slot => {
         slot.addEventListener('click', () => {
-          if (selectedPlayer) {
-            const playerId = selectedPlayer.image.split('/').pop().replace('.png', '');
-            slot.innerHTML = `<div style="position: relative; text-align: center; display: inline-block;">
-                <img src="${selectedPlayer.image}" 
-                    alt="${selectedPlayer.name}" 
-                    title="${selectedPlayer.description}" 
-                    data-id="${playerId}" 
-                    style="display: block; width: 100px; height: 100px;">
-                <div style="position: absolute; bottom: 0; width: 100%; background: rgba(0, 0, 0, 0.5); color: white; padding: 5px 0;">
-                    ${selectedPlayer.name.split(' ')[0].toUpperCase()}
-                </div>
-            </div>`;
-            selectedPlayer = null;
-            if (selectedImg) {
-              selectedImg.classList.remove('selected');
-              selectedImg = null;
-            }
-            if (document.getElementById('unique-player').checked) {
-              enforceUniquePlayers();
+          // Case 1: We have a player selected from the player list
+          if (selectedPlayer && !selectedSlot) {
+            placePlayerInSlot(slot, selectedPlayer);
+            clearSelections();
+          }
+          // Case 2: We're clicking a slot with a player
+          else if (slot.querySelector('img')) {
+            // If clicking the same slot again, deselect it
+            if (selectedSlot === slot) {
+              clearSelections();
+            } else {
+              // Select this slot and show actions
+              if (selectedSlot) {
+                // If another slot was selected, perform swap
+                swapPlayers(selectedSlot, slot);
+                clearSelections();
+              } else {
+                selectSlot(slot);
+              }
             }
           }
         });
       });
+
+
+      // Function to place a player in a slot
+      function placePlayerInSlot(slot, player) {
+        const playerId = player.image.split('/').pop().replace('.png', '');
+        slot.innerHTML = `
+        <div class="player-container" style="position: relative; text-align: center; display: inline-block;">
+            <img src="${player.image}" 
+                alt="${player.name}" 
+                title="${player.description}" 
+                data-id="${playerId}" 
+                style="display: block; width: 100px; height: 100px;">
+            <div class="player-name" style="position: absolute; bottom: 0; width: 100%; background: rgba(0, 0, 0, 0.5); color: white; padding: 5px 0;">
+                ${player.name.split(' ')[0].toUpperCase()}
+            </div>
+            <div class="player-actions" style="display: none; position: absolute; bottom: -40px; width: 100%; text-align: center; background: rgba(0, 0, 0, 0.7); padding: 5px; border-radius: 0 0 5px 5px;">
+                <button class="remove-player" style="padding: 2px 8px; margin: 2px; background: #ff4444; border: none; color: white; border-radius: 3px; cursor: pointer;">
+                    🗑️ Remove
+                </button>
+            </div>
+        </div>
+    `;
+
+        // Add event listener for remove button
+        const removeBtn = slot.querySelector('.remove-player');
+        removeBtn.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent slot click event
+          removePlayerFromSlot(slot);
+        });
+
+        if (document.getElementById('unique-player').checked) {
+          enforceUniquePlayers();
+        }
+      }
+
+      // Function to select a slot
+      function selectSlot(slot) {
+        clearSelections();
+        selectedSlot = slot;
+        const playerContainer = slot.querySelector('.player-container');
+        playerContainer.style.transform = 'scale(1.05)';
+        playerContainer.style.boxShadow = '0 0 10px rgba(76, 175, 80, 0.5)';
+        const actionsDiv = slot.querySelector('.player-actions');
+        actionsDiv.style.display = 'block';
+      }
+
+      // Function to swap players between slots
+      function swapPlayers(slot1, slot2) {
+        const player1Html = slot1.innerHTML;
+        const player2Html = slot2.innerHTML;
+        slot1.innerHTML = player2Html;
+        slot2.innerHTML = player1Html;
+
+        // Reattach event listeners for remove buttons
+        [slot1, slot2].forEach(slot => {
+          const removeBtn = slot.querySelector('.remove-player');
+          if (removeBtn) {
+            removeBtn.addEventListener('click', (e) => {
+              e.stopPropagation();
+              removePlayerFromSlot(slot);
+            });
+          }
+        });
+
+        if (document.getElementById('unique-player').checked) {
+          enforceUniquePlayers();
+        }
+      }
+
+      // Function to remove a player from a slot
+      function removePlayerFromSlot(slot) {
+        const position = slot.getAttribute('data-slot').split('-')[1];
+        slot.innerHTML = position;
+        clearSelections();
+        if (document.getElementById('unique-player').checked) {
+          enforceUniquePlayers();
+        }
+      }
+
+      // Function to clear all selections
+      function clearSelections() {
+        if (selectedSlot) {
+          const playerContainer = selectedSlot.querySelector('.player-container');
+          if (playerContainer) {
+            playerContainer.style.transform = '';
+            playerContainer.style.boxShadow = '';
+            const actionsDiv = selectedSlot.querySelector('.player-actions');
+            if (actionsDiv) {
+              actionsDiv.style.display = 'none';
+            }
+          }
+        }
+        if (selectedImg) {
+          selectedImg.classList.remove('selected');
+        }
+        selectedSlot = null;
+        selectedPlayer = null;
+        selectedImg = null;
+      }
 
       // Update the enforceUniquePlayers function to use data-id instead of src:
       function enforceUniquePlayers() {
