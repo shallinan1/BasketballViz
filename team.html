@@ -253,21 +253,16 @@
 
       // Update the slot click handler to use the new ID:
       document.querySelectorAll('.slot').forEach(slot => {
-        slot.addEventListener('click', () => {
-          // Case 1: We have a player selected from the player list
+        slot.addEventListener('click', (e) => {
+          e.stopPropagation();
           if (selectedPlayer && !selectedSlot) {
             placePlayerInSlot(slot, selectedPlayer);
             clearSelections();
-          }
-          // Case 2: We're clicking a slot with a player
-          else if (slot.querySelector('img')) {
-            // If clicking the same slot again, deselect it
+          } else if (slot.querySelector('img')) {
             if (selectedSlot === slot) {
               clearSelections();
             } else {
-              // Select this slot and show actions
               if (selectedSlot) {
-                // If another slot was selected, perform swap
                 swapPlayers(selectedSlot, slot);
                 clearSelections();
               } else {
@@ -278,6 +273,11 @@
         });
       });
 
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.slot') && !e.target.closest('.player-list')) {
+          clearSelections();
+        }
+      });
 
       // Function to place a player in a slot
       function placePlayerInSlot(slot, player) {
