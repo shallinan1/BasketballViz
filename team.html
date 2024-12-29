@@ -513,8 +513,10 @@
         }
       });
 
+      balanceSum = (2.5 - Math.abs(2.5 - balanceSum)) * 2
       const offenseRating = getRatingClassAndLabel(offenseSum);
       const defenseRating = getRatingClassAndLabel(defenseSum);
+      const balanceRating = getRatingClassAndLabel(balanceSum)
 
       const statsDiv = document.getElementById(`${team}-stats`) || document.createElement('div');
       statsDiv.id = `${team}-stats`;
@@ -522,7 +524,7 @@
         <p>
           <b>Offense</b>: <span style="color: ${offenseRating.color};">${offenseRating.label}</span> (${offenseSum.toFixed(2)})
           <b>Defense</b>: <span style="color: ${defenseRating.color};">${defenseRating.label}</span> (${defenseSum.toFixed(2)})
-          <b>Balance</b>: (${balanceSum.toFixed(2)})
+          <b>Balance</b>: <span style="color: ${balanceRating.color};">${balanceRating.label}</span> (${balanceSum.toFixed(2)})
         </p>
     `;
 

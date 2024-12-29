@@ -503,7 +503,7 @@ export const players = [
         shades_of: ["Stephen Curry"],
         offense: 0.85,
         defense: 0.7,
-        aggressive: 0.4
+        aggressive: 0.5
     },
     {
         number: 3.51,
