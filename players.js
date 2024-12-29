@@ -14,7 +14,7 @@ export const players = [
         description: "<b>A raw, floor-stretching big with boundless hustle</b>, still finding his footing and defensive identity.",
         icons: ["Spacer", "Ridiculous Upside"],
         shades_of: ["Karl-Anthony Towns", "Mo Bamba"],
-        offense: 0.25,
+        offense: 0.2,
         defense: 0.55,
         aggressive: 0.4,
     },
@@ -32,7 +32,7 @@ export const players = [
         icons: ["Positional Versatility", "Finisher", "On-Ball Defense", "Injury Concerns"],
         shades_of: ["Dyson Daniels", "Trey Murphy"],
         offense: 0.85,
-        defense: 0.95,
+        defense: 0.9,
         aggressive: 0.25,
     },
     {
@@ -117,7 +117,7 @@ export const players = [
         description: "<b>Ageless hustle machine</b> defying father time with relentless effort, scrappy defense, and fearless dives.",
         icons: ["Hustle", "Ridiculous Upside", "Injury Concerns", "Sh*t Stirrer"],
         shades_of: ["Killian Hayes", "Udonis Haslem",],
-        offense: 0.25,
+        offense: 0.2,
         defense: 0.75,
         aggressive: 0.9
     },
@@ -190,7 +190,7 @@ export const players = [
         icons: ["On-Ball Defense", "Positional Versatility", "Spacer", "Hustle"],
         shades_of: ["Kawhi Leonard", "OG Anunoby"],
         offense: 0.8,
-        defense: 0.9,
+        defense: 0.85,
         aggressive: 0.3
     },
 
@@ -226,7 +226,7 @@ export const players = [
         icons: ["On-Ball Defense", "Finisher", "Hustle", "Speed Demon"],
         shades_of: ["T.J. McConnell", "Alex Caruso"],
         offense: 0.8,
-        defense: 0.9,
+        defense: 0.85,
         aggressive: 0.85
     },
     {
@@ -260,7 +260,7 @@ export const players = [
         description: "<b>Unpredictable loose cannon</b> whose creativity hurts as much as it helps.",
         icons: ["Fast and Loose", "Human Highlight"],
         shades_of: ["Kevin Porter Jr."],
-        offense: 0.3,
+        offense: 0.1,
         defense: 0.5,
         aggressive: 0.95
     },
@@ -362,7 +362,7 @@ export const players = [
         description: "<b>Decisive driver</b> still searching for a rhythm from beyond the arc.",
         icons: ["Fast and Loose", "Ridiculous Upside"],
         shades_of: ["Russell Westbrook"],
-        offense: 0.4,
+        offense: 0.3,
         defense: 0.5,
         aggressive: 0.75
     },

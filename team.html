@@ -460,12 +460,18 @@
     });
 
     // Function to compute and display team stats
+    function getRatingClassAndLabel(value) {
+      if (value < 1) return { label: 'Abysmal', color: 'red' };
+      if (value < 2) return { label: 'Poor', color: 'orange' };
+      if (value < 3) return { label: 'Average', color: 'black' };
+      if (value < 4) return { label: 'Good', color: '#6B8E23' };
+      return { label: 'Excellent', color: '#32CD32' };
+    }
+
     function computeTeamStats(team) {
       let offenseSum = 0;
       let defenseSum = 0;
       let aggressiveSum = 0;
-
-      // Select all slots for the specified team
       const teamSlots = document.querySelectorAll(`[data-slot^="${team}"] img`);
 
       teamSlots.forEach(img => {
@@ -479,14 +485,18 @@
         }
       });
 
-      // Display stats
+      const offenseRating = getRatingClassAndLabel(offenseSum);
+      const defenseRating = getRatingClassAndLabel(defenseSum);
+
       const statsDiv = document.getElementById(`${team}-stats`) || document.createElement('div');
       statsDiv.id = `${team}-stats`;
       statsDiv.innerHTML = `
-    <p><b>Offense</b>: ${offenseSum.toFixed(2)}
-    <b>Defense</b>: ${defenseSum.toFixed(2)}
-    <b>Aggressiveness</b>: ${aggressiveSum.toFixed(2)}</p>
-  `;
+        <p>
+          <b>Offense</b>: <span style="color: ${offenseRating.color};">${offenseRating.label}</span> (${offenseSum.toFixed(2)})
+          <b>Defense</b>: <span style="color: ${defenseRating.color};">${defenseRating.label}</span> (${defenseSum.toFixed(2)})
+          <b>Aggressiveness</b>: (${aggressiveSum.toFixed(2)})
+        </p>
+    `;
 
       const teamDiv = document.querySelector(`[data-slot^="${team}"]`).parentElement;
       teamDiv.appendChild(statsDiv);
