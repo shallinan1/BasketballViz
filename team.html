@@ -458,6 +458,66 @@
       });
 
     });
+
+    // Function to compute and display team stats
+function computeTeamStats(team) {
+  let offenseSum = 0;
+  let defenseSum = 0;
+  let aggressiveSum = 0;
+  
+  // Select all slots for the specified team
+  const teamSlots = document.querySelectorAll(`[data-slot^="${team}"] img`);
+  
+  teamSlots.forEach(img => {
+    const playerId = img.dataset.id;
+    const player = players.find(p => p.image.includes(playerId));
+    
+    if (player) {
+      offenseSum += player.offense || 0;
+      defenseSum += player.defense || 0;
+      aggressiveSum += player.aggressive || 0;
+    }
+  });
+  
+  // Display stats
+  const statsDiv = document.getElementById(`${team}-stats`) || document.createElement('div');
+  statsDiv.id = `${team}-stats`;
+  statsDiv.innerHTML = `
+    <p><b>Offense</b>: ${offenseSum.toFixed(2)}
+    <b>Defense</b>: ${defenseSum.toFixed(2)}
+    <b>Aggressiveness</b>: ${aggressiveSum.toFixed(2)}</p>
+  `;
+  
+  const teamDiv = document.querySelector(`[data-slot^="${team}"]`).parentElement;
+  teamDiv.appendChild(statsDiv);
+}
+
+// Remove team stats if any player is removed or team is cleared
+function removeTeamStats(team) {
+  const statsDiv = document.getElementById(`${team}-stats`);
+  if (statsDiv) {
+    statsDiv.remove();
+  }
+}
+
+// Check if team is full and compute stats
+function checkFullTeam() {
+  ['team1', 'team2'].forEach(team => {
+    const teamSlots = document.querySelectorAll(`[data-slot^="${team}"] img`);
+    if (teamSlots.length === 5) {
+      computeTeamStats(team);
+    } else {
+      removeTeamStats(team);
+    }
+  });
+}
+
+// Add event listeners to compute stats whenever a player is placed or removed
+['team1', 'team2'].forEach(team => {
+  document.querySelectorAll(`[data-slot^="${team}"]`).forEach(slot => {
+    slot.addEventListener('DOMSubtreeModified', () => checkFullTeam());
+  });
+});
   </script>
 </head>
 
