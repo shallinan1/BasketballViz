@@ -1,241 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basketball Team Picker</title>
-    <style>
-        /* General Reset & Body */
-        * {
-          box-sizing: border-box;
-        }
-        
-        body {
-          margin: 0;
-          padding: 0;
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          background: #f4f4f4;
-          color: #333;
-        }
-      
-        h1 {
-          text-align: center;
-          margin: 20px 0;
-          font-size: 2.2em;
-          letter-spacing: 1px;
-        }
-      
-        h2 {
-          font-size: 1.5em;
-          margin: 15px 0 5px;
-          color: #555;
-        }
-      
-        /* Container */
-        .container {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin-top: 20px;
-          width: 90%;
-          max-width: 1000px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-      
-        /* Teams Section */
-        .teams {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          width: 100%;
-          margin-bottom: 30px;
-        }
-      
-        .team {
-          background: #fff;
-          border-radius: 8px;
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-          padding: 15px 20px;
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          gap: 15px;
-          margin-bottom: 20px;
-          width: 100%;
-          max-width: 800px;
-        }
-      
-        .team h2 {
-          width: 100%;
-          text-align: center;
-          margin-bottom: 10px;
-          color: #333;
-        }
-      
-        /* Slots */
-        .slot {
-          border: 2px dashed #999;
-          width: 100px;
-          height: 100px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #fafafa;
-          border-radius: 6px;
-          transition: border-color 0.3s ease, background-color 0.3s ease;
-          cursor: pointer;
-        }
-      
-        .slot:hover {
-          border-color: #666;
-          background-color: #f0f0f0;
-        }
-      
-        /* When a player is selected */
-        .selected {
-          border: 3px solid #4CAF50 !important;
-        }
-      
-        /* Player List Section */
-        .players {
-          margin-top: 40px;
-          width: 100%;
-          max-width: 800px;
-        }
-      
-        .player-list {
-          display: flex;
-          justify-content: center;
-          flex-wrap: wrap;
-          gap: 15px;
-          background: #fff;
-          border-radius: 8px;
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-          padding: 15px;
-          margin-top: 10px;
-        }
-      
-        .player-list img,
-        .slot img {
-          width: 100px;
-          height: 100px;
-          cursor: pointer;
-          border-radius: 6px;
-          transition: transform 0.2s ease;
-          object-fit: cover;
-        }
-      
-        .player-list img:hover,
-        .slot img:hover {
-          transform: scale(1.05);
-        }
-      
-        /* Clear and Randomize Buttons */
-        .clear-buttons {
-          margin-top: 20px;
-          display: flex;
-          gap: 10px;
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-      
-        button {
-          background-color: #4CAF50;
-          color: #fff;
-          border: none;
-          padding: 10px 15px;
-          border-radius: 4px;
-          cursor: pointer;
-          font-size: 1rem;
-          transition: background-color 0.3s ease;
-          outline: none;
-        }
-      
-        button:hover {
-          background-color: #43a047;
-        }
-      
-        /* Responsive */
-        @media (max-width: 600px) {
-          .slot {
-            width: 80px;
-            height: 80px;
-            margin: 5px 0;
-          }
-          .player-list img,
-          .slot img {
-            width: 80px;
-            height: 80px;
-          }
-          .team h2 {
-            font-size: 1.2em;
-          }
-        }
-      </style>
-      
-    <script type="module">
-        import { players } from './players.js';
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basketball Team Picker</title>
+  <style>
+    /* General Reset & Body */
+    * {
+      box-sizing: border-box;
+    }
 
-        window.addEventListener('DOMContentLoaded', () => {
-        const playerList = document.getElementById('player-list');
-        let selectedPlayer = null;
-        let selectedImg = null;
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f4f4;
+      color: #333;
+    }
 
-        players.sort((a, b) => a.number - b.number);
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 2.2em;
+      letter-spacing: 1px;
+    }
 
-// In your script section, modify the player creation part:
-players.forEach(player => {
-    const playerDiv = document.createElement('div');
-    playerDiv.style.position = 'relative';
-    playerDiv.style.textAlign = 'center';
-    playerDiv.style.display = 'inline-block';
+    h2 {
+      font-size: 1.5em;
+      margin: 15px 0 5px;
+      color: #555;
+    }
 
-    const firstName = player.name.split(' ')[0].toUpperCase();
-    
-    // Create an ID from the image path
-    const playerId = player.image.split('/').pop().replace('.png', '');
+    /* Container */
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+      width: 90%;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-    const nameLabelBottom = document.createElement('div');
-    nameLabelBottom.innerText = firstName;
-    nameLabelBottom.style.position = 'absolute';
-    nameLabelBottom.style.bottom = '0';
-    nameLabelBottom.style.width = '100%';
-    nameLabelBottom.style.background = 'rgba(0, 0, 0, 0.5)';
-    nameLabelBottom.style.color = 'white';
-    nameLabelBottom.style.padding = '5px 0';
+    /* Teams Section */
+    .teams {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 30px;
+    }
 
-    const img = document.createElement('img');
-    img.src = player.image;
-    img.alt = player.name;
-    img.title = player.description;
-    img.dataset.id = playerId;  // Set the ID based on image filename
-    img.style.display = 'block';
-    img.style.width = '100px';
-    img.style.height = '100px';
-    img.addEventListener('click', () => {
-        if (selectedImg) {
+    .team {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 15px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .team h2 {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    /* Slots */
+    .slot {
+      border: 2px dashed #999;
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fafafa;
+      border-radius: 6px;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .slot:hover {
+      border-color: #666;
+      background-color: #f0f0f0;
+    }
+
+    /* When a player is selected */
+    .selected {
+      border: 3px solid #4CAF50 !important;
+    }
+
+    /* Player List Section */
+    .players {
+      margin-top: 40px;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .player-list {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      margin-top: 10px;
+    }
+
+    .player-list img,
+    .slot img {
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: transform 0.2s ease;
+      object-fit: cover;
+    }
+
+    .player-list img:hover,
+    .slot img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Clear and Randomize Buttons */
+    .clear-buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+      outline: none;
+    }
+
+    button:hover {
+      background-color: #43a047;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .slot {
+        width: 80px;
+        height: 80px;
+        margin: 5px 0;
+      }
+
+      .player-list img,
+      .slot img {
+        width: 80px;
+        height: 80px;
+      }
+
+      .team h2 {
+        font-size: 1.2em;
+      }
+    }
+  </style>
+
+  <script type="module">
+    import { players } from './players.js';
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const playerList = document.getElementById('player-list');
+      let selectedPlayer = null;
+      let selectedImg = null;
+
+      players.sort((a, b) => a.number - b.number);
+
+      // In your script section, modify the player creation part:
+      players.forEach(player => {
+        const playerDiv = document.createElement('div');
+        playerDiv.style.position = 'relative';
+        playerDiv.style.textAlign = 'center';
+        playerDiv.style.display = 'inline-block';
+
+        const firstName = player.name.split(' ')[0].toUpperCase();
+
+        // Create an ID from the image path
+        const playerId = player.image.split('/').pop().replace('.png', '');
+
+        const nameLabelBottom = document.createElement('div');
+        nameLabelBottom.innerText = firstName;
+        nameLabelBottom.style.position = 'absolute';
+        nameLabelBottom.style.bottom = '0';
+        nameLabelBottom.style.width = '100%';
+        nameLabelBottom.style.background = 'rgba(0, 0, 0, 0.5)';
+        nameLabelBottom.style.color = 'white';
+        nameLabelBottom.style.padding = '5px 0';
+
+        const img = document.createElement('img');
+        img.src = player.image;
+        img.alt = player.name;
+        img.title = player.description;
+        img.dataset.id = playerId;  // Set the ID based on image filename
+        img.style.display = 'block';
+        img.style.width = '100px';
+        img.style.height = '100px';
+        img.addEventListener('click', () => {
+          if (selectedImg) {
             selectedImg.classList.remove('selected');
-        }
-        if (selectedPlayer === player) {
+          }
+          if (selectedPlayer === player) {
             selectedPlayer = null;
             selectedImg = null;
-        } else {
+          } else {
             selectedPlayer = player;
             img.classList.add('selected');
             selectedImg = img;
-        }
-    });
+          }
+        });
 
-    playerDiv.appendChild(img);
-    playerDiv.appendChild(nameLabelBottom);
-    playerList.appendChild(playerDiv);
-});
+        playerDiv.appendChild(img);
+        playerDiv.appendChild(nameLabelBottom);
+        playerList.appendChild(playerDiv);
+      });
 
-// Update the slot click handler to use the new ID:
-document.querySelectorAll('.slot').forEach(slot => {
-    slot.addEventListener('click', () => {
-        if (selectedPlayer) {
+      // Update the slot click handler to use the new ID:
+      document.querySelectorAll('.slot').forEach(slot => {
+        slot.addEventListener('click', () => {
+          if (selectedPlayer) {
             const playerId = selectedPlayer.image.split('/').pop().replace('.png', '');
             slot.innerHTML = `<div style="position: relative; text-align: center; display: inline-block;">
                 <img src="${selectedPlayer.image}" 
@@ -249,54 +252,54 @@ document.querySelectorAll('.slot').forEach(slot => {
             </div>`;
             selectedPlayer = null;
             if (selectedImg) {
-                selectedImg.classList.remove('selected');
-                selectedImg = null;
+              selectedImg.classList.remove('selected');
+              selectedImg = null;
             }
             if (document.getElementById('unique-player').checked) {
-                enforceUniquePlayers();
+              enforceUniquePlayers();
             }
-        }
-    });
-});
+          }
+        });
+      });
 
-// Update the enforceUniquePlayers function to use data-id instead of src:
-function enforceUniquePlayers() {
-    const selectedIds = new Set();
-    
-    document.querySelectorAll('.slot img').forEach(img => {
-        selectedIds.add(img.dataset.id);
-    });
+      // Update the enforceUniquePlayers function to use data-id instead of src:
+      function enforceUniquePlayers() {
+        const selectedIds = new Set();
 
-    document.querySelectorAll('#player-list img').forEach(img => {
-        if (selectedIds.has(img.dataset.id)) {
+        document.querySelectorAll('.slot img').forEach(img => {
+          selectedIds.add(img.dataset.id);
+        });
+
+        document.querySelectorAll('#player-list img').forEach(img => {
+          if (selectedIds.has(img.dataset.id)) {
             img.style.display = 'none';
-        } else {
+          } else {
             img.style.display = 'inline-block';
-        }
-    });
-}
+          }
+        });
+      }
 
-// Keep all previous code the same, but replace the randomizeTeamSlots function with this fixed version:
+      // Keep all previous code the same, but replace the randomizeTeamSlots function with this fixed version:
 
-function randomizeTeamSlots(team) {
-    const teamSlots = document.querySelectorAll(`[data-slot^="${team}"]`);
-    const availablePlayers = [...players].filter(player => {
-        const playerId = player.image.split('/').pop().replace('.png', '');
-        return !Array.from(document.querySelectorAll('.slot img')).some(img => 
+      function randomizeTeamSlots(team) {
+        const teamSlots = document.querySelectorAll(`[data-slot^="${team}"]`);
+        const availablePlayers = [...players].filter(player => {
+          const playerId = player.image.split('/').pop().replace('.png', '');
+          return !Array.from(document.querySelectorAll('.slot img')).some(img =>
             img.dataset.id === playerId
-        );
-    });
+          );
+        });
 
-    // Shuffle the available players
-    const shuffledPlayers = availablePlayers.sort(() => Math.random() - 0.5);
+        // Shuffle the available players
+        const shuffledPlayers = availablePlayers.sort(() => Math.random() - 0.5);
 
-    teamSlots.forEach(slot => {
-        // Only fill empty slots
-        if (!slot.querySelector('img')) {
+        teamSlots.forEach(slot => {
+          // Only fill empty slots
+          if (!slot.querySelector('img')) {
             const player = shuffledPlayers.shift();
             if (player) {
-                const playerId = player.image.split('/').pop().replace('.png', '');
-                slot.innerHTML = `<div style="position: relative; text-align: center; display: inline-block;">
+              const playerId = player.image.split('/').pop().replace('.png', '');
+              slot.innerHTML = `<div style="position: relative; text-align: center; display: inline-block;">
                     <img src="${player.image}" 
                         alt="${player.name}" 
                         title="${player.description}" 
@@ -307,96 +310,99 @@ function randomizeTeamSlots(team) {
                     </div>
                 </div>`;
             }
-        }
-    });
-    
-    // Run enforce unique players after randomization
-    enforceUniquePlayers();
-}
-
-// Make sure these event listeners are properly attached
-document.getElementById('randomize-team1').addEventListener('click', () => {
-    randomizeTeamSlots('team1');
-});
-
-document.getElementById('randomize-team2').addEventListener('click', () => {
-    randomizeTeamSlots('team2');
-});
-
-// Keep all previous code the same, but update the clearTeamSlots function:
-
-function clearTeamSlots(team) {
-    // Select all slots for the specified team
-    document.querySelectorAll(`[data-slot^="${team}"]`).forEach(slot => {
-        // Get the position label (PG, SG, etc.) from the data-slot attribute
-        const position = slot.getAttribute('data-slot').split('-')[1];
-        // Reset the slot to show just the position
-        slot.innerHTML = position;
-    });
-
-    // Make all players visible again after clearing
-    document.querySelectorAll('#player-list img').forEach(img => {
-        img.style.display = 'inline-block';
-    });
-
-    // Run enforce unique players to update visibility based on remaining players
-    if (document.getElementById('unique-player').checked) {
-        enforceUniquePlayers();
-    }
-}
-
-// Make sure these event listeners are properly attached
-document.getElementById('clear-team1').addEventListener('click', () => {
-    clearTeamSlots('team1');
-});
-
-document.getElementById('clear-team2').addEventListener('click', () => {
-    clearTeamSlots('team2');
-});
-
+          }
         });
-    </script>
+
+        // Run enforce unique players after randomization
+        enforceUniquePlayers();
+      }
+
+      // Make sure these event listeners are properly attached
+      document.getElementById('randomize-team1').addEventListener('click', () => {
+        randomizeTeamSlots('team1');
+      });
+
+      document.getElementById('randomize-team2').addEventListener('click', () => {
+        randomizeTeamSlots('team2');
+      });
+
+      // Keep all previous code the same, but update the clearTeamSlots function:
+
+      function clearTeamSlots(team) {
+        // Select all slots for the specified team
+        document.querySelectorAll(`[data-slot^="${team}"]`).forEach(slot => {
+          // Get the position label (PG, SG, etc.) from the data-slot attribute
+          const position = slot.getAttribute('data-slot').split('-')[1];
+          // Reset the slot to show just the position
+          slot.innerHTML = position;
+        });
+
+        // Make all players visible again after clearing
+        document.querySelectorAll('#player-list img').forEach(img => {
+          img.style.display = 'inline-block';
+        });
+
+        // Run enforce unique players to update visibility based on remaining players
+        if (document.getElementById('unique-player').checked) {
+          enforceUniquePlayers();
+        }
+      }
+
+      // Make sure these event listeners are properly attached
+      document.getElementById('clear-team1').addEventListener('click', () => {
+        clearTeamSlots('team1');
+      });
+
+      document.getElementById('clear-team2').addEventListener('click', () => {
+        clearTeamSlots('team2');
+      });
+
+    });
+  </script>
 </head>
+
 <body>
-    <h1>Basketball Team Picker</h1>
-    
-    <div class="container">
-        <label>
-            <input type="checkbox" id="unique-player" checked> Enforce Unique Players per Team
-        </label>
-        <div class="teams">
-            <div class="team">
-                <h2>Team 1</h2>
-                <div class="slot" data-slot="team1-PG">PG</div>
-                <div class="slot" data-slot="team1-SG">SG</div>
-                <div class="slot" data-slot="team1-SF">SF</div>
-                <div class="slot" data-slot="team1-PF">PF</div>
-                <div class="slot" data-slot="team1-C">C</div>
-            </div>
-            <div class="team">
-                <h2>Team 2</h2>
-                <div class="slot" data-slot="team2-PG">PG</div>
-                <div class="slot" data-slot="team2-SG">SG</div>
-                <div class="slot" data-slot="team2-SF">SF</div>
-                <div class="slot" data-slot="team2-PF">PF</div>
-                <div class="slot" data-slot="team2-C">C</div>
-            </div>
-        </div>
+  <h1>Basketball Team Picker</h1>
+
+  <div class="container">
+    <label>
+      <input type="checkbox" id="unique-player" checked> Enforce Unique Players per Team
+    </label>
+    <div class="teams">
+      <div class="team">
+        <h2>Team 1</h2>
+        <div class="slot" data-slot="team1-PG">PG</div>
+        <div class="slot" data-slot="team1-SG">SG</div>
+        <div class="slot" data-slot="team1-SF">SF</div>
+        <div class="slot" data-slot="team1-PF">PF</div>
+        <div class="slot" data-slot="team1-C">C</div>
+      </div>
+      <div class="team">
+        <h2>Team 2</h2>
+        <div class="slot" data-slot="team2-PG">PG</div>
+        <div class="slot" data-slot="team2-SG">SG</div>
+        <div class="slot" data-slot="team2-SF">SF</div>
+        <div class="slot" data-slot="team2-PF">PF</div>
+        <div class="slot" data-slot="team2-C">C</div>
+      </div>
+    </div>
 </body>
+
 </html>
 
 
-        <div class="clear-buttons">
-            <button id="clear-team1">Clear Team 1</button>
-            <button id="clear-team2">Clear Team 2</button>
-            <button id="randomize-team1">Randomize Team 1</button>
-            <button id="randomize-team2">Randomize Team 2</button>
-        </div>
+<div class="clear-buttons">
+  <button id="clear-team1">Clear Team 1</button>
+  <button id="clear-team2">Clear Team 2</button>
+  <button id="randomize-team1">Randomize Team 1</button>
+  <button id="randomize-team2">Randomize Team 2</button>
+</div>
 
-        <div class="players">
-            <h2>Players</h2>
-            <div class="player-list" id="player-list"></div>
-        </div>
-    </div>
+<div class="players">
+  <h2>Players</h2>
+  <div class="player-list" id="player-list"></div>
+</div>
+</div>
 </body>
+
 </html>
