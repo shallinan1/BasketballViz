@@ -203,7 +203,7 @@ export const players = [
         weight: "175 lbs",
         age: 31,
         season: 4,
-        image: "images/kevin.png", 
+        image: "images/kevinjr.png", 
         description: "<b>Unpredictable, athletic spark plug</b> whose shooting streaks can ignite a team.",
         icons: ["Athleticism", "Pull-up Threat", "Spacer", "Lightning Rod"],
         shades_of: ["Michael Porter Jr.", "Klay Thompson"],
@@ -225,7 +225,7 @@ export const players = [
         description: "<b>Jack-of-all-trades</b> guard who attacks the rim at will and can lock your favorite player up.",  // on a meteoric rise
         icons: ["On-Ball Defense", "Finisher", "Hustle", "Speed Demon"],
         shades_of: ["T.J. McConnell", "Alex Caruso"],
-        offense: 0.8,
+        offense: 100,
         defense: 0.85,
         aggressive: 0.85
     },
