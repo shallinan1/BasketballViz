@@ -489,10 +489,10 @@
 
     // Function to compute and display team stats
     function getRatingClassAndLabel(value) {
-      if (value < 1) return { label: 'Abysmal', color: 'red' };
+      if (value < 1.25) return { label: 'Abysmal', color: 'red' };
       if (value < 2) return { label: 'Poor', color: 'orange' };
       if (value < 3) return { label: 'Average', color: 'black' };
-      if (value < 4) return { label: 'Good', color: '#6B8E23' };
+      if (value < 4.25) return { label: 'Good', color: '#6B8E23' };
       return { label: 'Excellent', color: '#32CD32' };
     }
 
@@ -513,7 +513,7 @@
         }
       });
 
-      balanceSum = (2.5 - Math.abs(2.5 - balanceSum)) * 2
+      balanceSum = 5 - ((Math.abs(2.5 - balanceSum) + 0.25) * 2)
       const offenseRating = getRatingClassAndLabel(offenseSum);
       const defenseRating = getRatingClassAndLabel(defenseSum);
       const balanceRating = getRatingClassAndLabel(balanceSum)

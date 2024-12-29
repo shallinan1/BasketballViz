@@ -469,7 +469,7 @@ export const players = [
         shades_of: ["Eric Bledsoe"],
         offense: 0.65,
         defense: 0.7,
-        aggressive: 0.75
+        aggressive: 0.8
     },
     {
         number: 6.911,
