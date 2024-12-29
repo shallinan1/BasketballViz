@@ -54,6 +54,12 @@
       letter-spacing: 1px;
     }
 
+    #overtime {
+      color: red;
+      font-weight: bold;
+      display: none;
+    }
+
     h2 {
       font-size: 1.5em;
       margin: 15px 0 5px;
@@ -100,6 +106,16 @@
       text-align: center;
       margin-bottom: 10px;
       color: #333;
+    }
+
+    .simulate-button {
+      background-color: black;
+      color: white;
+    }
+
+    .simulate-button:hover {
+      background-color: #333;
+      /* Dark gray */
     }
 
     /* Slots */
@@ -219,6 +235,8 @@
 
   <script type="module">
     import { players } from './players.js';
+    import { simulateGame } from './simulation.js';  // Add this line
+    window.simulateGame = simulateGame;
 
     window.addEventListener('DOMContentLoaded', () => {
       const playerList = document.getElementById('player-list');
@@ -596,6 +614,11 @@
   <button id="clear-team2">Clear Team 2</button>
   <button id="randomize-team1">Randomize Team 1</button>
   <button id="randomize-team2">Randomize Team 2</button>
+</div>
+
+<div class="container">
+  <button class="simulate-button" onclick="simulateGame()">Simulate Game</button>
+  <div id="overtime">Overtime!</div>
 </div>
 
 <div class="players">
