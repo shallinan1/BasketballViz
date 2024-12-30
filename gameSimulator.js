@@ -94,8 +94,8 @@ export function simulateGame(teamA, teamB, options = {}) {
     }
 
     function balanceAdjusted(prob, balanceFactor) {
-        const average = 0.5;
-        return Math.min(1, prob * (average + balanceFactor));
+        maxBoost = 0.1
+        return Math.min(1, prob + ((balanceFactor - 0.5)/0.5 * maxBoost));
     }
 
     function simulatePossession() {
