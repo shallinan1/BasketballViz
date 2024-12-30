@@ -94,7 +94,7 @@ export function simulateGame(teamA, teamB, options = {}) {
     }
 
     function balanceAdjusted(prob, balanceFactor) {
-        maxBoost = 0.1
+        let maxBoost = 0.1
         return Math.min(1, prob + ((balanceFactor - 0.5)/0.5 * maxBoost));
     }
 
