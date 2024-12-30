@@ -314,6 +314,20 @@
           if (selectedPlayer && !selectedSlot) {
             placePlayerInSlot(slot, selectedPlayer);
             clearSelections();
+          } else if (selectedSlot && !slot.querySelector('img')) {  // Moving to empty slot
+            const playerContainer = selectedSlot.querySelector('.player-container');
+            if (playerContainer) {
+              playerContainer.style.transform = '';  // Remove scaling
+              playerContainer.style.boxShadow = '';  // Remove shadow
+              const actionsDiv = playerContainer.querySelector('.player-actions');
+              if (actionsDiv) {
+                actionsDiv.style.display = 'none';  // Hide actions
+              }
+            }
+            slot.innerHTML = selectedSlot.innerHTML;
+            const position = selectedSlot.getAttribute('data-slot').split('-')[1];
+            selectedSlot.innerHTML = position;
+            clearSelections();
           } else if (slot.querySelector('img')) {
             if (selectedSlot === slot) {
               clearSelections();
