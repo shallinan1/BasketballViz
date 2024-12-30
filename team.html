@@ -108,16 +108,6 @@
       color: #333;
     }
 
-    .simulate-button {
-      background-color: black;
-      color: white;
-    }
-
-    .simulate-button:hover {
-      background-color: #333;
-      /* Dark gray */
-    }
-
     /* Slots */
     .slot {
       border: 2px dashed #999;
@@ -213,6 +203,20 @@
       opacity: 0.9;
     }
 
+    .simulation-button {
+      background-color: #2196F3;
+      margin: 0 5px;
+    }
+
+    .simulation-button:hover {
+      background-color: #1976D2;
+    }
+
+    .winner {
+      color: #4CAF50;
+      font-weight: bold;
+    }
+
     /* Responsive */
     @media (max-width: 600px) {
       .slot {
@@ -235,8 +239,7 @@
 
   <script type="module">
     import { players } from './players.js';
-    import { simulateGame } from './simulation.js';  // Add this line
-    window.simulateGame = simulateGame;
+    import { simulateGame, calculateTeamRating } from './gameSimulator.js';
 
     window.addEventListener('DOMContentLoaded', () => {
       const playerList = document.getElementById('player-list');
@@ -503,6 +506,50 @@
         clearTeamSlots('team2');
       });
 
+      document.getElementById('simulate-game').addEventListener('click', () => {
+        const team1Slots = document.querySelectorAll('[data-slot^="team1"]');
+        const team2Slots = document.querySelectorAll('[data-slot^="team2"]');
+
+        const team1Rating = calculateTeamRating(team1Slots);
+        const team2Rating = calculateTeamRating(team2Slots);
+
+        if (!team1Rating || !team2Rating) {
+          alert('Both teams must have 5 players to simulate a game!');
+          return;
+        }
+
+        const resultDiv = document.getElementById('simulation-result');
+        resultDiv.innerHTML = 'Game Starting...';
+
+        const gameSpeed = parseInt(document.getElementById('speedSlider').value);
+
+        simulateGame(
+          { name: 'Ringers', ...team1Rating },
+          { name: 'Ballers', ...team2Rating },
+          {
+            gameSpeed,
+            onScoreUpdate: ({ scoreA, scoreB, inOvertime }) => {
+              resultDiv.innerHTML = `Ringers: ${scoreA} - Ballers: ${scoreB}`;
+            },
+            onGameOver: ({ scoreA, scoreB, winner }) => {
+              const winnerName = winner === 'A' ? 'Ringers' : 'Ballers';
+              resultDiv.innerHTML = `
+                    Final Score:<br>
+                    Ringers: ${scoreA} - Ballers: ${scoreB}<br>
+                    <span class="winner">${winnerName} wins!</span>
+                `;
+            },
+            onOvertimeStart: () => {
+              document.getElementById('overtime').style.display = 'block';
+            }
+          }
+        );
+      });
+
+      document.getElementById('speedSlider').addEventListener('input', (e) => {
+        document.getElementById('speedValue').textContent = e.target.value;
+      });
+
     });
 
     // Function to compute and display team stats
@@ -510,7 +557,7 @@
       if (value < 1.25) return { label: 'Abysmal', color: 'red' };
       if (value < 2) return { label: 'Poor', color: 'orange' };
       if (value < 3) return { label: 'Average', color: 'black' };
-      if (value < 4.25) return { label: 'Good', color: '#6B8E23' };
+      if (value < 4.1) return { label: 'Good', color: '#6B8E23' };
       return { label: 'Excellent', color: '#32CD32' };
     }
 
@@ -616,10 +663,18 @@
   <button id="randomize-team2">Randomize Team 2</button>
 </div>
 
-<div class="container">
-  <button class="simulate-button" onclick="simulateGame()">Simulate Game</button>
-  <div id="overtime">Overtime!</div>
+<div class="simulation-controls" style="margin-top: 20px; text-align: center;">
+  <div class="slider-container" style="margin: 20px 0;">
+    <label class="slider-label" for="speedSlider">
+      Game Speed: <span id="speedValue">100</span> ms
+    </label>
+    <input type="range" id="speedSlider" min="50" max="500" value="100" step="10">
+  </div>
+  <button id="simulate-game" class="simulation-button">Simulate Game</button>
+  <div id="simulation-result" style="margin-top: 20px; font-size: 1.2em;"></div>
+  <div id="overtime" style="display: none; color: red; font-weight: bold; font-size: 1.5em;">Overtime!</div>
 </div>
+
 
 <div class="players">
   <h2>Players</h2>
