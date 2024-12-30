@@ -178,7 +178,7 @@ export const players = [
 
     {
         number: 1.6,
-        name: "Tyler",
+        name: "Tyler Baldwin",
         team: "San Antonio Spurs",
         position: "Forward",
         height: "5'10\"",

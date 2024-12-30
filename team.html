@@ -175,6 +175,13 @@
       justify-content: center;
     }
 
+    .simulation-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+
     button {
       background-color: #4CAF50;
       color: #fff;
@@ -518,6 +525,8 @@
           return;
         }
 
+        document.getElementById('overtime').style.display = 'none';
+
         const resultDiv = document.getElementById('simulation-result');
         resultDiv.innerHTML = 'Game Starting...';
 
@@ -674,7 +683,6 @@
   <div id="simulation-result" style="margin-top: 20px; font-size: 1.2em;"></div>
   <div id="overtime" style="display: none; color: red; font-weight: bold; font-size: 1.5em;">Overtime!</div>
 </div>
-
 
 <div class="players">
   <h2>Players</h2>
