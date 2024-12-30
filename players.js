@@ -16,7 +16,7 @@ export const players = [
         shades_of: ["Karl-Anthony Towns", "Mo Bamba"],
         offense: 0.2,
         defense: 0.55,
-        aggressive: 0.4,
+        aggressive: 0.35,
     },
     {
         number: 1,
@@ -50,7 +50,7 @@ export const players = [
         shades_of: ["Josh Hart", "Scottie Barnes"],
         offense: 0.55,
         defense: 0.65,
-        aggressive: 0.5,
+        aggressive: 0.45,
     },
     {
         number: 3.5,
@@ -101,7 +101,7 @@ export const players = [
         shades_of: ["Trae Young", "Tyus Jones"],
         offense: 0.65,
         defense: 0.6,
-        aggressive: 0.65
+        aggressive: 0.6
     },
 
     {
@@ -282,7 +282,7 @@ export const players = [
         aggressive: 0.45
     },
     {
-        number: 2.9,
+        number: 2.8999,
         name: "Allen",
         team: "Unknown",
         position: "Center",
@@ -296,7 +296,7 @@ export const players = [
         shades_of: ["Brook Lopez", 'Myles Turner'],
         offense: 0.65,
         defense: 0.75,
-        aggressive: 0.45
+        aggressive: 0.4
     },
     {
         number: 2.6,
@@ -346,7 +346,7 @@ export const players = [
         icons: ["Spacer", "Feel For the Game"],
         shades_of: ["De'Anthony Melton"],
         offense: 0.65,
-        defense: 0.35,
+        defense: 0.4,
         aggressive: 0.3
     },
     {
@@ -438,7 +438,7 @@ export const players = [
         aggressive: 0.25
     },
     {
-        number: 2.61,
+        number: 2.5999,
         name: "Mitch Ly",
         team: "Golden State Warriors",
         position: "Guard",
@@ -455,7 +455,7 @@ export const players = [
         aggressive: 0.3
     },
     {
-        number: 2.99,
+        number: 2.88,
         name: "Eric Pham",
         team: "Unknown",
         position: "Guard",
@@ -489,7 +489,7 @@ export const players = [
         aggressive: 0.75
     },
     {
-        number: 2.01,
+        number: 1.999,
         name: "Lorne (Loren?)",
         team: "Unknown",
         position: "Guard",
