@@ -292,7 +292,10 @@
           if (selectedImg) {
             selectedImg.classList.remove('selected');
           }
-          if (selectedPlayer === player) {
+          if (selectedSlot) {
+            placePlayerInSlot(selectedSlot, player);
+            clearSelections();
+          } else if (selectedPlayer === player) {
             selectedPlayer = null;
             selectedImg = null;
           } else {
