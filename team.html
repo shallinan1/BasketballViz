@@ -87,11 +87,30 @@
       margin-bottom: 30px;
     }
 
+    .record-tracker {
+      text-align: center;
+      margin: 20px 0;
+      padding: 10px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .record-tracker h3 {
+      margin: 0 0 10px 0;
+      color: #333;
+    }
+
+    .record {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
     .team {
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      padding: 15px 20px;
+      padding: 15px 15px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -104,8 +123,7 @@
     .team h2 {
       width: 100%;
       text-align: center;
-      margin-bottom: 10px;
-      color: #333;
+      margin: 0px 0 10px 0px; /* Reduced from 15px to 5px top margin */      color: #333;
     }
 
     /* Slots */
@@ -254,6 +272,14 @@
       let selectedImg = null;
       let selectedSlot = null;
       let selectedSlotImg = null;
+      let ringersWins = 0;
+      let ballersWins = 0;
+
+      // Update the record display
+      function updateRecord() {
+        document.getElementById('record').textContent = `${ringersWins} - ${ballersWins}`;
+      }
+      updateRecord();
 
       players.sort((a, b) => a.number - b.number);
 
@@ -559,17 +585,33 @@
             },
             onGameOver: ({ scoreA, scoreB, winner }) => {
               const winnerName = winner === 'A' ? 'Ringers' : 'Ballers';
+
+              if (winner === 'A') {
+                ringersWins++;
+              } else {
+                ballersWins++;
+              }
+
+              // Update the record display
+              updateRecord();
+
               resultDiv.innerHTML = `
-                    Final Score:<br>
-                    Ringers: ${scoreA} - Ballers: ${scoreB}<br>
-                    <span class="winner">${winnerName} wins!</span>
-                `;
+                Final Score:<br>
+                Ringers: ${scoreA} - Ballers: ${scoreB}<br>
+                <span class="winner">${winnerName} wins!</span>
+              `;
             },
             onOvertimeStart: () => {
               document.getElementById('overtime').style.display = 'block';
             }
           }
         );
+      });
+
+      document.getElementById('reset-record').addEventListener('click', () => {
+        ringersWins = 0;
+        ballersWins = 0;
+        updateRecord();
       });
 
       document.getElementById('speedSlider').addEventListener('input', (e) => {
@@ -677,35 +719,37 @@
         <div class="slot" data-slot="team2-C">C</div>
       </div>
     </div>
-</body>
 
-</html>
+    <div class="record-tracker">
+      <h3>Session Record (Ringers - Ballers)</h3>
+      <div class="record" id="record">0 - 0</div>
+      <button id="reset-record" style="margin-top: 10px;">Reset Record</button>
+    </div>
 
+    <div class="clear-buttons">
+      <button id="clear-team1">Clear Team 1</button>
+      <button id="clear-team2">Clear Team 2</button>
+      <button id="randomize-team1">Randomize Team 1</button>
+      <button id="randomize-team2">Randomize Team 2</button>
+    </div>
 
-<div class="clear-buttons">
-  <button id="clear-team1">Clear Team 1</button>
-  <button id="clear-team2">Clear Team 2</button>
-  <button id="randomize-team1">Randomize Team 1</button>
-  <button id="randomize-team2">Randomize Team 2</button>
-</div>
+    <div class="simulation-controls" style="margin-top: 20px; text-align: center;">
+      <div class="slider-container" style="margin: 20px 0;">
+        <label class="slider-label" for="speedSlider">
+          Game Speed: <span id="speedValue">100</span> ms
+        </label>
+        <input type="range" id="speedSlider" min="50" max="500" value="100" step="10">
+      </div>
+      <button id="simulate-game" class="simulation-button">Simulate Game</button>
+      <div id="simulation-result" style="margin-top: 20px; font-size: 1.2em;"></div>
+      <div id="overtime" style="display: none; color: red; font-weight: bold; font-size: 1.5em;">Overtime!</div>
+    </div>
 
-<div class="simulation-controls" style="margin-top: 20px; text-align: center;">
-  <div class="slider-container" style="margin: 20px 0;">
-    <label class="slider-label" for="speedSlider">
-      Game Speed: <span id="speedValue">100</span> ms
-    </label>
-    <input type="range" id="speedSlider" min="50" max="500" value="100" step="10">
+    <div class="players">
+      <h2>Players</h2>
+      <div class="player-list" id="player-list"></div>
+    </div>
   </div>
-  <button id="simulate-game" class="simulation-button">Simulate Game</button>
-  <div id="simulation-result" style="margin-top: 20px; font-size: 1.2em;"></div>
-  <div id="overtime" style="display: none; color: red; font-weight: bold; font-size: 1.5em;">Overtime!</div>
-</div>
-
-<div class="players">
-  <h2>Players</h2>
-  <div class="player-list" id="player-list"></div>
-</div>
-</div>
 </body>
 
 </html>
