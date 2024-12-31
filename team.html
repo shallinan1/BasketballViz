@@ -89,21 +89,41 @@
 
     .record-tracker {
       text-align: center;
-      margin: 20px 0;
-      padding: 10px;
+      margin: 10px 0;
+      padding: 5px;
       background: white;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
 
     .record-tracker h3 {
-      margin: 0 0 10px 0;
+      margin: 0;
       color: #333;
+      font-size: 1em;
+      display: inline;
     }
 
     .record {
-      font-size: 1.2em;
       font-weight: bold;
+      display: inline;
+    }
+
+    #reset-record {
+      padding: 5px 10px;
+      font-size: 0.9em;
+      margin: 0;
+    }
+
+    .simulation-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0;
     }
 
     .team {
@@ -179,6 +199,10 @@
       object-fit: cover;
     }
 
+    .slider-container {
+      margin: 20px 0;
+    }
+
     .player-list img:hover,
     .slot img:hover {
       transform: scale(1.05);
@@ -197,6 +221,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      margin-top: 20px; text-align: center;
     }
 
 
@@ -596,7 +621,6 @@
               updateRecord();
 
               resultDiv.innerHTML = `
-                Final Score:<br>
                 Ringers: ${scoreA} - Ballers: ${scoreB}<br>
                 <span class="winner">${winnerName} wins!</span>
               `;
@@ -720,12 +744,6 @@
       </div>
     </div>
 
-    <div class="record-tracker">
-      <h3>Session Record (Ringers - Ballers)</h3>
-      <div class="record" id="record">0 - 0</div>
-      <button id="reset-record" style="margin-top: 10px;">Reset Record</button>
-    </div>
-
     <div class="clear-buttons">
       <button id="clear-team1">Clear Team 1</button>
       <button id="clear-team2">Clear Team 2</button>
@@ -733,16 +751,25 @@
       <button id="randomize-team2">Randomize Team 2</button>
     </div>
 
-    <div class="simulation-controls" style="margin-top: 20px; text-align: center;">
-      <div class="slider-container" style="margin: 20px 0;">
-        <label class="slider-label" for="speedSlider">
-          Game Speed: <span id="speedValue">100</span> ms
-        </label>
-        <input type="range" id="speedSlider" min="50" max="500" value="100" step="10">
+    <div class="simulation-section">
+      <div class="simulation-controls">
+        <div class="slider-container">
+          <label class="slider-label" for="speedSlider">
+            Game Speed: <span id="speedValue">100</span> ms
+          </label>
+          <input type="range" id="speedSlider" min="50" max="500" value="100" step="10">
+        </div>
+        <button id="simulate-game" class="simulation-button">Simulate Game</button>
       </div>
-      <button id="simulate-game" class="simulation-button">Simulate Game</button>
-      <div id="simulation-result" style="margin-top: 20px; font-size: 1.2em;"></div>
+
+      <div id="simulation-result" style="font-size: 1.2em; text-align: center;"></div>
       <div id="overtime" style="display: none; color: red; font-weight: bold; font-size: 1.5em;">Overtime!</div>
+
+      <div class="record-tracker">
+        <h3>Record (Ringers - Ballers):</h3>
+        <div class="record" id="record">0 - 0</div>
+        <button id="reset-record">Reset</button>
+      </div>
     </div>
 
     <div class="players">
