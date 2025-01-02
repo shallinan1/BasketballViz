@@ -270,6 +270,39 @@
       font-weight: bold;
     }
 
+    .progress-container {
+      width: 100%;
+      height: 20px;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+      margin: 10px 0;
+      display: none;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background-color: #4CAF50;
+      border-radius: 10px;
+      transition: width 0.1s ease;
+    }
+
+    .game-results {
+      margin: 10px 0;
+      max-height: 200px;
+      overflow-y: auto;
+      text-align: left;
+    }
+
+    .game-result {
+      padding: 5px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .game-result.winner {
+      background-color: #e8f5e9;
+    }
+
     /* Responsive */
     @media (max-width: 600px) {
       .slot {
@@ -654,7 +687,14 @@
         }
 
         const resultDiv = document.getElementById('simulation-result');
+        const progressContainer = document.querySelector('.progress-container');
+        const progressBar = document.querySelector('.progress-bar');
+        const gameResultsDiv = document.querySelector('.game-results');
+
         document.getElementById('overtime').style.display = 'none';
+        progressContainer.style.display = 'block';
+        progressBar.style.width = '0%';
+        gameResultsDiv.innerHTML = '';
 
         let team1Wins = 0;
         let team2Wins = 0;
@@ -674,8 +714,11 @@
                 { name: 'Ballers', ...team2Rating },
                 {
                   gameSpeed: 0, // No delay between score updates
-                  onScoreUpdate: () => { }, // No score updates needed
-                  onGameOver: ({ winner }) => {
+                  onScoreUpdate: ({ scoreA, scoreB, inOvertime }) => {
+                    // Update the current game score
+                    resultDiv.innerHTML = `Game ${i + 1}/${numGames}<br>Ringers: ${scoreA} - Ballers: ${scoreB}${inOvertime ? ' (OT)' : ''}`;
+                  },
+                  onGameOver: ({ scoreA, scoreB, winner }) => {
                     if (winner === 'A') {
                       team1Wins++;
                       ringersWins++;
@@ -683,9 +726,25 @@
                       team2Wins++;
                       ballersWins++;
                     }
+
+                    // Create game result entry
+                    const gameResult = document.createElement('div');
+                    gameResult.className = `game-result${winner === 'A' ? ' winner' : ''}`;
+                    gameResult.innerHTML = `Game ${i + 1}: Ringers ${scoreA} - Ballers ${scoreB}`;
+                    gameResultsDiv.insertBefore(gameResult, gameResultsDiv.firstChild);
+
+                    // Update progress bar
+                    const progress = ((i + 1) / numGames) * 100;
+                    progressBar.style.width = `${progress}%`;
+
                     resolve();
                   },
-                  onOvertimeStart: () => { } // No overtime notification needed
+                  onOvertimeStart: () => {
+                    const currentText = resultDiv.innerHTML;
+                    if (!currentText.includes('(OT)')) {
+                      resultDiv.innerHTML = currentText + ' (OT)';
+                    }
+                  }
                 }
               );
             });
@@ -709,6 +768,10 @@
         } finally {
           // Re-enable buttons after simulation
           buttons.forEach(button => button.disabled = false);
+          // Hide progress bar
+          setTimeout(() => {
+            progressContainer.style.display = 'none';
+          }, 1000);
         }
       });
 
@@ -848,6 +911,12 @@
 
       <div id="simulation-result" style="font-size: 1.2em; text-align: center;"></div>
       <div id="overtime" style="display: none; color: red; font-weight: bold; font-size: 1.5em;">Overtime!</div>
+
+      <div class="progress-container">
+        <div class="progress-bar"></div>
+      </div>
+      <div class="game-results"></div>
+
 
       <div class="record-tracker">
         <h3>Record (Ringers - Ballers):</h3>
