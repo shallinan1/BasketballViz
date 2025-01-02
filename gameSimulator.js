@@ -105,12 +105,7 @@ export function simulateGame(teamA, teamB, options = {}) {
                 onOvertimeStart();
             }
         }
-        console.log("114")
-        console.log(scoreA)
-        console.log(scoreB)
-        console.log(scoreA >= pointLimit)
-        console.log(scoreB >= pointLimit)
-        console.log( Math.abs(scoreA - scoreB))
+
         if ((scoreA >= pointLimit || scoreB >= pointLimit) && Math.abs(scoreA - scoreB) >= 2) {
             console.log(`Game Over: ${scoreA} - ${scoreB}`);
             onGameOver({

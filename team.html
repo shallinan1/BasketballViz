@@ -143,7 +143,9 @@
     .team h2 {
       width: 100%;
       text-align: center;
-      margin: 0px 0 10px 0px; /* Reduced from 15px to 5px top margin */      color: #333;
+      margin: 0px 0 10px 0px;
+      /* Reduced from 15px to 5px top margin */
+      color: #333;
     }
 
     /* Slots */
@@ -221,7 +223,8 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-top: 20px; text-align: center;
+      margin-top: 20px;
+      text-align: center;
     }
 
 
@@ -632,6 +635,83 @@
         );
       });
 
+      document.getElementById('simulate-n-games').addEventListener('click', async () => {
+        const team1Slots = document.querySelectorAll('[data-slot^="team1"]');
+        const team2Slots = document.querySelectorAll('[data-slot^="team2"]');
+
+        const team1Rating = calculateTeamRating(team1Slots);
+        const team2Rating = calculateTeamRating(team2Slots);
+
+        if (!team1Rating || !team2Rating) {
+          alert('Both teams must have 5 players to simulate games!');
+          return;
+        }
+
+        const numGames = parseInt(document.getElementById('num-games').value);
+        if (isNaN(numGames) || numGames < 1 || numGames > 1000) {
+          alert('Please enter a valid number of games (1-1000)');
+          return;
+        }
+
+        const resultDiv = document.getElementById('simulation-result');
+        document.getElementById('overtime').style.display = 'none';
+
+        let team1Wins = 0;
+        let team2Wins = 0;
+
+        resultDiv.innerHTML = `Simulating ${numGames} games...`;
+
+        // Disable buttons during simulation
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(button => button.disabled = true);
+
+        try {
+          // Simulate all games with no delay
+          for (let i = 0; i < numGames; i++) {
+            await new Promise(resolve => {
+              simulateGame(
+                { name: 'Ringers', ...team1Rating },
+                { name: 'Ballers', ...team2Rating },
+                {
+                  gameSpeed: 0, // No delay between score updates
+                  onScoreUpdate: () => { }, // No score updates needed
+                  onGameOver: ({ winner }) => {
+                    if (winner === 'A') {
+                      team1Wins++;
+                      ringersWins++;
+                    } else {
+                      team2Wins++;
+                      ballersWins++;
+                    }
+                    resolve();
+                  },
+                  onOvertimeStart: () => { } // No overtime notification needed
+                }
+              );
+            });
+          }
+
+          // Update the record display
+          updateRecord();
+
+          // Calculate win percentages
+          const team1WinPercent = ((team1Wins / numGames) * 100).toFixed(1);
+          const team2WinPercent = ((team2Wins / numGames) * 100).toFixed(1);
+
+          // Display final results
+          resultDiv.innerHTML = `
+      <div style="margin: 10px 0;">
+        <strong>Results of ${numGames} games:</strong><br>
+        Ringers: ${team1Wins} wins (${team1WinPercent}%)<br>
+        Ballers: ${team2Wins} wins (${team2WinPercent}%)
+      </div>
+    `;
+        } finally {
+          // Re-enable buttons after simulation
+          buttons.forEach(button => button.disabled = false);
+        }
+      });
+
       document.getElementById('reset-record').addEventListener('click', () => {
         ringersWins = 0;
         ballersWins = 0;
@@ -760,6 +840,10 @@
           <input type="range" id="speedSlider" min="50" max="500" value="100" step="10">
         </div>
         <button id="simulate-game" class="simulation-button">Simulate Game</button>
+        <div class="multi-sim-container" style="display: inline-flex; align-items: center; gap: 10px;">
+          <input type="number" id="num-games" min="1" max="1000" value="10" style="width: 80px; padding: 8px;">
+          <button id="simulate-n-games" class="simulation-button">Simulate N Games</button>
+        </div>
       </div>
 
       <div id="simulation-result" style="font-size: 1.2em; text-align: center;"></div>
