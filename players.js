@@ -2,7 +2,8 @@
 export const players = [
 
     {
-        number: 8.5,
+        old_number: 8.5,
+        number: 8,
         name: "Isaac Araki",
         team: "Unknown",
         position: "Big",
@@ -123,7 +124,8 @@ export const players = [
     },
 
     {
-        number: 1.5,
+        number: 0,
+        old_number: 1.5, 
         name: "Elliot Rosenberg",
         team: "Los Angeles Lakers", 
         position: "Forward",
@@ -177,7 +179,8 @@ export const players = [
     },
 
     {
-        number: 1.6,
+        number: 1.91,
+        old_number: 1.6,
         name: "Tyler Baldwin",
         team: "San Antonio Spurs",
         position: "Forward",
@@ -188,7 +191,7 @@ export const players = [
         image: "images/tyler.png", 
         description: "<b>The prototypical modern power forward</b>, blending perimeter-stifling lateral quickness and strength with a dependable stroke from deep.",
         icons: ["On-Ball Defense", "Positional Versatility", "Spacer", "Hustle"],
-        shades_of: ["Kawhi Leonard", "OG Anunoby"],
+        shades_of: ["OG Anunoby", "Kawhi Leonard", "Miles Bridges", "Aaron Gordon"],
         offense: 0.75,
         defense: 0.85,
         aggressive: 0.4
@@ -207,7 +210,7 @@ export const players = [
         description: "<b>Unpredictable, athletic spark plug</b> whose shooting streaks can ignite a team.",
         icons: ["Athleticism", "Pull-up Threat", "Spacer", "Lightning Rod"],
         shades_of: ["Michael Porter Jr.", "Klay Thompson"],
-        offense: 0.65,
+        offense: 0.7,
         defense: 0.55,
         aggressive: 0.85
     },
@@ -385,7 +388,8 @@ export const players = [
     },
 
     {
-        number: 3.01,
+        old_number: 3.01,
+        number: 2.9,
         name: "Mo",
         team: "Unknown",
         position: "Guard",
@@ -472,7 +476,8 @@ export const players = [
         aggressive: 0.8
     },
     {
-        number: 6.911,
+        number: 7.01,
+        old_number: 6.911,
         name: "Phil",
         team: "Unknown",
         position: "Guard",
