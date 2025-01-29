@@ -191,7 +191,18 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                position: relative;
             }
+
+            .player-change {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                font-weight: bold;
+                font-size: 1.1em;
+                z-index: 3; /* Ensure it's above other elements */
+            }
+
         
             .player-name {
                 font-size: 24px;
@@ -261,7 +272,7 @@
         
                 .player-image-section {
                     width: 100%;
-                    padding: 10px;
+                    padding: 0px;
                 }
         
                 .player-content {
@@ -380,40 +391,40 @@
                         ? `<span style="color: red;">↓ ${change}</span>` 
                         : ``;
 
-                card.innerHTML = `
-                    <div class="player-image-section">
-                        <div class="player-number">${String(currentPosition).padStart(2, '0')}</div>
-                        <div class="player-image-container">
-                            <img src="${player.image}" alt="${player.name}">
-                            <div class="player-position">${player.position}</div>
-                        </div>
-                        <div class="player-stats">
-                            <div class="player-stat"><span class="title">HEIGHT</span> <span class="value">${player.height}</span></div>
-                            <div class="player-stat"><span class="title">WEIGHT</span> <span class="value">${player.weight}</span></div>
-                            <div class="player-stat"><span class="title">AGE</span> <span class="value">${player.age}</span></div>
-                            <div class="player-stat"><span class="title">SEASON</span> <span class="value">${player.season}</span></div>
-                        </div>
-                    </div>
-                    <div class="player-content">
-                        <div class="player-header">
-                            <h2 class="player-name">${player.name}</h2>
-                            <span class="player-team">${player.team}</span>
-                        </div>
-                        <p class="player-description">${player.description}</p>
-                        <div class="player-icons" style="font-size:0.8em">
-                            ${player.icons.map(icon => `
-                                <div class="player-icon">
-                                    <img src="${getIconPath(icon)}" alt="${icon}" style="width: 40px; height: 40px; margin-bottom: 5px;">
-                                    <div>${icon}</div>
-                                </div>
-                            `).join('')}
-                        </div>
-                        ${player.shades_of ? `<div class="player-shades"><strong>SHADES OF:</strong> ${player.shades_of.join(', ')}</div>` : ''}
-                        <div class="player-change" title="Previous position: ${oldPosition}">
-                            ${changeIndicator}
-                        </div>
-                    </div>
-                `;
+                        card.innerHTML = `
+    <div class="player-image-section">
+        <div class="player-number">${String(currentPosition).padStart(2, '0')}</div>
+        <div class="player-change" title="Previous position: ${oldPosition}">
+            ${changeIndicator}
+        </div>
+        <div class="player-image-container">
+            <img src="${player.image}" alt="${player.name}">
+            <div class="player-position">${player.position}</div>
+        </div>
+        <div class="player-stats">
+            <div class="player-stat"><span class="title">HEIGHT</span> <span class="value">${player.height}</span></div>
+            <div class="player-stat"><span class="title">WEIGHT</span> <span class="value">${player.weight}</span></div>
+            <div class="player-stat"><span class="title">AGE</span> <span class="value">${player.age}</span></div>
+            <div class="player-stat"><span class="title">SEASON</span> <span class="value">${player.season}</span></div>
+        </div>
+    </div>
+    <div class="player-content">
+        <div class="player-header">
+            <h2 class="player-name">${player.name}</h2>
+            <span class="player-team">${player.team}</span>
+        </div>
+        <p class="player-description">${player.description}</p>
+        <div class="player-icons" style="font-size:0.8em">
+            ${player.icons.map(icon => `
+                <div class="player-icon">
+                    <img src="${getIconPath(icon)}" alt="${icon}" style="width: 40px; height: 40px; margin-bottom: 5px;">
+                    <div>${icon}</div>
+                </div>
+            `).join('')}
+        </div>
+        ${player.shades_of ? `<div class="player-shades"><strong>SHADES OF:</strong> ${player.shades_of.join(', ')}</div>` : ''}
+    </div>
+`;
 
                 playerList.appendChild(card);
             });
