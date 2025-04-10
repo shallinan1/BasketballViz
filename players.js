@@ -51,7 +51,7 @@ export const players = [
         shades_of: ["Josh Hart", "Scottie Barnes"],
         offense: 0.55,
         defense: 0.65,
-        aggressive: 0.45,
+        aggressive: 0.5,
     },
     {
         number: 3.5,
@@ -66,7 +66,7 @@ export const players = [
         description: "<b>Relentless on-ball defender</b> a consistent offense away from superstardom.",
         icons: ["On-Ball Defense", "Hustle", "Off-Ball Defense", "Got That Dog in Him"],
         shades_of: ["Dennis Schroeder", "Gary Payton II","Jose Alvarado", ],
-        offense: 0.35,
+        offense: 0.45,
         defense: 0.8,
         aggressive: 0.6,
     },
@@ -100,7 +100,7 @@ export const players = [
         description: "<b>High-energy point guard</b> who thrives on speed, constant movement, and creative shot-making.",
         icons: ["Lightning Rod", "Speed Demon", "Fast and Loose", "Floor General"],
         shades_of: ["Trae Young", "Tyus Jones"],
-        offense: 0.65,
+        offense: 0.7,
         defense: 0.6,
         aggressive: 0.6
     },
@@ -118,9 +118,9 @@ export const players = [
         description: "<b>Ageless hustle machine</b> defying father time with relentless effort, scrappy defense, and fearless dives.",
         icons: ["Hustle", "Ridiculous Upside", "Injury Concerns", "Sh*t Stirrer"],
         shades_of: ["Killian Hayes", "Udonis Haslem",],
-        offense: 0.2,
+        offense: 0.15,
         defense: 0.6,
-        aggressive: 0.9
+        aggressive: 0.95
     },
 
     {
@@ -297,7 +297,7 @@ export const players = [
         description: "<b>Relentless enforcer</b> with elite help instincts and a smooth touch to match his grit.",
         icons: ["Shot Blocking", "Off-Ball Defense", "Sh*t Stirrer", "Ridiculous Upside"],
         shades_of: ["Brook Lopez", 'Myles Turner'],
-        offense: 0.65,
+        offense: 0.6,
         defense: 0.75,
         aggressive: 0.4
     },
@@ -520,12 +520,30 @@ export const players = [
         age: 50,
         season: "Unknown",
         image: "images/steve.png", 
-        description: "<b>Brusising backdown punisher</b> who also makes the right reads in the two-man game.",
+        description: "<b>Bruising backdown punisher</b> who also makes the right reads in the two-man game.",
         icons: ["Post Moves", "Shot Blocking"],
         shades_of: ["Bobby Portis", "Aaron Gordon"],
         offense: 0.7,
         defense: 0.65,
         aggressive: 0.65
+    },
+
+    {
+        number: 3.51,
+        name: "Skyler Hallinan",
+        team: "LA Clippers",
+        position: "Wing",
+        height: "5'11\"",
+        weight: "160 lbs",
+        age: 24,
+        season: "6",
+        image: "images/skyler.png", 
+        description: "<b>Veteran sharpshooter whose athletic finishes and foul-baiting tactics are perpetually threatened by nagging injuries.</b>",
+        icons: ["Spacer", "Injury Concerns"],
+        shades_of: ["Mikale Bridges"],
+        offense: 0.8,
+        defense: 0.7,
+        aggressive: 0.6
     },
     // {
     //     number: 8.6,
