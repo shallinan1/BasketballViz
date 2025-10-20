@@ -13,45 +13,145 @@
       box-sizing: border-box;
     }
 
+    :root {
+      /* Dark theme (default) */
+      --bg-primary: #000000;
+      --bg-card: rgba(29, 29, 31, 0.95);
+      --text-primary: #f5f5f7;
+      --text-secondary: rgba(255, 255, 255, 0.5);
+      --border-primary: rgba(255, 255, 255, 0.1);
+      --border-secondary: rgba(255, 255, 255, 0.2);
+      --shadow-primary: rgba(0, 0, 0, 0.6);
+      --slot-bg: rgba(255, 255, 255, 0.05);
+      --slot-bg-hover: rgba(255, 255, 255, 0.1);
+
+      /* Team 1 (Ringers) - Blue */
+      --team1-border: rgba(0, 102, 255, 0.3);
+      --team1-glow: rgba(0, 102, 255, 0.15);
+      --team1-slot-border: rgba(0, 102, 255, 0.4);
+      --team1-slot-bg: rgba(0, 102, 255, 0.08);
+      --team1-slot-bg-hover: rgba(0, 102, 255, 0.15);
+
+      /* Team 2 (Ballers) - Red */
+      --team2-border: rgba(255, 69, 58, 0.3);
+      --team2-glow: rgba(255, 69, 58, 0.15);
+      --team2-slot-border: rgba(255, 69, 58, 0.4);
+      --team2-slot-bg: rgba(255, 69, 58, 0.08);
+      --team2-slot-bg-hover: rgba(255, 69, 58, 0.15);
+    }
+
+    [data-theme="light"] {
+      /* Light theme */
+      --bg-primary: #f5f5f7;
+      --bg-card: rgba(255, 255, 255, 0.98);
+      --text-primary: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --border-primary: rgba(0, 0, 0, 0.1);
+      --border-secondary: rgba(0, 0, 0, 0.15);
+      --shadow-primary: rgba(0, 0, 0, 0.15);
+      --slot-bg: rgba(0, 0, 0, 0.03);
+      --slot-bg-hover: rgba(0, 0, 0, 0.06);
+
+      /* Team 1 (Ringers) - Blue */
+      --team1-border: rgba(0, 102, 255, 0.2);
+      --team1-glow: rgba(0, 102, 255, 0.08);
+      --team1-slot-border: rgba(0, 102, 255, 0.3);
+      --team1-slot-bg: rgba(0, 102, 255, 0.05);
+      --team1-slot-bg-hover: rgba(0, 102, 255, 0.12);
+
+      /* Team 2 (Ballers) - Red */
+      --team2-border: rgba(255, 69, 58, 0.2);
+      --team2-glow: rgba(255, 69, 58, 0.08);
+      --team2-slot-border: rgba(255, 69, 58, 0.3);
+      --team2-slot-bg: rgba(255, 69, 58, 0.05);
+      --team2-slot-bg-hover: rgba(255, 69, 58, 0.12);
+    }
+
+    .team:nth-child(1) {
+      background: var(--bg-card);
+      border: 1px solid var(--team1-border);
+      box-shadow: 0 8px 32px var(--shadow-primary), 0 0 80px var(--team1-glow);
+    }
+
     .team:nth-child(1) h2 {
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Orbitron', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #2c3e50;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      letter-spacing: 3px;
+      font-size: 2em;
+      background: linear-gradient(90deg, #06f 0%, #00d4ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
     }
 
     .team:nth-child(1) .slot {
       font-family: 'Orbitron', sans-serif;
-      border-color: #3498db;
+      border: 2px solid var(--team1-slot-border);
+      background: var(--team1-slot-bg);
+      color: #06f;
+    }
+
+    .team:nth-child(1) .slot:hover {
+      border-color: #06f;
+      background: var(--team1-slot-bg-hover);
+      transform: scale(1.02);
+      box-shadow: 0 0 20px var(--team1-glow);
+    }
+
+    .team:nth-child(2) {
+      background: var(--bg-card);
+      border: 1px solid var(--team2-border);
+      box-shadow: 0 8px 32px var(--shadow-primary), 0 0 80px var(--team2-glow);
     }
 
     .team:nth-child(2) h2 {
-      font-family: 'Righteous', cursive;
+      font-family: 'Righteous', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #c0392b;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      letter-spacing: 2px;
+      font-size: 2em;
+      background: linear-gradient(90deg, #ff453a 0%, #ff9500 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
     }
 
     .team:nth-child(2) .slot {
       font-family: 'Righteous', cursive;
-      border-color: #e74c3c;
+      border: 2px solid var(--team2-slot-border);
+      background: var(--team2-slot-bg);
+      color: #ff453a;
+    }
+
+    .team:nth-child(2) .slot:hover {
+      border-color: #ff453a;
+      background: var(--team2-slot-bg-hover);
+      transform: scale(1.02);
+      box-shadow: 0 0 20px var(--team2-glow);
     }
 
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f4f4f4;
-      color: #333;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     h1 {
       text-align: center;
-      margin: 20px 0;
-      font-size: 2.2em;
-      letter-spacing: 1px;
+      margin: 40px 0 20px 0;
+      font-size: 3.5em;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+      font-weight: 700;
+      background: linear-gradient(90deg, #06f 0%, #00d4ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     #overtime {
@@ -61,9 +161,11 @@
     }
 
     h2 {
-      font-size: 1.5em;
-      margin: 15px 0 5px;
-      color: #555;
+      font-size: 2em;
+      margin: 0 0 24px 0;
+      color: var(--text-primary);
+      font-weight: 600;
+      letter-spacing: -0.5px;
     }
 
     /* Container */
@@ -72,48 +174,62 @@
       flex-direction: column;
       align-items: center;
       margin-top: 20px;
-      width: 90%;
-      max-width: 1000px;
+      width: 95%;
+      max-width: 1400px;
       margin-left: auto;
       margin-right: auto;
     }
 
     /* Teams Section */
     .teams {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
       width: 100%;
-      margin-bottom: 30px;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 900px) {
+      .teams {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
     }
 
     .record-tracker {
       text-align: center;
-      margin: 0px 0;
-      padding: 5px;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin: 16px 0;
+      padding: 20px 32px;
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px var(--shadow-primary);
+      border: 1px solid var(--border-primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 16px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
 
     .record-tracker h3 {
       margin: 0;
-      color: #333;
-      font-size: 1em;
+      color: var(--text-primary);
+      font-size: 1.1em;
       display: inline;
+      font-weight: 500;
     }
 
     .record {
-      font-weight: bold;
+      font-weight: 700;
       display: inline;
+      color: #06f;
+      font-size: 1.2em;
     }
 
     #reset-record {
-      padding: 5px 10px;
+      padding: 8px 16px;
       font-size: 0.9em;
       margin: 0;
     }
@@ -122,99 +238,146 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      margin: 0px 0;
+      gap: 16px;
+      margin: 24px 0;
     }
 
     .team {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      padding: 15px 15px;
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px var(--shadow-primary);
+      border: 1px solid var(--border-primary);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      animation: fadeInUp 0.6s ease-out;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .team-slots {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 15px;
-      margin-bottom: 20px;
-      width: 100%;
-      max-width: 800px;
+      gap: 16px;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .team h2 {
       width: 100%;
       text-align: center;
-      margin: 0px 0 10px 0px;
-      /* Reduced from 15px to 5px top margin */
-      color: #333;
     }
 
     /* Slots */
     .slot {
-      border: 2px dashed #999;
-      width: 100px;
-      height: 100px;
+      border: 2px solid var(--border-secondary);
+      width: 115px;
+      height: 115px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #fafafa;
-      border-radius: 6px;
-      transition: border-color 0.3s ease, background-color 0.3s ease;
+      background: var(--slot-bg);
+      border-radius: 12px;
+      transition: all 0.3s ease;
       cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85em;
+      color: var(--text-secondary);
+      position: relative;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     .slot:hover {
-      border-color: #666;
-      background-color: #f0f0f0;
+      border-color: var(--text-secondary);
+      background: var(--slot-bg-hover);
+      transform: scale(1.02);
     }
 
     /* When a player is selected */
     .selected {
       border: 3px solid #4CAF50 !important;
+      box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 30px rgba(76, 175, 80, 0.8);
+      }
     }
 
     /* Player List Section */
     .players {
-      margin-top: 0px;
+      margin-top: 24px;
       width: 100%;
-      max-width: 800px;
+      max-width: 1400px;
+    }
+
+    .players h2 {
+      text-align: center;
+      margin-bottom: 16px;
     }
 
     .player-list {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 15px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      padding: 15px;
-      margin-top: 10px;
+      gap: 16px;
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px var(--shadow-primary);
+      border: 1px solid var(--border-primary);
+      padding: 32px;
+      margin-top: 16px;
+      animation: fadeInUp 0.8s ease-out;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
 
     .player-list img,
     .slot img {
-      width: 100px;
-      height: 100px;
+      width: 115px;
+      height: 115px;
       cursor: pointer;
-      border-radius: 6px;
+      border-radius: 8px;
       transition: transform 0.2s ease;
       object-fit: cover;
     }
 
     .slider-container {
-      margin: 0px 0;
+      margin: 0;
     }
 
     .player-list img:hover,
     .slot img:hover {
-      transform: scale(1.05);
+      transform: scale(1.08);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
 
     /* Clear and Randomize Buttons */
     .clear-buttons {
-      margin-top: 20px;
+      margin-top: 24px;
       display: flex;
-      gap: 10px;
+      gap: 12px;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -222,26 +385,36 @@
     .simulation-controls {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-top: 20px;
+      gap: 12px;
+      margin-top: 24px;
       text-align: center;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
 
     button {
-      background-color: #4CAF50;
+      background: rgba(0, 102, 255, 1);
       color: #fff;
       border: none;
-      padding: 10px 15px;
-      border-radius: 4px;
+      padding: 12px 24px;
+      border-radius: 980px;
       cursor: pointer;
-      font-size: 1rem;
-      transition: background-color 0.3s ease;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
       outline: none;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
     }
 
     button:hover {
-      background-color: #43a047;
+      background: rgba(0, 122, 255, 1);
+      transform: scale(1.02);
+    }
+
+    button:active {
+      transform: scale(0.98);
+      opacity: 0.8;
     }
 
     .player-container {
@@ -257,17 +430,61 @@
     }
 
     .simulation-button {
-      background-color: #2196F3;
+      background: rgba(255, 69, 58, 1);
       margin: 0 5px;
     }
 
     .simulation-button:hover {
-      background-color: #1976D2;
+      background: rgba(255, 89, 78, 1);
     }
 
     .winner {
       color: #4CAF50;
       font-weight: bold;
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: 50px;
+      padding: 8px;
+      display: flex;
+      gap: 4px;
+      box-shadow: 0 4px 16px var(--shadow-primary);
+      z-index: 1000;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .theme-toggle-btn {
+      background: transparent;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: all 0.2s ease;
+      padding: 0;
+    }
+
+    .theme-toggle-btn:hover {
+      transform: scale(1.05);
+      background: var(--slot-bg-hover);
+    }
+
+    .theme-toggle-btn.active {
+      background: #06f;
+    }
+
+    .theme-toggle-btn.active:hover {
+      background: rgba(0, 122, 255, 1);
     }
 
     .progress-container {
@@ -288,7 +505,7 @@
     }
 
     .game-results {
-      margin: 0px 0;
+      margin: 16px 0;
       max-height: 200px;
       overflow-y: auto;
       text-align: left;
@@ -306,19 +523,34 @@
     /* Responsive */
     @media (max-width: 600px) {
       .slot {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
         margin: 5px 0;
       }
 
       .player-list img,
       .slot img {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
       }
 
       .team h2 {
         font-size: 1.2em;
+      }
+
+      .team {
+        padding: 16px;
+        gap: 12px;
+      }
+
+      .theme-toggle {
+        top: 10px;
+        right: 10px;
+      }
+
+      h1 {
+        font-size: 2.5em;
+        margin: 60px 0 20px 0;
       }
     }
   </style>
@@ -373,8 +605,8 @@
         img.title = player.description;
         img.dataset.id = playerId;
         img.style.display = 'block';
-        img.style.width = '100px';
-        img.style.height = '100px';
+        img.style.width = '115px';
+        img.style.height = '115px';
         img.addEventListener('click', () => {
           if (selectedImg) {
             selectedImg.classList.remove('selected');
@@ -450,7 +682,7 @@
                 alt="${player.name}"
                 title="${player.description}"
                 data-id="${playerId}"
-                style="display: block; width: 100px; height: 100px;">
+                style="display: block; width: 115px; height: 115px;">
             <div class="player-name" style="position: absolute; bottom: 0; width: 100%; background: rgba(0, 0, 0, 0.5); color: white; padding: 5px 0;">
                 ${player.name.split(' ')[0].toUpperCase()}
             </div>
@@ -836,7 +1068,7 @@
         </p>
     `;
 
-      const teamDiv = document.querySelector(`[data-slot^="${team}"]`).parentElement;
+      const teamDiv = document.querySelector(`[data-slot^="${team}"]`).parentElement.parentElement;
       teamDiv.appendChild(statsDiv);
     }
 
@@ -863,31 +1095,71 @@
     // Declare checkFullTeam in global scope so it can be called from inside the DOMContentLoaded listener
     window.checkFullTeam = checkFullTeam;
   </script>
+
+  <script>
+    // Theme Toggle - runs immediately to prevent flash
+    document.addEventListener('DOMContentLoaded', () => {
+      const darkModeBtn = document.getElementById('dark-mode-btn');
+      const lightModeBtn = document.getElementById('light-mode-btn');
+      const html = document.documentElement;
+
+      // Check for saved theme preference or default to dark
+      const currentTheme = localStorage.getItem('theme') || 'dark';
+      if (currentTheme === 'light') {
+        html.setAttribute('data-theme', 'light');
+        darkModeBtn.classList.remove('active');
+        lightModeBtn.classList.add('active');
+      }
+
+      darkModeBtn.addEventListener('click', () => {
+        html.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'dark');
+        darkModeBtn.classList.add('active');
+        lightModeBtn.classList.remove('active');
+      });
+
+      lightModeBtn.addEventListener('click', () => {
+        html.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+        lightModeBtn.classList.add('active');
+        darkModeBtn.classList.remove('active');
+      });
+    });
+  </script>
 </head>
 
 <body>
+  <div class="theme-toggle">
+    <button class="theme-toggle-btn active" id="dark-mode-btn" title="Dark Mode">🌙</button>
+    <button class="theme-toggle-btn" id="light-mode-btn" title="Light Mode">☀️</button>
+  </div>
+
   <h1>Basketball Team Picker</h1>
 
   <div class="container">
-    <label>
-      <input type="checkbox" id="unique-player" checked> Enforce Unique Players per Team
+    <label style="color: var(--text-primary); font-size: 1.1em; font-weight: 400; margin-bottom: 32px; display: block; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;">
+      <input type="checkbox" id="unique-player" checked style="margin-right: 10px; transform: scale(1.3); accent-color: #06f;"> Enforce Unique Players per Team
     </label>
     <div class="teams">
       <div class="team">
         <h2>Ringers</h2>
-        <div class="slot" data-slot="team1-PG">PG</div>
-        <div class="slot" data-slot="team1-SG">SG</div>
-        <div class="slot" data-slot="team1-SF">SF</div>
-        <div class="slot" data-slot="team1-PF">PF</div>
-        <div class="slot" data-slot="team1-C">C</div>
+        <div class="team-slots">
+          <div class="slot" data-slot="team1-PG">PG</div>
+          <div class="slot" data-slot="team1-SG">SG</div>
+          <div class="slot" data-slot="team1-SF">SF</div>
+          <div class="slot" data-slot="team1-PF">PF</div>
+          <div class="slot" data-slot="team1-C">C</div>
+        </div>
       </div>
       <div class="team">
         <h2>Ballers</h2>
-        <div class="slot" data-slot="team2-PG">PG</div>
-        <div class="slot" data-slot="team2-SG">SG</div>
-        <div class="slot" data-slot="team2-SF">SF</div>
-        <div class="slot" data-slot="team2-PF">PF</div>
-        <div class="slot" data-slot="team2-C">C</div>
+        <div class="team-slots">
+          <div class="slot" data-slot="team2-PG">PG</div>
+          <div class="slot" data-slot="team2-SG">SG</div>
+          <div class="slot" data-slot="team2-SF">SF</div>
+          <div class="slot" data-slot="team2-PF">PF</div>
+          <div class="slot" data-slot="team2-C">C</div>
+        </div>
       </div>
     </div>
 
