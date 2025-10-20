@@ -54,7 +54,7 @@ export const players = [
         aggressive: 0.5,
     },
     {
-        number: 3.5,
+        number: 2.99,
         name: "Lance Muchina",
         team: "Los Angeles Lakers",
         position: "Guard",
@@ -88,7 +88,7 @@ export const players = [
         aggressive: 0.6
     },
     {
-        number: 2.87,
+        number: 3.0,
         name: "Declan Edgecombe",
         team: "Golden State Warriors",
         position: "Guard",
@@ -529,7 +529,7 @@ export const players = [
     },
 
     {
-        number: 3.51,
+        number: 2.65,
         name: "Skyler Hallinan",
         team: "LA Clippers",
         position: "Wing",
@@ -541,7 +541,7 @@ export const players = [
         description: "<b>Veteran sharpshooter whose athletic finishes and foul-baiting tactics are perpetually threatened by nagging injuries.</b>",
         icons: ["Spacer", "Injury Concerns"],
         shades_of: ["Mikal Bridges"],
-        offense: 0.8,
+        offense: 0.7,
         defense: 0.7,
         aggressive: 0.6
     },
