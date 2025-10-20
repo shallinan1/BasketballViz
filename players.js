@@ -540,7 +540,7 @@ export const players = [
         image: "images/skyler.png", 
         description: "<b>Veteran sharpshooter whose athletic finishes and foul-baiting tactics are perpetually threatened by nagging injuries.</b>",
         icons: ["Spacer", "Injury Concerns"],
-        shades_of: ["Mikale Bridges"],
+        shades_of: ["Mikal Bridges"],
         offense: 0.8,
         defense: 0.7,
         aggressive: 0.6
