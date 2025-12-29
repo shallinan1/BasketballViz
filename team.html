@@ -603,6 +603,43 @@
         margin: 60px 0 20px 0;
       }
     }
+
+    /* Extra small screens */
+    @media (max-width: 480px) {
+      .slot {
+        width: 75px;
+        height: 75px;
+      }
+
+      .player-list img,
+      .slot img {
+        width: 75px;
+        height: 75px;
+      }
+
+      .player-list {
+        padding: 16px;
+        gap: 10px;
+      }
+
+      .selection-controls {
+        padding: 8px;
+        gap: 6px 8px;
+      }
+
+      .selection-controls button {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+      }
+
+      h1 {
+        font-size: 2em;
+      }
+
+      .team h2 {
+        font-size: 1em;
+      }
+    }
   </style>
 
   <script type="module">
@@ -619,12 +656,39 @@
         const selectionCountEl = document.getElementById('selection-count');
         const selectionModeCheckbox = document.getElementById('select-10-mode');
         const MAX_SELECTION = 10;
-      let ringersWins = 0;
-      let ballersWins = 0;
+      // Load persisted win record from localStorage
+      const savedRecord = JSON.parse(localStorage.getItem('basketballViz.record') || '{"ringersWins":0,"ballersWins":0}');
+      let ringersWins = savedRecord.ringersWins;
+      let ballersWins = savedRecord.ballersWins;
+
+      // Load game history from localStorage
+      let gameHistory = JSON.parse(localStorage.getItem('basketballViz.gameHistory') || '[]');
+      const MAX_HISTORY = 100;
+
+      // Save record to localStorage
+      function saveRecord() {
+        localStorage.setItem('basketballViz.record', JSON.stringify({ ringersWins, ballersWins }));
+      }
+
+      // Save game to history
+      function saveGameToHistory(scoreA, scoreB, winner) {
+        const game = {
+          scoreA,
+          scoreB,
+          winner,
+          date: new Date().toISOString()
+        };
+        gameHistory.unshift(game);
+        if (gameHistory.length > MAX_HISTORY) {
+          gameHistory = gameHistory.slice(0, MAX_HISTORY);
+        }
+        localStorage.setItem('basketballViz.gameHistory', JSON.stringify(gameHistory));
+      }
 
       // Update the record display
       function updateRecord() {
         document.getElementById('record').textContent = `${ringersWins} - ${ballersWins}`;
+        saveRecord();
       }
       updateRecord();
 
@@ -1118,7 +1182,8 @@
                 ballersWins++;
               }
 
-              // Update the record display
+              // Save game to history and update the record display
+              saveGameToHistory(scoreA, scoreB, winner);
               updateRecord();
 
               resultDiv.innerHTML = `
@@ -1192,6 +1257,9 @@
                       ballersWins++;
                     }
 
+                    // Save game to history
+                    saveGameToHistory(scoreA, scoreB, winner);
+
                     // Create game result entry
                     const gameResult = document.createElement('div');
                     gameResult.className = `game-result${winner === 'A' ? ' winner' : ''}`;
@@ -1243,6 +1311,8 @@
       document.getElementById('reset-record').addEventListener('click', () => {
         ringersWins = 0;
         ballersWins = 0;
+        gameHistory = [];
+        localStorage.removeItem('basketballViz.gameHistory');
         updateRecord();
       });
 
