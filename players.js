@@ -18,6 +18,14 @@ export const players = [
         offense: 0.2,
         defense: 0.55,
         aggressive: 0.35,
+        stats: {
+            shooting2: 0.2,
+            shooting3: 0.2,
+            playmaking: 0.2,
+            perimeterDefense: 0.55,
+            interiorDefense: 0.55,
+            rebounding: 0.47
+        },
     },
     {
         number: 1,
@@ -35,6 +43,14 @@ export const players = [
         offense: 0.85,
         defense: 0.9,
         aggressive: 0.25,
+        stats: {
+            shooting2: 0.85,
+            shooting3: 0.85,
+            playmaking: 0.85,
+            perimeterDefense: 0.9,
+            interiorDefense: 0.9,
+            rebounding: 0.64
+        },
     },
     {
         number: 2.9,
@@ -52,6 +68,14 @@ export const players = [
         offense: 0.55,
         defense: 0.65,
         aggressive: 0.5,
+        stats: {
+            shooting2: 0.55,
+            shooting3: 0.55,
+            playmaking: 0.55,
+            perimeterDefense: 0.65,
+            interiorDefense: 0.65,
+            rebounding: 0.59
+        },
     },
     {
         number: 2.99,
@@ -69,6 +93,14 @@ export const players = [
         offense: 0.45,
         defense: 0.8,
         aggressive: 0.6,
+        stats: {
+            shooting2: 0.45,
+            shooting3: 0.45,
+            playmaking: 0.45,
+            perimeterDefense: 0.8,
+            interiorDefense: 0.8,
+            rebounding: 0.72
+        },
     },
     {
         number: 2,
@@ -85,7 +117,15 @@ export const players = [
         shades_of: ["Kevin Durant"],
         offense: 0.8,
         defense: 0.65,
-        aggressive: 0.6
+        aggressive: 0.6,
+        stats: {
+            shooting2: 0.8,
+            shooting3: 0.8,
+            playmaking: 0.8,
+            perimeterDefense: 0.65,
+            interiorDefense: 0.65,
+            rebounding: 0.63
+        }
     },
     {
         number: 3.0,
@@ -102,7 +142,15 @@ export const players = [
         shades_of: ["Trae Young", "Tyus Jones"],
         offense: 0.7,
         defense: 0.6,
-        aggressive: 0.6
+        aggressive: 0.6,
+        stats: {
+            shooting2: 0.7,
+            shooting3: 0.7,
+            playmaking: 0.7,
+            perimeterDefense: 0.6,
+            interiorDefense: 0.6,
+            rebounding: 0.6
+        }
     },
 
     {
@@ -120,7 +168,15 @@ export const players = [
         shades_of: ["Killian Hayes", "Udonis Haslem",],
         offense: 0.15,
         defense: 0.6,
-        aggressive: 0.95
+        aggressive: 0.95,
+        stats: {
+            shooting2: 0.15,
+            shooting3: 0.15,
+            playmaking: 0.15,
+            perimeterDefense: 0.6,
+            interiorDefense: 0.6,
+            rebounding: 0.74
+        }
     },
 
     {
@@ -139,7 +195,15 @@ export const players = [
         shades_of: ["Julius Randle", "LeBron James",],
         offense: 0.85,
         defense: 0.75,
-        aggressive: 0.95
+        aggressive: 0.95,
+        stats: {
+            shooting2: 0.85,
+            shooting3: 0.85,
+            playmaking: 0.85,
+            perimeterDefense: 0.75,
+            interiorDefense: 0.75,
+            rebounding: 0.83
+        }
     },
 
     {
@@ -157,7 +221,15 @@ export const players = [
         shades_of: ["Chuck Hayes", "Kevon Looney"],
         offense: 0.4,
         defense: 0.6,
-        aggressive: 0.2
+        aggressive: 0.2,
+        stats: {
+            shooting2: 0.4,
+            shooting3: 0.4,
+            playmaking: 0.4,
+            perimeterDefense: 0.6,
+            interiorDefense: 0.6,
+            rebounding: 0.44
+        }
     },
 
     {
@@ -175,7 +247,15 @@ export const players = [
         shades_of: ["Tyler Herro", "Kobe Bryant", ],
         offense: 0.8,
         defense: 0.4,
-        aggressive: 0.8
+        aggressive: 0.8,
+        stats: {
+            shooting2: 0.8,
+            shooting3: 0.8,
+            playmaking: 0.8,
+            perimeterDefense: 0.4,
+            interiorDefense: 0.4,
+            rebounding: 0.56
+        }
     },
 
     {
@@ -194,7 +274,15 @@ export const players = [
         shades_of: ["OG Anunoby", "Kawhi Leonard", "Miles Bridges", "Aaron Gordon"],
         offense: 0.75,
         defense: 0.85,
-        aggressive: 0.4
+        aggressive: 0.4,
+        stats: {
+            shooting2: 0.75,
+            shooting3: 0.75,
+            playmaking: 0.75,
+            perimeterDefense: 0.85,
+            interiorDefense: 0.85,
+            rebounding: 0.67
+        }
     },
 
     {
@@ -212,7 +300,15 @@ export const players = [
         shades_of: ["Michael Porter Jr.", "Klay Thompson"],
         offense: 0.7,
         defense: 0.55,
-        aggressive: 0.85
+        aggressive: 0.85,
+        stats: {
+            shooting2: 0.7,
+            shooting3: 0.7,
+            playmaking: 0.7,
+            perimeterDefense: 0.55,
+            interiorDefense: 0.55,
+            rebounding: 0.67
+        }
     },
 
     {
@@ -230,7 +326,15 @@ export const players = [
         shades_of: ["T.J. McConnell", "Alex Caruso"],
         offense: 0.8,
         defense: 0.85,
-        aggressive: 0.85
+        aggressive: 0.85,
+        stats: {
+            shooting2: 0.8,
+            shooting3: 0.8,
+            playmaking: 0.8,
+            perimeterDefense: 0.85,
+            interiorDefense: 0.85,
+            rebounding: 0.85
+        }
     },
     {
         number: 7,
@@ -247,7 +351,15 @@ export const players = [
         shades_of: ["Kyle Anderson"],
         offense: 0.65,
         defense: 0.2,
-        aggressive: 0.1
+        aggressive: 0.1,
+        stats: {
+            shooting2: 0.65,
+            shooting3: 0.65,
+            playmaking: 0.65,
+            perimeterDefense: 0.2,
+            interiorDefense: 0.2,
+            rebounding: 0.16
+        }
     },
 
     {
@@ -265,7 +377,15 @@ export const players = [
         shades_of: ["Kevin Porter Jr."],
         offense: 0.15,
         defense: 0.4,
-        aggressive: 0.95
+        aggressive: 0.95,
+        stats: {
+            shooting2: 0.15,
+            shooting3: 0.15,
+            playmaking: 0.15,
+            perimeterDefense: 0.4,
+            interiorDefense: 0.4,
+            rebounding: 0.62
+        }
     },
     {
         number: 6.9,
@@ -282,7 +402,15 @@ export const players = [
         shades_of: ["David Roddy"],
         offense: 0.6,
         defense: 0.5,
-        aggressive: 0.45
+        aggressive: 0.45,
+        stats: {
+            shooting2: 0.6,
+            shooting3: 0.6,
+            playmaking: 0.6,
+            perimeterDefense: 0.5,
+            interiorDefense: 0.5,
+            rebounding: 0.48
+        }
     },
     {
         number: 2.8999,
@@ -299,7 +427,15 @@ export const players = [
         shades_of: ["Brook Lopez", 'Myles Turner'],
         offense: 0.6,
         defense: 0.75,
-        aggressive: 0.4
+        aggressive: 0.4,
+        stats: {
+            shooting2: 0.6,
+            shooting3: 0.6,
+            playmaking: 0.6,
+            perimeterDefense: 0.75,
+            interiorDefense: 0.75,
+            rebounding: 0.61
+        }
     },
     {
         number: 2.6,
@@ -316,7 +452,15 @@ export const players = [
         shades_of: ["Tyrese Maxey", "Immanuel Quickley"],
         offense: 0.8,
         defense: 0.45,
-        aggressive: 0.85
+        aggressive: 0.85,
+        stats: {
+            shooting2: 0.8,
+            shooting3: 0.8,
+            playmaking: 0.8,
+            perimeterDefense: 0.45,
+            interiorDefense: 0.45,
+            rebounding: 0.61
+        }
     },
     {
         number: 6.91,
@@ -333,7 +477,15 @@ export const players = [
         shades_of: ["Kevin Huerter", "Joe Harris"],
         offense: 0.55,
         defense: 0.55,
-        aggressive: 0.5
+        aggressive: 0.5,
+        stats: {
+            shooting2: 0.55,
+            shooting3: 0.55,
+            playmaking: 0.55,
+            perimeterDefense: 0.55,
+            interiorDefense: 0.55,
+            rebounding: 0.53
+        }
     },
     {
         number: 3.51,
@@ -350,7 +502,15 @@ export const players = [
         shades_of: ["De'Anthony Melton"],
         offense: 0.65,
         defense: 0.4,
-        aggressive: 0.3
+        aggressive: 0.3,
+        stats: {
+            shooting2: 0.65,
+            shooting3: 0.65,
+            playmaking: 0.65,
+            perimeterDefense: 0.4,
+            interiorDefense: 0.4,
+            rebounding: 0.36
+        }
     },
     {
         number: 8.5,
@@ -367,7 +527,15 @@ export const players = [
         shades_of: ["Russell Westbrook"],
         offense: 0.3,
         defense: 0.3,
-        aggressive: 0.75
+        aggressive: 0.75,
+        stats: {
+            shooting2: 0.3,
+            shooting3: 0.3,
+            playmaking: 0.3,
+            perimeterDefense: 0.3,
+            interiorDefense: 0.3,
+            rebounding: 0.48
+        }
     },
     {
         number: 1.1,
@@ -384,7 +552,15 @@ export const players = [
         shades_of: ["Paul George", "D'Angelo Russell"],
         offense: 0.9,
         defense: 0.8,
-        aggressive: 0.5
+        aggressive: 0.5,
+        stats: {
+            shooting2: 0.9,
+            shooting3: 0.9,
+            playmaking: 0.9,
+            perimeterDefense: 0.8,
+            interiorDefense: 0.8,
+            rebounding: 0.68
+        }
     },
 
     {
@@ -403,7 +579,15 @@ export const players = [
         shades_of: ["Norman Powell"],
         offense: 0.75,
         defense: 0.65,
-        aggressive: 0.9
+        aggressive: 0.9,
+        stats: {
+            shooting2: 0.75,
+            shooting3: 0.75,
+            playmaking: 0.75,
+            perimeterDefense: 0.65,
+            interiorDefense: 0.65,
+            rebounding: 0.75
+        }
     },
 
     {
@@ -421,7 +605,15 @@ export const players = [
         shades_of: ["Alperen Sengun", "Nikola Jokic", "Domantis Sabonis"],
         offense: 0.75,
         defense: 0.5,
-        aggressive: 0.75
+        aggressive: 0.75,
+        stats: {
+            shooting2: 0.75,
+            shooting3: 0.75,
+            playmaking: 0.75,
+            perimeterDefense: 0.5,
+            interiorDefense: 0.5,
+            rebounding: 0.6
+        }
     },
 
     {
@@ -439,7 +631,15 @@ export const players = [
         shades_of: ["Eric Gordon",],
         offense: 0.75,
         defense: 0.6,
-        aggressive: 0.25
+        aggressive: 0.25,
+        stats: {
+            shooting2: 0.75,
+            shooting3: 0.75,
+            playmaking: 0.75,
+            perimeterDefense: 0.6,
+            interiorDefense: 0.6,
+            rebounding: 0.46
+        }
     },
     {
         number: 2.5999,
@@ -456,7 +656,15 @@ export const players = [
         shades_of: ["Ty Jerome", "Payton Pritchard"],
         offense: 0.8,
         defense: 0.4,
-        aggressive: 0.3
+        aggressive: 0.3,
+        stats: {
+            shooting2: 0.8,
+            shooting3: 0.8,
+            playmaking: 0.8,
+            perimeterDefense: 0.4,
+            interiorDefense: 0.4,
+            rebounding: 0.36
+        }
     },
     {
         number: 2.88,
@@ -473,7 +681,15 @@ export const players = [
         shades_of: ["Eric Bledsoe"],
         offense: 0.7,
         defense: 0.7,
-        aggressive: 0.8
+        aggressive: 0.8,
+        stats: {
+            shooting2: 0.7,
+            shooting3: 0.7,
+            playmaking: 0.7,
+            perimeterDefense: 0.7,
+            interiorDefense: 0.7,
+            rebounding: 0.74
+        }
     },
     {
         number: 7.01,
@@ -491,7 +707,15 @@ export const players = [
         shades_of: [""],
         offense: 0.65,
         defense: 0.25,
-        aggressive: 0.75
+        aggressive: 0.75,
+        stats: {
+            shooting2: 0.65,
+            shooting3: 0.65,
+            playmaking: 0.65,
+            perimeterDefense: 0.25,
+            interiorDefense: 0.25,
+            rebounding: 0.45
+        }
     },
     {
         number: 1.999,
@@ -508,7 +732,15 @@ export const players = [
         shades_of: ["Stephen Curry"],
         offense: 0.85,
         defense: 0.6,
-        aggressive: 0.5
+        aggressive: 0.5,
+        stats: {
+            shooting2: 0.85,
+            shooting3: 0.85,
+            playmaking: 0.85,
+            perimeterDefense: 0.6,
+            interiorDefense: 0.6,
+            rebounding: 0.56
+        }
     },
     {
         number: 3.51,
@@ -525,7 +757,15 @@ export const players = [
         shades_of: ["Bobby Portis", "Aaron Gordon"],
         offense: 0.7,
         defense: 0.65,
-        aggressive: 0.65
+        aggressive: 0.65,
+        stats: {
+            shooting2: 0.7,
+            shooting3: 0.7,
+            playmaking: 0.7,
+            perimeterDefense: 0.65,
+            interiorDefense: 0.65,
+            rebounding: 0.65
+        }
     },
 
     {
@@ -543,7 +783,15 @@ export const players = [
         shades_of: ["Mikal Bridges"],
         offense: 0.7,
         defense: 0.7,
-        aggressive: 0.6
+        aggressive: 0.6,
+        stats: {
+            shooting2: 0.7,
+            shooting3: 0.7,
+            playmaking: 0.7,
+            perimeterDefense: 0.7,
+            interiorDefense: 0.7,
+            rebounding: 0.66
+        }
     },
     // {
     //     number: 8.6,
