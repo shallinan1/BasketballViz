@@ -1,5 +1,69 @@
 // gameSimulator.js
-import { players } from './players.js';  // Add this import at the top
+import { players } from './players.js';
+
+// === Configuration Constants ===
+export const CONFIG = {
+    FATIGUE_THRESHOLD: 15,
+    FATIGUE_PENALTY: 0.03,      // 3% per shot after threshold
+    MOMENTUM_THRESHOLD: 3,
+    MOMENTUM_BOOST: 0.08,       // +8% for hot streak
+    MOMENTUM_PENALTY: 0.05,     // -5% for cold streak
+    BASE_TURNOVER_RATE: 0.08,   // 8% base
+    OFFENSIVE_REBOUND_CHANCE: 0.25  // 25% chance
+};
+
+// === Pure Utility Functions (exported for testing) ===
+
+export function sigmoid(x) {
+    return 1 / (1 + Math.exp(-x));
+}
+
+export function gaussianRandom(mean = 0, stdDev = 1, min = -Infinity, max = Infinity) {
+    let result;
+    do {
+        let u1 = Math.random();
+        let u2 = Math.random();
+        let z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+        result = z0 * stdDev + mean;
+    } while (result < min || result > max);
+    return result;
+}
+
+export function balanceAdjusted(prob, balanceFactor) {
+    const maxBoost = 0.1;
+    return Math.min(1, prob + ((balanceFactor - 0.5) / 0.5 * maxBoost));
+}
+
+export function getFatiguePenalty(shots, threshold = CONFIG.FATIGUE_THRESHOLD, penalty = CONFIG.FATIGUE_PENALTY) {
+    if (shots <= threshold) return 0;
+    return (shots - threshold) * penalty;
+}
+
+export function getMomentumModifier(streak, threshold = CONFIG.MOMENTUM_THRESHOLD, boost = CONFIG.MOMENTUM_BOOST, penalty = CONFIG.MOMENTUM_PENALTY) {
+    if (streak >= threshold) {
+        return boost; // Hot streak
+    } else if (streak <= -threshold) {
+        return -penalty; // Cold streak
+    }
+    return 0;
+}
+
+export function calculateTurnoverRate(teamBalance, baseRate = CONFIG.BASE_TURNOVER_RATE) {
+    // Better balanced teams have fewer turnovers
+    const balanceModifier = (teamBalance / 5) * 0.04; // Up to 4% reduction
+    return Math.max(0.02, baseRate - balanceModifier);
+}
+
+export function calculateReboundChance(teamOffense, opponentDefense, baseChance = CONFIG.OFFENSIVE_REBOUND_CHANCE) {
+    // Team's offense vs opponent's defense affects rebound chance
+    return baseChance * sigmoid((teamOffense - opponentDefense) * 0.5 + 0.5);
+}
+
+export function calculateBalanceRating(aggressive) {
+    return 5 - ((Math.abs(2.5 - aggressive) + 0.25) * 2);
+}
+
+// === DOM-dependent Functions ===
 
 export function calculateTeamRating(teamSlots) {
     let offense = 0;
@@ -27,11 +91,13 @@ export function calculateTeamRating(teamSlots) {
         return {
             offense: offense,
             defense: defense,
-            balance: 5 - ((Math.abs(2.5 - aggressive) + 0.25) * 2)
+            balance: calculateBalanceRating(aggressive)
         };
     }
     return null;
 }
+
+// === Game Simulation ===
 
 export function simulateGame(teamA, teamB, options = {}) {
     const {
@@ -49,69 +115,18 @@ export function simulateGame(teamA, teamB, options = {}) {
     // Fatigue tracking - shots taken per team
     let shotsA = 0;
     let shotsB = 0;
-    const FATIGUE_THRESHOLD = 15;
-    const FATIGUE_PENALTY = 0.03; // 3% per shot after threshold
 
     // Momentum tracking - consecutive makes/misses
     let streakA = 0; // positive = makes, negative = misses
     let streakB = 0;
-    const MOMENTUM_THRESHOLD = 3;
-    const MOMENTUM_BOOST = 0.08;  // +8% for hot streak
-    const MOMENTUM_PENALTY = 0.05; // -5% for cold streak
-
-    // Turnover settings
-    const BASE_TURNOVER_RATE = 0.08; // 8% base
-    // Playmaker rating reduces turnovers (high playmaker = fewer turnovers)
-    // We use balance as a proxy since we don't have per-player playmaker stats in team rating
-
-    // Rebounding settings
-    const OFFENSIVE_REBOUND_CHANCE = 0.25; // 25% chance
-
-    function gaussianRandom(mean = 0, stdDev = 1, min = -Infinity, max = Infinity) {
-        let result;
-        do {
-            let u1 = Math.random();
-            let u2 = Math.random();
-            let z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
-            result = z0 * stdDev + mean;
-        } while (result < min || result > max);
-
-        return result;
-    }
-
-    function sigmoid(x) {
-        return 1 / (1 + Math.exp(-x));
-    }
-
-    function balanceAdjusted(prob, balanceFactor) {
-        let maxBoost = 0.1;
-        return Math.min(1, prob + ((balanceFactor - 0.5)/0.5 * maxBoost));
-    }
-
-    function getFatiguePenalty(shots) {
-        if (shots <= FATIGUE_THRESHOLD) return 0;
-        return (shots - FATIGUE_THRESHOLD) * FATIGUE_PENALTY;
-    }
-
-    function getMomentumModifier(streak) {
-        if (streak >= MOMENTUM_THRESHOLD) {
-            return MOMENTUM_BOOST; // Hot streak
-        } else if (streak <= -MOMENTUM_THRESHOLD) {
-            return -MOMENTUM_PENALTY; // Cold streak
-        }
-        return 0;
-    }
 
     function checkTurnover(team) {
-        // Better balanced teams have fewer turnovers
-        const balanceModifier = (team.balance / 5) * 0.04; // Up to 4% reduction
-        const turnoverRate = Math.max(0.02, BASE_TURNOVER_RATE - balanceModifier);
+        const turnoverRate = calculateTurnoverRate(team.balance);
         return Math.random() < turnoverRate;
     }
 
     function checkOffensiveRebound(team, opponent) {
-        // Team's offense vs opponent's defense affects rebound chance
-        const reboundChance = OFFENSIVE_REBOUND_CHANCE * sigmoid((team.offense - opponent.defense) * 0.5 + 0.5);
+        const reboundChance = calculateReboundChance(team.offense, opponent.defense);
         return Math.random() < reboundChance;
     }
 
