@@ -190,15 +190,15 @@ export const players = [
             // Shooting
             shotClose: 70.7070707,
             shotMid: 70.7070707,
-            shot3pt: 70.7070707,
-            shotIQ: 70.7070707,
+            shot3pt: 76,
+            shotIQ: 70,
             freeThrow: 70.7070707,
             offensiveConsistency: 70.7070707,
             // Inside Scoring
             drivingLayup: 70.7070707,
-            standingDunk: 70.7070707,
-            drivingDunk: 70.7070707,
-            drawFoul: 70.7070707,
+            standingDunk: 15,
+            drivingDunk: 15,
+            drawFoul: 40,
             postMoves: 70.7070707,
             postHook: 70.7070707,
             postFade: 70.7070707,
@@ -580,7 +580,7 @@ export const players = [
             freeThrow: 72.0,
             offensiveConsistency: 94.0,
             // Inside Scoring
-            drivingLayup: 74.0,
+            drivingLayup: 70.0,
             standingDunk: 15.0,
             drivingDunk: 15.0,
             drawFoul: 78.0,
@@ -600,7 +600,7 @@ export const players = [
             ballHandle: 60.0,
             passingAccuracy: 68.0,
             passingVision: 66.0,
-            passingIQ: 70.0,
+            passingIQ: 55,
             // Defense
             interiorDefense: 81.0,
             perimeterDefense: 81.0,
@@ -744,7 +744,7 @@ export const players = [
             defensiveRebounding: 84.0,
             // Mental
             intangibles: 79.0,
-            potential: 88.0
+            potential: 86
         }
     },
 
@@ -835,48 +835,48 @@ export const players = [
         stats: {
             // Shooting
             shotClose: 83,
-            shotMid: 78,
-            shot3pt: 80,
+            shotMid: 80,
+            shot3pt: 82,
             shotIQ: 83,
             freeThrow: 82,
             offensiveConsistency: 84,
             // Inside Scoring
-            drivingLayup: 70,
-            standingDunk: 25,
-            drivingDunk: 25,
-            drawFoul: 70,
-            postMoves: 50,
-            postHook: 50,
-            postFade: 50,
-            hands: 70,
+            drivingLayup: 73,
+            standingDunk: 35,
+            drivingDunk: 35,
+            drawFoul: 75,
+            postMoves: 78,
+            postHook: 63,
+            postFade: 82,
+            hands: 84,
             // Athleticism
-            speed: 70,
-            acceleration: 70,
-            vertical: 65,
-            strength: 70,
-            stamina: 75,
-            hustle: 75,
+            speed: 85,
+            acceleration: 88,
+            vertical: 84,
+            strength: 91,
+            stamina: 94,
+            hustle: 94,
             // Playmaking
-            speedWithBall: 70,
-            ballHandle: 70,
-            passingAccuracy: 70,
-            passingVision: 70,
-            passingIQ: 70,
+            speedWithBall: 79,
+            ballHandle: 76,
+            passingAccuracy: 80,
+            passingVision: 80,
+            passingIQ: 86,
             // Defense
-            interiorDefense: 70,
-            perimeterDefense: 70,
-            helpDefenseIQ: 70,
-            lateralQuickness: 70,
-            passPerception: 70,
-            steal: 70,
-            block: 70,
-            defensiveConsistency: 70,
+            interiorDefense: 92,
+            perimeterDefense: 89,
+            helpDefenseIQ: 89,
+            lateralQuickness: 84,
+            passPerception: 80,
+            steal: 78,
+            block: 83,
+            defensiveConsistency: 97,
             // Rebounding
-            offensiveRebounding: 65,
-            defensiveRebounding: 70,
+            offensiveRebounding: 83,
+            defensiveRebounding: 87,
             // Mental
-            intangibles: 75,
-            potential: 70
+            intangibles: 85,
+            potential: 96
         }
     },
 
@@ -1452,7 +1452,7 @@ export const players = [
             defensiveRebounding: 70.7070707,
             // Mental
             intangibles: 90,
-            potential: 70.7070707
+            potential: 87
         }
     },
     {
@@ -1567,18 +1567,18 @@ export const players = [
             // Defense
             interiorDefense: 70.7070707,
             perimeterDefense: 70.7070707,
-            helpDefenseIQ: 70.7070707,
+            helpDefenseIQ: 92,
             lateralQuickness: 70.7070707,
             passPerception: 70.7070707,
-            steal: 70.7070707,
-            block: 70.7070707,
+            steal: 92,
+            block: 85,
             defensiveConsistency: 70.7070707,
             // Rebounding
             offensiveRebounding: 70.7070707,
             defensiveRebounding: 70.7070707,
             // Mental
-            intangibles: 70.7070707,
-            potential: 70.7070707
+            intangibles: 99,
+            potential: 92
         }
     },
 
@@ -1731,7 +1731,7 @@ export const players = [
             // Shooting
             shotClose: 74.0,
             shotMid: 84.0,
-            shot3pt: 89.0,
+            shot3pt: 92.0,
             shotIQ: 93.0,
             freeThrow: 96.0,
             offensiveConsistency: 90.0,
@@ -1988,10 +1988,10 @@ export const players = [
         aggressive: 0.5,
         stats: {
             // Shooting
-            shotClose: 70.7070707,
-            shotMid: 70.7070707,
-            shot3pt: 70.7070707,
-            shotIQ: 70.7070707,
+            shotClose: 84,
+            shotMid: 84,
+            shot3pt: 86,
+            shotIQ: 85,
             freeThrow: 70.7070707,
             offensiveConsistency: 70.7070707,
             // Inside Scoring
@@ -2008,14 +2008,14 @@ export const players = [
             acceleration: 70.7070707,
             vertical: 70.7070707,
             strength: 70.7070707,
-            stamina: 70.7070707,
-            hustle: 70.7070707,
+            stamina: 90,
+            hustle: 86,
             // Playmaking
             speedWithBall: 70.7070707,
-            ballHandle: 70.7070707,
-            passingAccuracy: 70.7070707,
-            passingVision: 70.7070707,
-            passingIQ: 70.7070707,
+            ballHandle: 75,
+            passingAccuracy: 75,
+            passingVision: 70,
+            passingIQ: 70,
             // Defense
             interiorDefense: 70.7070707,
             perimeterDefense: 70.7070707,
@@ -2029,8 +2029,8 @@ export const players = [
             offensiveRebounding: 70.7070707,
             defensiveRebounding: 70.7070707,
             // Mental
-            intangibles: 70.7070707,
-            potential: 70.7070707
+            intangibles: 95,
+            potential: 92
         }
     },
     {
