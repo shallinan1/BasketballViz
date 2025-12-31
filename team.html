@@ -928,7 +928,15 @@
       }
       updateRecord();
 
-      players.sort((a, b) => a.number - b.number);
+      // Sort players by max position rating (descending)
+      const getMaxRating = (stats) => Math.max(
+        computePGRating(stats),
+        computeSGRating(stats),
+        computeSFRating(stats),
+        computePFRating(stats),
+        computeCRating(stats)
+      );
+      players.sort((a, b) => getMaxRating(b.stats || {}) - getMaxRating(a.stats || {}));
 
       // Helper to get acceptable positions and best rating for a player
       // Uses computePosition which shows primary + co-positions within 1 point of max
@@ -1824,6 +1832,7 @@
   </div>
 
   <h1>Basketball Team Picker</h1>
+  <p style="text-align: center; margin-bottom: 20px;"><a href="spreadsheet.html" style="color: #FF6600;">View Player Stats Spreadsheet</a></p>
 
   <div class="container">
     <label style="color: var(--text-primary); font-size: 1.1em; font-weight: 400; margin-bottom: 32px; display: block; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;">

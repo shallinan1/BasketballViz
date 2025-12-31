@@ -8,6 +8,7 @@ BasketballViz is designed for the IMA (intramural) basketball league, featuring 
 
 - **Player Rankings** (`index.html`) - Browse all players with their stats, descriptions, and ranking history
 - **Team Builder & Simulator** (`team.html`) - Build teams and simulate games
+- **Stats Spreadsheet** (`spreadsheet.html`) - Excel-like view of all player stats with formulas
 
 ## Features
 
@@ -41,6 +42,14 @@ Players have position-specific ratings (PG, SG, SF, PF, C) that affect their eff
 
 The player selection list shows each player's acceptable positions and best rating at a glance.
 
+### Stats Spreadsheet
+A full Excel-like spreadsheet view (`spreadsheet.html`) with:
+- **All player stats** displayed in a sortable, filterable table
+- **Computed columns** - Category totals (Shooting, Inside Scoring, etc.) calculated using formulas
+- **Position ratings** - PG/SG/SF/PF/C ratings computed dynamically
+- **Editable cells** - Modify stats to see how changes affect computed ratings
+- **Password-protected export** - Save changes with authorization
+
 ### Player Data
 Each player includes:
 - Position, height, weight, age, and season count
@@ -52,7 +61,7 @@ Each player includes:
   - **Playmaking**: Ball Handle, Pass Accuracy/Vision/IQ, Speed with Ball
   - **Defense**: Interior/Perimeter Defense, Steal, Block, Help Defense IQ
   - **Rebounding**: Offensive and Defensive Rebounding
-  - **Position Ratings**: PG/SG/SF/PF/C ratings for position fit calculation
+  - **Position Ratings**: PG/SG/SF/PF/C ratings computed dynamically from stats
 - Trait icons (Clutch Gene, Speed Demon, Shot Blocking, etc.)
 - NBA player comparisons ("Shades of...")
 - Narrative descriptions
@@ -63,7 +72,8 @@ Each player includes:
 BasketballViz/
 ├── index.html          # Player rankings display
 ├── team.html           # Team builder & game simulator
-├── players.js          # Player database (42 players)
+├── spreadsheet.html    # Excel-like stats editor
+├── players.js          # Player database with stat formulas
 ├── gameSimulator.js    # Game simulation engine
 ├── images/             # Player profile photos
 └── icons/              # Trait/attribute icons
@@ -79,6 +89,27 @@ The simulator runs discrete possessions with probabilistic outcomes:
 2. Shot success uses Gaussian distribution weighted by offense-defense differential
 3. Team balance provides a ±10% boost to shot success rates
 4. First to 15 points wins (must win by 2+)
+
+### Dynamic Rating System
+
+All aggregate stats and position ratings are computed dynamically using formulas:
+
+**Category Totals:**
+- **Shooting**: Weighted combination of shot types with offensive consistency multiplier
+- **Inside Scoring**: Top moves weighted heavily, plus hands and draw foul
+- **Athleticism**: Speed, acceleration, vertical, strength (21% each) + stamina, hustle (8% each)
+- **Playmaking**: Ball handling and passing attributes equally weighted
+- **Defense**: Interior/perimeter defense weighted by consistency multiplier
+- **Rebounding**: Average of offensive and defensive rebounding
+
+**Position Ratings** (weighted combinations of category totals):
+- **PG**: 36% Playmaking, 28% Shooting, 16% Athleticism
+- **SG**: 34% Shooting, 19% Athleticism, 16% Playmaking
+- **SF**: 21% Shooting, 20% Athleticism, 20% Defense, 17% Inside
+- **PF**: 24% Athleticism, 21% Inside, 20% Defense, 19% Rebounding
+- **C**: 25% Defense, 25% Rebounding, 24% Inside, 20% Athleticism
+
+**Position Display**: Shows primary position (max rating) plus co-positions within 1 point (e.g., "PG/SG", "SF/PF").
 
 ### Team Balancing Algorithm
 

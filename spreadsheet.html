@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Stats Spreadsheet</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #eee;
+        }
+        h1 {
+            color: #FF6600;
+            margin-bottom: 10px;
+        }
+        .controls {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .controls button {
+            padding: 8px 16px;
+            background: #FF6600;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .controls button:hover {
+            background: #e55a00;
+        }
+        .controls button.secondary {
+            background: #444;
+        }
+        .controls button.secondary:hover {
+            background: #555;
+        }
+        .search-box {
+            padding: 8px 12px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background: #2a2a3e;
+            color: #eee;
+            font-size: 14px;
+            width: 200px;
+        }
+        .table-container {
+            overflow-x: auto;
+            border: 1px solid #333;
+            border-radius: 4px;
+        }
+        table {
+            border-collapse: collapse;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 6px 8px;
+            text-align: center;
+            min-width: 60px;
+        }
+        th {
+            background: #2a2a3e;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            cursor: pointer;
+            user-select: none;
+        }
+        th:hover {
+            background: #3a3a4e;
+        }
+        th.sorted-asc::after {
+            content: ' ▲';
+            font-size: 10px;
+        }
+        th.sorted-desc::after {
+            content: ' ▼';
+            font-size: 10px;
+        }
+        .category-header {
+            background: #FF6600 !important;
+            color: white;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 11;
+        }
+        .sub-header {
+            top: 28px !important;
+            z-index: 9 !important;
+        }
+        td {
+            background: #1e1e2e;
+        }
+        td.editable {
+            background: #252538;
+            cursor: text;
+        }
+        td.editable:hover {
+            background: #303048;
+        }
+        td.editable:focus {
+            outline: 2px solid #FF6600;
+            background: #353550;
+        }
+        td.computed {
+            background: #1a2a1a;
+            color: #8f8;
+            font-weight: bold;
+        }
+        td.position-rating {
+            background: #1a1a2a;
+            color: #88f;
+            font-weight: bold;
+        }
+        td.overall {
+            background: #2a1a1a;
+            color: #f88;
+            font-weight: bold;
+        }
+        td.name-cell {
+            position: sticky;
+            left: 0;
+            background: #2a2a3e;
+            z-index: 5;
+            font-weight: bold;
+            text-align: left;
+        }
+        td.modified {
+            background: #4a3a1a !important;
+        }
+        td.default-value {
+            color: #666;
+            font-style: italic;
+        }
+        tr:hover td {
+            filter: brightness(1.1);
+        }
+        .filter-input {
+            width: 100%;
+            padding: 2px 4px;
+            font-size: 10px;
+            border: 1px solid #444;
+            background: #1a1a2e;
+            color: #eee;
+            margin-top: 4px;
+            border-radius: 2px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: #2a2a3e;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+        }
+        .modal-content h2 {
+            margin-top: 0;
+            color: #FF6600;
+        }
+        .modal-content input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background: #1a1a2e;
+            color: #eee;
+            font-size: 16px;
+        }
+        .modal-content textarea {
+            width: 100%;
+            height: 300px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background: #1a1a2e;
+            color: #eee;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+        }
+        .changes-indicator {
+            color: #f88;
+            font-weight: bold;
+        }
+        a {
+            color: #FF6600;
+        }
+    </style>
+</head>
+<body>
+    <h1>Player Stats Spreadsheet</h1>
+    <p><a href="team.html">← Back to Team Builder</a></p>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background: #252538;"></div>
+            <span>Editable</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #1a2a1a;"></div>
+            <span>Computed (Category)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #1a1a2a;"></div>
+            <span>Position Rating</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #2a1a1a;"></div>
+            <span>Overall</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #4a3a1a;"></div>
+            <span>Modified</span>
+        </div>
+    </div>
+
+    <div class="controls">
+        <input type="text" class="search-box" id="searchBox" placeholder="Search players...">
+        <button onclick="resetFilters()">Reset Filters</button>
+        <button onclick="resetChanges()" class="secondary">Reset Changes</button>
+        <button onclick="showExportModal()">Export Changes</button>
+        <span class="changes-indicator" id="changesIndicator"></span>
+    </div>
+
+    <div class="table-container">
+        <table id="statsTable">
+            <thead id="tableHead"></thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+    <!-- Password Modal -->
+    <div class="modal" id="passwordModal">
+        <div class="modal-content">
+            <h2>Enter Password</h2>
+            <p>Enter the secret password to export changes:</p>
+            <input type="password" id="passwordInput" placeholder="Password">
+            <div class="modal-buttons">
+                <button class="secondary" onclick="closeModal('passwordModal')">Cancel</button>
+                <button onclick="checkPassword()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div class="modal" id="exportModal">
+        <div class="modal-content">
+            <h2>Export Player Changes</h2>
+            <p>Copy the updated players.js content below:</p>
+            <textarea id="exportContent" readonly></textarea>
+            <div class="modal-buttons">
+                <button onclick="copyExport()">Copy to Clipboard</button>
+                <button class="secondary" onclick="closeModal('exportModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import {
+            players,
+            DEFAULT_STAT,
+            computeShooting,
+            computeInsideScoring,
+            computeAthleticism,
+            computePlaymaking,
+            computeDefense,
+            computeRebounding,
+            computePGRating,
+            computeSGRating,
+            computeSFRating,
+            computePFRating,
+            computeCRating,
+            computeOverallRating,
+            computePosition
+        } from './players.js';
+
+        // Simple hash function for client-side password check
+        // Note: For true security, this should be server-side
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // Pre-computed hash of the password (SHA-256)
+        const PASSWORD_HASH = '6a73ea4831812eb3fa8d7aba3c60c841788d5dcf34769eff47451e6c72babe4a';
+
+        // Track modifications
+        const modifications = new Map();
+
+        // Column definitions
+        const statColumns = [
+            // Shooting
+            { key: 'shotClose', label: 'Close', category: 'Shooting', editable: true },
+            { key: 'shotMid', label: 'Mid', category: 'Shooting', editable: true },
+            { key: 'shot3pt', label: '3PT', category: 'Shooting', editable: true },
+            { key: 'shotIQ', label: 'IQ', category: 'Shooting', editable: true },
+            { key: 'freeThrow', label: 'FT', category: 'Shooting', editable: true },
+            { key: 'offensiveConsistency', label: 'Consist', category: 'Shooting', editable: true },
+            { key: '_shooting', label: 'TOTAL', category: 'Shooting', computed: true, formula: computeShooting },
+
+            // Inside Scoring
+            { key: 'drivingLayup', label: 'Layup', category: 'Inside', editable: true },
+            { key: 'standingDunk', label: 'StDunk', category: 'Inside', editable: true },
+            { key: 'drivingDunk', label: 'DrDunk', category: 'Inside', editable: true },
+            { key: 'drawFoul', label: 'Foul', category: 'Inside', editable: true },
+            { key: 'postMoves', label: 'Post', category: 'Inside', editable: true },
+            { key: 'postHook', label: 'Hook', category: 'Inside', editable: true },
+            { key: 'postFade', label: 'Fade', category: 'Inside', editable: true },
+            { key: 'hands', label: 'Hands', category: 'Inside', editable: true },
+            { key: '_insideScoring', label: 'TOTAL', category: 'Inside', computed: true, formula: computeInsideScoring },
+
+            // Athleticism
+            { key: 'speed', label: 'Speed', category: 'Athletic', editable: true },
+            { key: 'acceleration', label: 'Accel', category: 'Athletic', editable: true },
+            { key: 'vertical', label: 'Vert', category: 'Athletic', editable: true },
+            { key: 'strength', label: 'Str', category: 'Athletic', editable: true },
+            { key: 'stamina', label: 'Stam', category: 'Athletic', editable: true },
+            { key: 'hustle', label: 'Hust', category: 'Athletic', editable: true },
+            { key: '_athleticism', label: 'TOTAL', category: 'Athletic', computed: true, formula: computeAthleticism },
+
+            // Playmaking
+            { key: 'speedWithBall', label: 'SwB', category: 'Playmaking', editable: true },
+            { key: 'ballHandle', label: 'Handle', category: 'Playmaking', editable: true },
+            { key: 'passingAccuracy', label: 'Acc', category: 'Playmaking', editable: true },
+            { key: 'passingVision', label: 'Vision', category: 'Playmaking', editable: true },
+            { key: 'passingIQ', label: 'IQ', category: 'Playmaking', editable: true },
+            { key: '_playmaking', label: 'TOTAL', category: 'Playmaking', computed: true, formula: computePlaymaking },
+
+            // Defense
+            { key: 'interiorDefense', label: 'Int', category: 'Defense', editable: true },
+            { key: 'perimeterDefense', label: 'Peri', category: 'Defense', editable: true },
+            { key: 'helpDefenseIQ', label: 'Help', category: 'Defense', editable: true },
+            { key: 'lateralQuickness', label: 'Lat', category: 'Defense', editable: true },
+            { key: 'passPerception', label: 'Perc', category: 'Defense', editable: true },
+            { key: 'steal', label: 'Stl', category: 'Defense', editable: true },
+            { key: 'block', label: 'Blk', category: 'Defense', editable: true },
+            { key: 'defensiveConsistency', label: 'Consist', category: 'Defense', editable: true },
+            { key: '_defense', label: 'TOTAL', category: 'Defense', computed: true, formula: computeDefense },
+
+            // Rebounding
+            { key: 'offensiveRebounding', label: 'Off', category: 'Rebound', editable: true },
+            { key: 'defensiveRebounding', label: 'Def', category: 'Rebound', editable: true },
+            { key: '_rebounding', label: 'TOTAL', category: 'Rebound', computed: true, formula: computeRebounding },
+
+            // Mental
+            { key: 'intangibles', label: 'Intang', category: 'Mental', editable: true },
+            { key: 'potential', label: 'Potent', category: 'Mental', editable: true },
+
+            // Position Ratings
+            { key: '_pgRating', label: 'PG', category: 'Position', posRating: true, formula: computePGRating },
+            { key: '_sgRating', label: 'SG', category: 'Position', posRating: true, formula: computeSGRating },
+            { key: '_sfRating', label: 'SF', category: 'Position', posRating: true, formula: computeSFRating },
+            { key: '_pfRating', label: 'PF', category: 'Position', posRating: true, formula: computePFRating },
+            { key: '_cRating', label: 'C', category: 'Position', posRating: true, formula: computeCRating },
+
+            // Overall
+            { key: '_overall', label: 'OVR', category: 'Overall', overall: true, formula: computeOverallRating },
+            { key: '_position', label: 'POS', category: 'Overall', overall: true, formula: computePosition }
+        ];
+
+        // Get unique categories
+        const categories = [...new Set(statColumns.map(c => c.category))];
+
+        // Current sort state
+        let sortColumn = null;
+        let sortDirection = 'asc';
+        let filters = {};
+
+        // Deep clone players for modifications
+        let playerData = JSON.parse(JSON.stringify(players));
+
+        // Get stats with modifications applied
+        function getPlayerStats(playerIndex) {
+            const player = playerData[playerIndex];
+            const stats = { ...player.stats };
+
+            // Apply any modifications
+            const playerMods = modifications.get(playerIndex);
+            if (playerMods) {
+                for (const [key, value] of playerMods) {
+                    stats[key] = value;
+                }
+            }
+
+            return stats;
+        }
+
+        // Build table headers
+        function buildHeaders() {
+            const thead = document.getElementById('tableHead');
+
+            // Category row
+            let categoryRow = '<tr>';
+            categoryRow += '<th class="category-header" rowspan="2">Player</th>';
+
+            let currentCategory = null;
+            let categorySpan = 0;
+
+            statColumns.forEach((col, i) => {
+                if (col.category !== currentCategory) {
+                    if (currentCategory !== null) {
+                        categoryRow += `<th class="category-header" colspan="${categorySpan}">${currentCategory}</th>`;
+                    }
+                    currentCategory = col.category;
+                    categorySpan = 1;
+                } else {
+                    categorySpan++;
+                }
+
+                if (i === statColumns.length - 1) {
+                    categoryRow += `<th class="category-header" colspan="${categorySpan}">${currentCategory}</th>`;
+                }
+            });
+            categoryRow += '</tr>';
+
+            // Column headers row
+            let headerRow = '<tr>';
+            statColumns.forEach((col, i) => {
+                headerRow += `<th class="sub-header" data-column="${i}" onclick="window.sortByColumn(${i})">${col.label}</th>`;
+            });
+            headerRow += '</tr>';
+
+            thead.innerHTML = categoryRow + headerRow;
+        }
+
+        // Build table body
+        function buildBody() {
+            const tbody = document.getElementById('tableBody');
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+
+            let rows = playerData.map((player, index) => ({ player, index }));
+
+            // Filter by search
+            if (searchTerm) {
+                rows = rows.filter(r => r.player.name.toLowerCase().includes(searchTerm));
+            }
+
+            // Sort
+            if (sortColumn !== null) {
+                rows.sort((a, b) => {
+                    const col = statColumns[sortColumn];
+                    let valA, valB;
+
+                    if (col.formula) {
+                        valA = col.formula(getPlayerStats(a.index));
+                        valB = col.formula(getPlayerStats(b.index));
+                    } else {
+                        valA = getPlayerStats(a.index)[col.key] || 0;
+                        valB = getPlayerStats(b.index)[col.key] || 0;
+                    }
+
+                    if (typeof valA === 'string') {
+                        return sortDirection === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                    }
+                    return sortDirection === 'asc' ? valA - valB : valB - valA;
+                });
+            }
+
+            let html = '';
+            rows.forEach(({ player, index }) => {
+                const stats = getPlayerStats(index);
+                const playerMods = modifications.get(index) || new Map();
+
+                html += '<tr>';
+                html += `<td class="name-cell">${player.name}</td>`;
+
+                statColumns.forEach(col => {
+                    let value;
+                    let cellClass = '';
+
+                    if (col.formula) {
+                        value = col.formula(stats);
+                        if (col.computed) cellClass = 'computed';
+                        else if (col.posRating) cellClass = 'position-rating';
+                        else if (col.overall) cellClass = 'overall';
+                    } else {
+                        value = stats[col.key];
+                        if (col.editable) {
+                            cellClass = 'editable';
+                            if (playerMods.has(col.key)) {
+                                cellClass += ' modified';
+                            } else if (value === DEFAULT_STAT) {
+                                cellClass += ' default-value';
+                            }
+                        }
+                    }
+
+                    const displayValue = typeof value === 'number' ?
+                        (Number.isInteger(value) ? value : value.toFixed(1)) : value;
+
+                    if (col.editable) {
+                        html += `<td class="${cellClass}" contenteditable="true"
+                            data-player="${index}" data-stat="${col.key}"
+                            onblur="window.handleCellEdit(this)"
+                            onkeydown="window.handleCellKeydown(event, this)">${displayValue}</td>`;
+                    } else {
+                        html += `<td class="${cellClass}">${displayValue}</td>`;
+                    }
+                });
+
+                html += '</tr>';
+            });
+
+            tbody.innerHTML = html;
+        }
+
+        // Sort by column
+        window.sortByColumn = function(columnIndex) {
+            // Clear previous sort indicators
+            document.querySelectorAll('th').forEach(th => {
+                th.classList.remove('sorted-asc', 'sorted-desc');
+            });
+
+            if (sortColumn === columnIndex) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortColumn = columnIndex;
+                sortDirection = 'desc'; // Default to descending for stats
+            }
+
+            // Add sort indicator
+            const th = document.querySelector(`th[data-column="${columnIndex}"]`);
+            if (th) {
+                th.classList.add(sortDirection === 'asc' ? 'sorted-asc' : 'sorted-desc');
+            }
+
+            buildBody();
+        };
+
+        // Handle cell edit
+        window.handleCellEdit = function(cell) {
+            const playerIndex = parseInt(cell.dataset.player);
+            const statKey = cell.dataset.stat;
+            const newValue = parseFloat(cell.textContent);
+
+            if (isNaN(newValue)) {
+                // Revert to original value
+                const stats = getPlayerStats(playerIndex);
+                cell.textContent = stats[statKey];
+                return;
+            }
+
+            // Store modification
+            if (!modifications.has(playerIndex)) {
+                modifications.set(playerIndex, new Map());
+            }
+
+            const originalValue = playerData[playerIndex].stats[statKey];
+            if (newValue !== originalValue) {
+                modifications.get(playerIndex).set(statKey, newValue);
+                cell.classList.add('modified');
+            } else {
+                modifications.get(playerIndex).delete(statKey);
+                cell.classList.remove('modified');
+                if (originalValue === DEFAULT_STAT) {
+                    cell.classList.add('default-value');
+                }
+            }
+
+            updateChangesIndicator();
+
+            // Rebuild to update computed columns
+            buildBody();
+        };
+
+        // Handle keydown in cells
+        window.handleCellKeydown = function(event, cell) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                cell.blur();
+            } else if (event.key === 'Tab') {
+                // Allow tab to move between cells
+            } else if (event.key === 'Escape') {
+                const playerIndex = parseInt(cell.dataset.player);
+                const statKey = cell.dataset.stat;
+                const stats = getPlayerStats(playerIndex);
+                cell.textContent = stats[statKey];
+                cell.blur();
+            }
+        };
+
+        // Update changes indicator
+        function updateChangesIndicator() {
+            let totalChanges = 0;
+            modifications.forEach(playerMods => {
+                totalChanges += playerMods.size;
+            });
+
+            const indicator = document.getElementById('changesIndicator');
+            if (totalChanges > 0) {
+                indicator.textContent = `${totalChanges} unsaved change${totalChanges > 1 ? 's' : ''}`;
+            } else {
+                indicator.textContent = '';
+            }
+        }
+
+        // Reset filters
+        window.resetFilters = function() {
+            document.getElementById('searchBox').value = '';
+            sortColumn = null;
+            sortDirection = 'asc';
+            document.querySelectorAll('th').forEach(th => {
+                th.classList.remove('sorted-asc', 'sorted-desc');
+            });
+            buildBody();
+        };
+
+        // Reset changes
+        window.resetChanges = function() {
+            if (modifications.size > 0 && !confirm('Are you sure you want to reset all changes?')) {
+                return;
+            }
+            modifications.clear();
+            updateChangesIndicator();
+            buildBody();
+        };
+
+        // Show export modal (requires password)
+        window.showExportModal = function() {
+            if (modifications.size === 0) {
+                alert('No changes to export.');
+                return;
+            }
+            document.getElementById('passwordModal').classList.add('active');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordInput').focus();
+        };
+
+        // Close modal
+        window.closeModal = function(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        };
+
+        // Check password
+        window.checkPassword = async function() {
+            const password = document.getElementById('passwordInput').value;
+            const inputHash = await hashPassword(password);
+            if (inputHash === PASSWORD_HASH) {
+                closeModal('passwordModal');
+                generateExport();
+            } else {
+                alert('Incorrect password.');
+            }
+        };
+
+        // Generate export content
+        function generateExport() {
+            // Apply modifications to player data
+            const exportData = JSON.parse(JSON.stringify(playerData));
+
+            modifications.forEach((playerMods, playerIndex) => {
+                playerMods.forEach((value, key) => {
+                    exportData[playerIndex].stats[key] = value;
+                });
+            });
+
+            // Generate JavaScript code
+            let code = '// Updated player stats - paste this into players.js\n';
+            code += '// Changes made:\n';
+
+            modifications.forEach((playerMods, playerIndex) => {
+                const playerName = playerData[playerIndex].name;
+                code += `// ${playerName}:\n`;
+                playerMods.forEach((value, key) => {
+                    const oldValue = playerData[playerIndex].stats[key];
+                    code += `//   ${key}: ${oldValue} -> ${value}\n`;
+                });
+            });
+
+            code += '\n// Updated stats objects:\n\n';
+
+            modifications.forEach((playerMods, playerIndex) => {
+                const player = exportData[playerIndex];
+                code += `// ${player.name}\n`;
+                code += `stats: {\n`;
+
+                const statGroups = [
+                    { comment: 'Shooting', keys: ['shotClose', 'shotMid', 'shot3pt', 'shotIQ', 'freeThrow', 'offensiveConsistency'] },
+                    { comment: 'Inside Scoring', keys: ['drivingLayup', 'standingDunk', 'drivingDunk', 'drawFoul', 'postMoves', 'postHook', 'postFade', 'hands'] },
+                    { comment: 'Athleticism', keys: ['speed', 'acceleration', 'vertical', 'strength', 'stamina', 'hustle'] },
+                    { comment: 'Playmaking', keys: ['speedWithBall', 'ballHandle', 'passingAccuracy', 'passingVision', 'passingIQ'] },
+                    { comment: 'Defense', keys: ['interiorDefense', 'perimeterDefense', 'helpDefenseIQ', 'lateralQuickness', 'passPerception', 'steal', 'block', 'defensiveConsistency'] },
+                    { comment: 'Rebounding', keys: ['offensiveRebounding', 'defensiveRebounding'] },
+                    { comment: 'Mental', keys: ['intangibles', 'potential'] }
+                ];
+
+                statGroups.forEach(group => {
+                    code += `    // ${group.comment}\n`;
+                    group.keys.forEach(key => {
+                        const value = player.stats[key];
+                        code += `    ${key}: ${value},\n`;
+                    });
+                });
+
+                code += `}\n\n`;
+            });
+
+            document.getElementById('exportContent').value = code;
+            document.getElementById('exportModal').classList.add('active');
+        }
+
+        // Copy export to clipboard
+        window.copyExport = function() {
+            const textarea = document.getElementById('exportContent');
+            textarea.select();
+            document.execCommand('copy');
+            alert('Copied to clipboard!');
+        };
+
+        // Search handler
+        document.getElementById('searchBox').addEventListener('input', () => {
+            buildBody();
+        });
+
+        // Handle password input enter key
+        document.getElementById('passwordInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Initialize
+        buildHeaders();
+        buildBody();
+    </script>
+</body>
+</html>
