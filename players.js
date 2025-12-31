@@ -1,4 +1,95 @@
 // players.js
+// Default stat value - stats with this exact value were not from CSV
+export const DEFAULT_STAT = 70.7070707;
+
+// Helper to check if a stat is a default value
+export const isDefaultStat = (value) => value === DEFAULT_STAT;
+
+// Category formulas from spreadsheet:
+
+// Shooting: (0.8 + offensiveConsistency/500) * 0.5*top1 + 0.35*avg(2nd,3rd) + 0.1*shotIQ + 0.05*freeThrow
+export const computeShooting = (stats) => {
+    const shots = [stats.shotClose, stats.shotMid, stats.shot3pt].sort((a, b) => b - a);
+    const consistencyMult = 0.8 + stats.offensiveConsistency / 500;
+    return Math.round(
+        consistencyMult * 0.5 * shots[0] +
+        0.35 * (shots[1] + shots[2]) / 2 +
+        0.1 * stats.shotIQ +
+        0.05 * stats.freeThrow
+    );
+};
+
+// Inside Scoring: 0.65*top1 + 0.2*avg(2nd,3rd) + 0.05*avg(4th,5th,6th) + 0.05*hands + 0.05*drawFoul
+export const computeInsideScoring = (stats) => {
+    const moves = [
+        stats.drivingLayup, stats.standingDunk, stats.drivingDunk,
+        stats.postMoves, stats.postHook, stats.postFade
+    ].sort((a, b) => b - a);
+    return Math.round(
+        0.65 * moves[0] +
+        0.2 * (moves[1] + moves[2]) / 2 +
+        0.05 * (moves[3] + moves[4] + moves[5]) / 3 +
+        0.05 * stats.hands +
+        0.05 * stats.drawFoul
+    );
+};
+
+// Athleticism: 0.21*speed + 0.21*accel + 0.21*vertical + 0.21*strength + 0.08*stamina + 0.08*hustle
+export const computeAthleticism = (stats) => {
+    return Math.round(
+        0.21 * stats.speed +
+        0.21 * stats.acceleration +
+        0.21 * stats.vertical +
+        0.21 * stats.strength +
+        0.08 * stats.stamina +
+        0.08 * stats.hustle
+    );
+};
+
+// Playmaking: 0.23*speedWithBall + 0.23*ballHandle + 0.23*passAccuracy + 0.23*passVision + 0.08*passIQ
+export const computePlaymaking = (stats) => {
+    return Math.round(
+        0.23 * stats.speedWithBall +
+        0.23 * stats.ballHandle +
+        0.23 * stats.passingAccuracy +
+        0.23 * stats.passingVision +
+        0.08 * stats.passingIQ
+    );
+};
+
+// Defense: (0.8 + defConsistency/500) * weighted formula
+export const computeDefense = (stats) => {
+    const consistencyMult = 0.8 + stats.defensiveConsistency / 500;
+    return Math.round(
+        consistencyMult * (
+            0.37 * Math.max(stats.interiorDefense, stats.perimeterDefense) +
+            0.15 * Math.min(stats.interiorDefense, stats.perimeterDefense) +
+            0.1 * Math.max(stats.steal, stats.block) +
+            0.08 * Math.min(stats.steal, stats.block) +
+            0.1 * stats.helpDefenseIQ +
+            0.1 * stats.lateralQuickness +
+            0.1 * stats.passPerception
+        )
+    );
+};
+
+// Rebounding: average(offReb, defReb)
+export const computeRebounding = (stats) => {
+    return Math.round((stats.offensiveRebounding + stats.defensiveRebounding) / 2);
+};
+
+// Overall rating: round(MAX(position ratings) + Intangibles/100 + Potential/200)
+export const computeOverallRating = (stats) => {
+    const maxPositionRating = Math.max(
+        stats.pgRating,
+        stats.sgRating,
+        stats.sfRating,
+        stats.pfRating,
+        stats.cRating
+    );
+    return Math.round(maxPositionRating + stats.intangibles / 100 + stats.potential / 200);
+};
+
 export const players = [
 
     {
@@ -15,16 +106,68 @@ export const players = [
         description: "<b>A raw, floor-stretching big with boundless hustle</b>, still finding his footing and defensive identity.",
         icons: ["Spacer", "Ridiculous Upside"],
         shades_of: ["Karl-Anthony Towns", "Mo Bamba"],
-        offense: 0.2,
-        defense: 0.55,
-        aggressive: 0.35,
+        offense: 0.70,
+        defense: 0.70,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.2,
-            shooting3: 0.2,
-            playmaking: 0.2,
-            perimeterDefense: 0.55,
-            interiorDefense: 0.55,
-            rebounding: 0.47
+            // Shared ratings (0-100 scale)
+            overall: 70.7070707,
+            // Shooting
+            shooting: 70.7070707,
+            shotClose: 70.7070707,
+            shotMid: 70.7070707,
+            shot3pt: 70.7070707,
+            shotIQ: 70.7070707,
+            freeThrow: 70.7070707,
+            offensiveConsistency: 70.7070707,
+            // Inside Scoring
+            insideScoring: 70.7070707,
+            drivingLayup: 70.7070707,
+            standingDunk: 70.7070707,
+            drivingDunk: 70.7070707,
+            drawFoul: 70.7070707,
+            postMoves: 70.7070707,
+            postHook: 70.7070707,
+            postFade: 70.7070707,
+            hands: 70.7070707,
+            // Athleticism
+            athleticism: 70.7070707,
+            speed: 70.7070707,
+            acceleration: 70.7070707,
+            vertical: 70.7070707,
+            strength: 70.7070707,
+            stamina: 70.7070707,
+            hustle: 70.7070707,
+            // Playmaking
+            playmaking: 70.7070707,
+            speedWithBall: 70.7070707,
+            ballHandle: 70.7070707,
+            passingAccuracy: 70.7070707,
+            passingVision: 70.7070707,
+            passingIQ: 70.7070707,
+            // Defense
+            defense: 70.7070707,
+            interiorDefense: 70.7070707,
+            perimeterDefense: 70.7070707,
+            helpDefenseIQ: 70.7070707,
+            lateralQuickness: 70.7070707,
+            passPerception: 70.7070707,
+            steal: 70.7070707,
+            block: 70.7070707,
+            defensiveConsistency: 70.7070707,
+            // Rebounding
+            rebounding: 70.7070707,
+            offensiveRebounding: 70.7070707,
+            defensiveRebounding: 70.7070707,
+            // Mental
+            intangibles: 70.7070707,
+            potential: 70.7070707,
+            // Position Ratings
+            pgRating: 70.7070707,
+            sgRating: 70.7070707,
+            sfRating: 70.7070707,
+            pfRating: 70.7070707,
+            cRating: 70.7070707,
         },
     },
     {
@@ -40,16 +183,68 @@ export const players = [
         description: "<b>An on-ball menace with elite instincts</b>, paired with smooth offense that prizes efficiency over flair.",
         icons: ["Positional Versatility", "Finisher", "On-Ball Defense", "Injury Concerns"],
         shades_of: ["Dyson Daniels", "Trey Murphy"],
-        offense: 0.85,
-        defense: 0.9,
-        aggressive: 0.25,
+        offense: 0.83,
+        defense: 0.87,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.85,
-            shooting3: 0.85,
-            playmaking: 0.85,
-            perimeterDefense: 0.9,
-            interiorDefense: 0.9,
-            rebounding: 0.64
+            // Shared ratings (0-100 scale)
+            overall: 84.0,
+            // Shooting
+            shooting: 81.0,
+            shotClose: 83.0,
+            shotMid: 82.0,
+            shot3pt: 80.0,
+            shotIQ: 83.0,
+            freeThrow: 84.0,
+            offensiveConsistency: 84.0,
+            // Inside Scoring
+            insideScoring: 83.0,
+            drivingLayup: 88.0,
+            standingDunk: 25.0,
+            drivingDunk: 45.0,
+            drawFoul: 72.0,
+            postMoves: 75.0,
+            postHook: 77.0,
+            postFade: 82.0,
+            hands: 85.0,
+            // Athleticism
+            athleticism: 85.0,
+            speed: 87.0,
+            acceleration: 84.0,
+            vertical: 82.0,
+            strength: 81.0,
+            stamina: 92.0,
+            hustle: 88.0,
+            // Playmaking
+            playmaking: 84.0,
+            speedWithBall: 86.0,
+            ballHandle: 83.0,
+            passingAccuracy: 82.0,
+            passingVision: 86.0,
+            passingIQ: 85.0,
+            // Defense
+            defense: 87.0,
+            interiorDefense: 85.0,
+            perimeterDefense: 94.0,
+            helpDefenseIQ: 80.0,
+            lateralQuickness: 91.0,
+            passPerception: 83.0,
+            steal: 93.0,
+            block: 80.0,
+            defensiveConsistency: 91.0,
+            // Rebounding
+            rebounding: 66.0,
+            offensiveRebounding: 62.0,
+            defensiveRebounding: 70.0,
+            // Mental
+            intangibles: 90.0,
+            potential: 70.0,
+            // Position Ratings
+            pgRating: 82.8,
+            sgRating: 82.3,
+            sfRating: 81.8,
+            pfRating: 80.9,
+            cRating: 80.1,
         },
     },
     {
@@ -65,17 +260,72 @@ export const players = [
         description: "<b>Elite rebounder</b> with a knack for bold, clever passes that keep defenses guessing -- and fellow teammates too.",
         icons: ["Rebounding", "Clutch Gene", "Passing Virtuoso", "Feel For the Game" ],
         shades_of: ["Josh Hart", "Scottie Barnes"],
-        offense: 0.55,
-        defense: 0.65,
+        offense: 0.77,
+        defense: 0.75,
         aggressive: 0.5,
         stats: {
-            shooting2: 0.55,
-            shooting3: 0.55,
-            playmaking: 0.55,
-            perimeterDefense: 0.65,
-            interiorDefense: 0.65,
-            rebounding: 0.59
+            // Shared ratings (0-100 scale)
+            overall: 82.0,
+            // Shooting
+            shooting: 75.0,
+            shotClose: 74.0,
+            shotMid: 77.0,
+            shot3pt: 74.0,
+            shotIQ: 83.0,
+            freeThrow: 74.0,
+            offensiveConsistency: 84.0,
+            // Inside Scoring
+            insideScoring: 75.0,
+            drivingLayup: 82.0,
+            standingDunk: 15.0,
+            drivingDunk: 15.0,
+            drawFoul: 73.0,
+            postMoves: 61.0,
+            postHook: 64.0,
+            postFade: 61.0,
+            hands: 87.0,
+            // Athleticism
+            athleticism: 81.0,
+            speed: 79.0,
+            acceleration: 84.0,
+            vertical: 72.0,
+            strength: 81.0,
+            stamina: 91.0,
+            hustle: 93.0,
+            // Playmaking
+            playmaking: 82.0,
+            speedWithBall: 82.0,
+            ballHandle: 77.0,
+            passingAccuracy: 82.0,
+            passingVision: 89.0,
+            passingIQ: 80.0,
+            // Defense
+            defense: 75.0,
+            interiorDefense: 75.0,
+            perimeterDefense: 73.0,
+            helpDefenseIQ: 77.0,
+            lateralQuickness: 73.0,
+            passPerception: 80.0,
+            steal: 86.0,
+            block: 82.0,
+            defensiveConsistency: 90.0,
+            // Rebounding
+            rebounding: 91.0,
+            offensiveRebounding: 90.0,
+            defensiveRebounding: 92.0,
+            // Mental
+            intangibles: 92.0,
+            potential: 86.0,
+            // Position Ratings
+            pgRating: 79.1,
+            sgRating: 78.2,
+            sfRating: 78.8,
+            pfRating: 79.8,
+            cRating: 80.4,
         },
+        clips: [
+            { title: "Three-ball on Skyler", url: "https://youtube.com/clip/UgkxXafIb3WPrKtk8CRgbhopqngn0h6Jmznb?si=kHateymgvNyM7n0J" }
+        ],
     },
     {
         number: 2.99,
@@ -90,16 +340,68 @@ export const players = [
         description: "<b>Relentless on-ball defender</b> a consistent offense away from superstardom.",
         icons: ["On-Ball Defense", "Hustle", "Off-Ball Defense", "Got That Dog in Him"],
         shades_of: ["Dennis Schroeder", "Gary Payton II","Jose Alvarado", ],
-        offense: 0.45,
-        defense: 0.8,
-        aggressive: 0.6,
+        offense: 0.75,
+        defense: 0.82,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.45,
-            shooting3: 0.45,
-            playmaking: 0.45,
-            perimeterDefense: 0.8,
-            interiorDefense: 0.8,
-            rebounding: 0.72
+            // Shared ratings (0-100 scale)
+            overall: 78.0,
+            // Shooting
+            shooting: 75.0,
+            shotClose: 73.0,
+            shotMid: 77.0,
+            shot3pt: 73.0,
+            shotIQ: 80.0,
+            freeThrow: 77.0,
+            offensiveConsistency: 82.0,
+            // Inside Scoring
+            insideScoring: 73.0,
+            drivingLayup: 79.0,
+            standingDunk: 10.0,
+            drivingDunk: 10.0,
+            drawFoul: 80.0,
+            postMoves: 61.0,
+            postHook: 64.0,
+            postFade: 61.0,
+            hands: 78.0,
+            // Athleticism
+            athleticism: 81.0,
+            speed: 87.0,
+            acceleration: 85.0,
+            vertical: 71.0,
+            strength: 70.0,
+            stamina: 96.0,
+            hustle: 95.0,
+            // Playmaking
+            playmaking: 78.0,
+            speedWithBall: 83.0,
+            ballHandle: 77.0,
+            passingAccuracy: 78.0,
+            passingVision: 73.0,
+            passingIQ: 76.0,
+            // Defense
+            defense: 82.0,
+            interiorDefense: 74.0,
+            perimeterDefense: 87.0,
+            helpDefenseIQ: 82.0,
+            lateralQuickness: 84.0,
+            passPerception: 84.0,
+            steal: 92.0,
+            block: 71.0,
+            defensiveConsistency: 93.0,
+            // Rebounding
+            rebounding: 65.0,
+            offensiveRebounding: 63.0,
+            defensiveRebounding: 66.0,
+            // Mental
+            intangibles: 87.0,
+            potential: 84.0,
+            // Position Ratings
+            pgRating: 77.0,
+            sgRating: 76.5,
+            sfRating: 76.4,
+            pfRating: 75.7,
+            cRating: 75.1,
         },
     },
     {
@@ -115,17 +417,69 @@ export const players = [
         description: "<b>Crafty playmaker</b> sporting a silky crossover, with a knack for defending the perimeter.",
         icons: ["Passing Virtuoso", "Ballhandling", "Shot Blocking", "Pull-Up Threat"],
         shades_of: ["Kevin Durant"],
-        offense: 0.8,
-        defense: 0.65,
-        aggressive: 0.6,
+        offense: 0.53,
+        defense: 0.20,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.8,
-            shooting3: 0.8,
-            playmaking: 0.8,
-            perimeterDefense: 0.65,
-            interiorDefense: 0.65,
-            rebounding: 0.63
-        }
+            // Shared ratings (0-100 scale)
+            overall: 64.0,
+            // Shooting
+            shooting: 80.0,
+            shotClose: 75.0,
+            shotMid: 80.0,
+            shot3pt: 83.0,
+            shotIQ: 81.0,
+            freeThrow: 84.0,
+            offensiveConsistency: 94.0,
+            // Inside Scoring
+            insideScoring: 79.0,
+            drivingLayup: 85.0,
+            standingDunk: 15.0,
+            drivingDunk: 20.0,
+            drawFoul: 81.0,
+            postMoves: 62.0,
+            postHook: 70.0,
+            postFade: 70.0,
+            hands: 86.0,
+            // Athleticism
+            athleticism: 79.0,
+            speed: 86.0,
+            acceleration: 85.0,
+            vertical: 69.0,
+            strength: 67.0,
+            stamina: 91.0,
+            hustle: 91.0,
+            // Playmaking
+            playmaking: 0.0,
+            speedWithBall: 70.7070707,
+            ballHandle: 70.7070707,
+            passingAccuracy: 70.7070707,
+            passingVision: 70.7070707,
+            passingIQ: 70.7070707,
+            // Defense
+            defense: 20.0,
+            interiorDefense: 70.7070707,
+            perimeterDefense: 70.7070707,
+            helpDefenseIQ: 70.7070707,
+            lateralQuickness: 70.7070707,
+            passPerception: 71.0,
+            steal: 82.0,
+            block: 66.0,
+            defensiveConsistency: 85.0,
+            // Rebounding
+            rebounding: 78.0,
+            offensiveRebounding: 75.0,
+            defensiveRebounding: 80.0,
+            // Mental
+            intangibles: 89.0,
+            potential: 70.7070707,
+            // Position Ratings
+            pgRating: 46.1,
+            sgRating: 60.2,
+            sfRating: 59.4,
+            pfRating: 63.2,
+            cRating: 61.7,
+        },
     },
     {
         number: 3.0,
@@ -140,17 +494,72 @@ export const players = [
         description: "<b>High-energy point guard</b> who thrives on speed, constant movement, and creative shot-making.",
         icons: ["Lightning Rod", "Speed Demon", "Fast and Loose", "Floor General"],
         shades_of: ["Trae Young", "Tyus Jones"],
-        offense: 0.7,
-        defense: 0.6,
-        aggressive: 0.6,
+        offense: 0.79,
+        defense: 0.77,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.7,
-            shooting3: 0.7,
-            playmaking: 0.7,
-            perimeterDefense: 0.6,
-            interiorDefense: 0.6,
-            rebounding: 0.6
-        }
+            // Shared ratings (0-100 scale)
+            overall: 81.0,
+            // Shooting
+            shooting: 78.0,
+            shotClose: 77.0,
+            shotMid: 75.0,
+            shot3pt: 79.0,
+            shotIQ: 85.0,
+            freeThrow: 83.0,
+            offensiveConsistency: 92.0,
+            // Inside Scoring
+            insideScoring: 76.0,
+            drivingLayup: 81.0,
+            standingDunk: 10.0,
+            drivingDunk: 10.0,
+            drawFoul: 85.0,
+            postMoves: 60.0,
+            postHook: 76.0,
+            postFade: 50.0,
+            hands: 86.0,
+            // Athleticism
+            athleticism: 83.0,
+            speed: 91.0,
+            acceleration: 91.0,
+            vertical: 70.0,
+            strength: 67.0,
+            stamina: 99.0,
+            hustle: 95.0,
+            // Playmaking
+            playmaking: 83.0,
+            speedWithBall: 88.0,
+            ballHandle: 76.0,
+            passingAccuracy: 79.0,
+            passingVision: 87.0,
+            passingIQ: 84.0,
+            // Defense
+            defense: 77.0,
+            interiorDefense: 73.0,
+            perimeterDefense: 80.0,
+            helpDefenseIQ: 83.0,
+            lateralQuickness: 85.0,
+            passPerception: 82.0,
+            steal: 75.0,
+            block: 60.0,
+            defensiveConsistency: 94.0,
+            // Rebounding
+            rebounding: 73.0,
+            offensiveRebounding: 68.0,
+            defensiveRebounding: 78.0,
+            // Mental
+            intangibles: 92.0,
+            potential: 72.0,
+            // Position Ratings
+            pgRating: 80.2,
+            sgRating: 79.1,
+            sfRating: 78.4,
+            pfRating: 77.9,
+            cRating: 77.2,
+        },
+        clips: [
+            { title: "Three", url: "https://youtube.com/clip/UgkxpJ6BWfNVfjXVfu6psoPj0TLOsWTdrqPG?si=BY5-r299-FafZAbo" }
+        ],
     },
 
     {
@@ -165,18 +574,70 @@ export const players = [
         image: "images/byron.png", 
         description: "<b>Ageless hustle machine</b> defying father time with relentless effort, scrappy defense, and fearless dives.",
         icons: ["Hustle", "Ridiculous Upside", "Injury Concerns", "Sh*t Stirrer"],
-        shades_of: ["Killian Hayes", "Udonis Haslem",],
-        offense: 0.15,
-        defense: 0.6,
-        aggressive: 0.95,
+        shades_of: ["Killian Hayes", "Udonis Haslem", "Rudy Gobert (offense)"],
+        offense: 0.69,
+        defense: 0.76,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.15,
-            shooting3: 0.15,
-            playmaking: 0.15,
-            perimeterDefense: 0.6,
-            interiorDefense: 0.6,
-            rebounding: 0.74
-        }
+            // Shared ratings (0-100 scale)
+            overall: 74.0,
+            // Shooting
+            shooting: 70.0,
+            shotClose: 66.0,
+            shotMid: 72.0,
+            shot3pt: 68.0,
+            shotIQ: 70.0,
+            freeThrow: 72.0,
+            offensiveConsistency: 94.0,
+            // Inside Scoring
+            insideScoring: 67.0,
+            drivingLayup: 74.0,
+            standingDunk: 15.0,
+            drivingDunk: 15.0,
+            drawFoul: 78.0,
+            postMoves: 40.0,
+            postHook: 55.0,
+            postFade: 45.0,
+            hands: 73.0,
+            // Athleticism
+            athleticism: 80.0,
+            speed: 87.0,
+            acceleration: 84.0,
+            vertical: 60.0,
+            strength: 77.0,
+            stamina: 90.0,
+            hustle: 99.0,
+            // Playmaking
+            playmaking: 70.0,
+            speedWithBall: 86.0,
+            ballHandle: 60.0,
+            passingAccuracy: 68.0,
+            passingVision: 66.0,
+            passingIQ: 70.0,
+            // Defense
+            defense: 76.0,
+            interiorDefense: 81.0,
+            perimeterDefense: 81.0,
+            helpDefenseIQ: 69.0,
+            lateralQuickness: 79.0,
+            passPerception: 73.0,
+            steal: 67.0,
+            block: 68.0,
+            defensiveConsistency: 99.0,
+            // Rebounding
+            rebounding: 69.0,
+            offensiveRebounding: 69.0,
+            defensiveRebounding: 68.0,
+            // Mental
+            intangibles: 83.0,
+            potential: 89.0,
+            // Position Ratings
+            pgRating: 71.8,
+            sgRating: 72.1,
+            sfRating: 72.6,
+            pfRating: 72.8,
+            cRating: 72.5,
+        },
     },
 
     {
@@ -193,17 +654,69 @@ export const players = [
         description: "<b>High-usage scorer</b> whose strength and deliberate pace enable a versatile scoring package.",
         icons: ["Pull-up Threat", "Off-Ball Defense", "Post Moves", "Got That Dog In Him"],
         shades_of: ["Julius Randle", "LeBron James",],
-        offense: 0.85,
-        defense: 0.75,
-        aggressive: 0.95,
+        offense: 0.70,
+        defense: 0.70,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.85,
-            shooting3: 0.85,
-            playmaking: 0.85,
-            perimeterDefense: 0.75,
-            interiorDefense: 0.75,
-            rebounding: 0.83
-        }
+            // Shared ratings (0-100 scale)
+            overall: 70,
+            // Shooting
+            shooting: 70,
+            shotClose: 70,
+            shotMid: 70,
+            shot3pt: 70,
+            shotIQ: 70,
+            freeThrow: 70,
+            offensiveConsistency: 70,
+            // Inside Scoring
+            insideScoring: 70,
+            drivingLayup: 70,
+            standingDunk: 25,
+            drivingDunk: 25,
+            drawFoul: 70,
+            postMoves: 50,
+            postHook: 50,
+            postFade: 50,
+            hands: 70,
+            // Athleticism
+            athleticism: 70,
+            speed: 70,
+            acceleration: 70,
+            vertical: 65,
+            strength: 70,
+            stamina: 75,
+            hustle: 75,
+            // Playmaking
+            playmaking: 70,
+            speedWithBall: 70,
+            ballHandle: 70,
+            passingAccuracy: 70,
+            passingVision: 70,
+            passingIQ: 70,
+            // Defense
+            defense: 70,
+            interiorDefense: 70,
+            perimeterDefense: 70,
+            helpDefenseIQ: 70,
+            lateralQuickness: 70,
+            passPerception: 70,
+            steal: 70,
+            block: 70,
+            defensiveConsistency: 70,
+            // Rebounding
+            rebounding: 70,
+            offensiveRebounding: 65,
+            defensiveRebounding: 70,
+            // Mental
+            intangibles: 75,
+            potential: 70,
+            // Position Ratings
+            pgRating: 70,
+            sgRating: 70,
+            sfRating: 70,
+            pfRating: 70,
+            cRating: 70,
+        },
     },
 
     {
@@ -219,17 +732,69 @@ export const players = [
         description: "<b>An old-school center</b> whose strength and spacing make up for a lack of size.",
         icons: ["Spacer", "Shot Blocking"],
         shades_of: ["Chuck Hayes", "Kevon Looney"],
-        offense: 0.4,
-        defense: 0.6,
-        aggressive: 0.2,
+        offense: 0.74,
+        defense: 0.76,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.4,
-            shooting3: 0.4,
-            playmaking: 0.4,
-            perimeterDefense: 0.6,
-            interiorDefense: 0.6,
-            rebounding: 0.44
-        }
+            // Shared ratings (0-100 scale)
+            overall: 78.0,
+            // Shooting
+            shooting: 71.0,
+            shotClose: 72.0,
+            shotMid: 64.0,
+            shot3pt: 70.0,
+            shotIQ: 84.0,
+            freeThrow: 80.0,
+            offensiveConsistency: 90.0,
+            // Inside Scoring
+            insideScoring: 75.0,
+            drivingLayup: 80.0,
+            standingDunk: 10.0,
+            drivingDunk: 10.0,
+            drawFoul: 83.0,
+            postMoves: 68.0,
+            postHook: 68.0,
+            postFade: 63.0,
+            hands: 87.0,
+            // Athleticism
+            athleticism: 81.0,
+            speed: 76.0,
+            acceleration: 84.0,
+            vertical: 73.0,
+            strength: 92.0,
+            stamina: 78.0,
+            hustle: 85.0,
+            // Playmaking
+            playmaking: 75.0,
+            speedWithBall: 76.0,
+            ballHandle: 68.0,
+            passingAccuracy: 82.0,
+            passingVision: 71.0,
+            passingIQ: 83.0,
+            // Defense
+            defense: 76.0,
+            interiorDefense: 84.0,
+            perimeterDefense: 68.0,
+            helpDefenseIQ: 80.0,
+            lateralQuickness: 70.0,
+            passPerception: 70.0,
+            steal: 68.0,
+            block: 82.0,
+            defensiveConsistency: 92.0,
+            // Rebounding
+            rebounding: 79.0,
+            offensiveRebounding: 74.0,
+            defensiveRebounding: 84.0,
+            // Mental
+            intangibles: 79.0,
+            potential: 88.0,
+            // Position Ratings
+            pgRating: 75.1,
+            sgRating: 75.1,
+            sfRating: 76.0,
+            pfRating: 77.0,
+            cRating: 77.3,
+        },
     },
 
     {
@@ -245,17 +810,72 @@ export const players = [
         description: "<b>Fierce competitor</b> who excels at creating his own shot off-the-dribble.",
         icons: ["Pull-up Threat", "Clutch Gene", "Float Game", "Got That Dog in Him"],
         shades_of: ["Tyler Herro", "Kobe Bryant", ],
-        offense: 0.8,
-        defense: 0.4,
-        aggressive: 0.8,
+        offense: 0.81,
+        defense: 0.70,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.8,
-            shooting3: 0.8,
-            playmaking: 0.8,
-            perimeterDefense: 0.4,
-            interiorDefense: 0.4,
-            rebounding: 0.56
-        }
+            // Shared ratings (0-100 scale)
+            overall: 81.0,
+            // Shooting
+            shooting: 83.0,
+            shotClose: 83.0,
+            shotMid: 83.0,
+            shot3pt: 84.0,
+            shotIQ: 85.0,
+            freeThrow: 86.0,
+            offensiveConsistency: 87.0,
+            // Inside Scoring
+            insideScoring: 79.0,
+            drivingLayup: 85.0,
+            standingDunk: 15.0,
+            drivingDunk: 20.0,
+            drawFoul: 87.0,
+            postMoves: 66.0,
+            postHook: 68.0,
+            postFade: 68.0,
+            hands: 86.0,
+            // Athleticism
+            athleticism: 80.0,
+            speed: 86.0,
+            acceleration: 87.0,
+            vertical: 71.0,
+            strength: 70.0,
+            stamina: 86.0,
+            hustle: 84.0,
+            // Playmaking
+            playmaking: 82.0,
+            speedWithBall: 84.0,
+            ballHandle: 86.0,
+            passingAccuracy: 82.0,
+            passingVision: 75.0,
+            passingIQ: 80.0,
+            // Defense
+            defense: 70.0,
+            interiorDefense: 72.0,
+            perimeterDefense: 69.0,
+            helpDefenseIQ: 67.0,
+            lateralQuickness: 70.0,
+            passPerception: 72.0,
+            steal: 80.0,
+            block: 77.0,
+            defensiveConsistency: 83.0,
+            // Rebounding
+            rebounding: 71.0,
+            offensiveRebounding: 66.0,
+            defensiveRebounding: 76.0,
+            // Mental
+            intangibles: 78.0,
+            potential: 79.0,
+            // Position Ratings
+            pgRating: 80.3,
+            sgRating: 79.6,
+            sfRating: 77.6,
+            pfRating: 76.5,
+            cRating: 75.2,
+        },
+        clips: [
+            { title: "And-1", url: "https://youtube.com/clip/Ugkx6VimGhj3mVJmHvB4Jh348aWp_0QOAY1e?si=WHox66PMT5pthI5h" }
+        ],
     },
 
     {
@@ -272,17 +892,69 @@ export const players = [
         description: "<b>The prototypical modern power forward</b>, blending perimeter-stifling lateral quickness and strength with a dependable stroke from deep.",
         icons: ["On-Ball Defense", "Positional Versatility", "Spacer", "Hustle"],
         shades_of: ["OG Anunoby", "Kawhi Leonard", "Miles Bridges", "Aaron Gordon"],
-        offense: 0.75,
-        defense: 0.85,
-        aggressive: 0.4,
+        offense: 0.70,
+        defense: 0.70,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.75,
-            shooting3: 0.75,
-            playmaking: 0.75,
-            perimeterDefense: 0.85,
-            interiorDefense: 0.85,
-            rebounding: 0.67
-        }
+            // Shared ratings (0-100 scale)
+            overall: 70,
+            // Shooting
+            shooting: 70,
+            shotClose: 70,
+            shotMid: 70,
+            shot3pt: 70,
+            shotIQ: 70,
+            freeThrow: 70,
+            offensiveConsistency: 70,
+            // Inside Scoring
+            insideScoring: 70,
+            drivingLayup: 70,
+            standingDunk: 25,
+            drivingDunk: 25,
+            drawFoul: 70,
+            postMoves: 50,
+            postHook: 50,
+            postFade: 50,
+            hands: 70,
+            // Athleticism
+            athleticism: 70,
+            speed: 70,
+            acceleration: 70,
+            vertical: 65,
+            strength: 70,
+            stamina: 75,
+            hustle: 75,
+            // Playmaking
+            playmaking: 70,
+            speedWithBall: 70,
+            ballHandle: 70,
+            passingAccuracy: 70,
+            passingVision: 70,
+            passingIQ: 70,
+            // Defense
+            defense: 70,
+            interiorDefense: 70,
+            perimeterDefense: 70,
+            helpDefenseIQ: 70,
+            lateralQuickness: 70,
+            passPerception: 70,
+            steal: 70,
+            block: 70,
+            defensiveConsistency: 70,
+            // Rebounding
+            rebounding: 70,
+            offensiveRebounding: 65,
+            defensiveRebounding: 70,
+            // Mental
+            intangibles: 75,
+            potential: 70,
+            // Position Ratings
+            pgRating: 70,
+            sgRating: 70,
+            sfRating: 70,
+            pfRating: 70,
+            cRating: 70,
+        },
     },
 
     {
@@ -298,17 +970,69 @@ export const players = [
         description: "<b>Unpredictable, athletic spark plug</b> whose shooting streaks can ignite a team.",
         icons: ["Athleticism", "Pull-up Threat", "Spacer", "Lightning Rod"],
         shades_of: ["Michael Porter Jr.", "Klay Thompson"],
-        offense: 0.7,
-        defense: 0.55,
-        aggressive: 0.85,
+        offense: 0.79,
+        defense: 0.77,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.7,
-            shooting3: 0.7,
-            playmaking: 0.7,
-            perimeterDefense: 0.55,
-            interiorDefense: 0.55,
-            rebounding: 0.67
-        }
+            // Shared ratings (0-100 scale)
+            overall: 81.0,
+            // Shooting
+            shooting: 81.0,
+            shotClose: 80.0,
+            shotMid: 82.0,
+            shot3pt: 84.0,
+            shotIQ: 76.0,
+            freeThrow: 85.0,
+            offensiveConsistency: 86.0,
+            // Inside Scoring
+            insideScoring: 78.0,
+            drivingLayup: 82.0,
+            standingDunk: 20.0,
+            drivingDunk: 25.0,
+            drawFoul: 94.0,
+            postMoves: 66.0,
+            postHook: 74.0,
+            postFade: 69.0,
+            hands: 86.0,
+            // Athleticism
+            athleticism: 82.0,
+            speed: 85.0,
+            acceleration: 82.0,
+            vertical: 84.0,
+            strength: 78.0,
+            stamina: 84.0,
+            hustle: 82.0,
+            // Playmaking
+            playmaking: 79.0,
+            speedWithBall: 85.0,
+            ballHandle: 77.0,
+            passingAccuracy: 81.0,
+            passingVision: 74.0,
+            passingIQ: 79.0,
+            // Defense
+            defense: 77.0,
+            interiorDefense: 79.0,
+            perimeterDefense: 77.0,
+            helpDefenseIQ: 82.0,
+            lateralQuickness: 78.0,
+            passPerception: 77.0,
+            steal: 82.0,
+            block: 85.0,
+            defensiveConsistency: 85.0,
+            // Rebounding
+            rebounding: 77.0,
+            offensiveRebounding: 72.0,
+            defensiveRebounding: 82.0,
+            // Mental
+            intangibles: 83.0,
+            potential: 76.0,
+            // Position Ratings
+            pgRating: 79.7,
+            sgRating: 79.8,
+            sfRating: 79.2,
+            pfRating: 79.0,
+            cRating: 78.4,
+        },
     },
 
     {
@@ -324,17 +1048,72 @@ export const players = [
         description: "<b>Jack-of-all-trades</b> guard who attacks the rim at will and can lock your favorite player up.",  // on a meteoric rise
         icons: ["On-Ball Defense", "Finisher", "Hustle", "Speed Demon"],
         shades_of: ["T.J. McConnell", "Alex Caruso"],
-        offense: 0.8,
+        offense: 0.80,
         defense: 0.85,
-        aggressive: 0.85,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.8,
-            shooting3: 0.8,
-            playmaking: 0.8,
-            perimeterDefense: 0.85,
-            interiorDefense: 0.85,
-            rebounding: 0.85
-        }
+            // Shared ratings (0-100 scale)
+            overall: 82.0,
+            // Shooting
+            shooting: 79.0,
+            shotClose: 82.0,
+            shotMid: 80.0,
+            shot3pt: 72.0,
+            shotIQ: 78.0,
+            freeThrow: 77.0,
+            offensiveConsistency: 94.0,
+            // Inside Scoring
+            insideScoring: 82.0,
+            drivingLayup: 92.0,
+            standingDunk: 15.0,
+            drivingDunk: 15.0,
+            drawFoul: 88.0,
+            postMoves: 70.0,
+            postHook: 55.0,
+            postFade: 55.0,
+            hands: 82.0,
+            // Athleticism
+            athleticism: 84.0,
+            speed: 89.0,
+            acceleration: 88.0,
+            vertical: 74.0,
+            strength: 75.0,
+            stamina: 96.0,
+            hustle: 98.0,
+            // Playmaking
+            playmaking: 79.0,
+            speedWithBall: 88.0,
+            ballHandle: 78.0,
+            passingAccuracy: 80.0,
+            passingVision: 73.0,
+            passingIQ: 74.0,
+            // Defense
+            defense: 85.0,
+            interiorDefense: 82.0,
+            perimeterDefense: 91.0,
+            helpDefenseIQ: 83.0,
+            lateralQuickness: 87.0,
+            passPerception: 79.0,
+            steal: 80.0,
+            block: 79.0,
+            defensiveConsistency: 98.0,
+            // Rebounding
+            rebounding: 73.0,
+            offensiveRebounding: 72.0,
+            defensiveRebounding: 74.0,
+            // Mental
+            intangibles: 95.0,
+            potential: 85.0,
+            // Position Ratings
+            pgRating: 80.3,
+            sgRating: 80.7,
+            sfRating: 81.0,
+            pfRating: 80.9,
+            cRating: 80.7,
+        },
+        clips: [
+            { title: "Drive + Layup", url: "https://youtube.com/clip/UgkxskyBi7g8tjskUsv6RFlfV0fSQ-q_aCyQ?si=7cYp7Fei9NE-j_Xs" }
+        ],
     },
     {
         number: 7,
@@ -349,17 +1128,72 @@ export const players = [
         description: "<b>Silent scoring option</b> with an arsenal of moves.",
         icons: ["Spacer", "Float Game"],
         shades_of: ["Kyle Anderson"],
-        offense: 0.65,
-        defense: 0.2,
-        aggressive: 0.1,
+        offense: 0.78,
+        defense: 0.64,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.65,
-            shooting3: 0.65,
-            playmaking: 0.65,
-            perimeterDefense: 0.2,
-            interiorDefense: 0.2,
-            rebounding: 0.16
-        }
+            // Shared ratings (0-100 scale)
+            overall: 77.0,
+            // Shooting
+            shooting: 80.0,
+            shotClose: 77.0,
+            shotMid: 81.0,
+            shot3pt: 81.0,
+            shotIQ: 85.0,
+            freeThrow: 86.0,
+            offensiveConsistency: 84.0,
+            // Inside Scoring
+            insideScoring: 76.0,
+            drivingLayup: 81.0,
+            standingDunk: 10.0,
+            drivingDunk: 10.0,
+            drawFoul: 80.0,
+            postMoves: 64.0,
+            postHook: 69.0,
+            postFade: 60.0,
+            hands: 85.0,
+            // Athleticism
+            athleticism: 75.0,
+            speed: 82.0,
+            acceleration: 84.0,
+            vertical: 66.0,
+            strength: 65.0,
+            stamina: 84.0,
+            hustle: 70.0,
+            // Playmaking
+            playmaking: 79.0,
+            speedWithBall: 81.0,
+            ballHandle: 77.0,
+            passingAccuracy: 80.0,
+            passingVision: 75.0,
+            passingIQ: 83.0,
+            // Defense
+            defense: 64.0,
+            interiorDefense: 63.0,
+            perimeterDefense: 67.0,
+            helpDefenseIQ: 65.0,
+            lateralQuickness: 62.0,
+            passPerception: 73.0,
+            steal: 72.0,
+            block: 68.0,
+            defensiveConsistency: 75.0,
+            // Rebounding
+            rebounding: 58.0,
+            offensiveRebounding: 60.0,
+            defensiveRebounding: 56.0,
+            // Mental
+            intangibles: 68.0,
+            potential: 86.0,
+            // Position Ratings
+            pgRating: 76.4,
+            sgRating: 75.3,
+            sfRating: 72.4,
+            pfRating: 70.5,
+            cRating: 68.5,
+        },
+        clips: [
+            { title: "And-1 on GOMC", url: "https://youtube.com/clip/Ugkx5jlQcenBDyayuhBefPz3CNYnT2Bse5p4?si=O-aftAzvXTXlma5m" }
+        ],
     },
 
     {
@@ -375,17 +1209,69 @@ export const players = [
         description: "<b>Unpredictable loose cannon</b> whose creativity hurts as much as it helps.",
         icons: ["Fast and Loose", "Human Highlight"],
         shades_of: ["Kevin Porter Jr."],
-        offense: 0.15,
-        defense: 0.4,
-        aggressive: 0.95,
+        offense: 0.70,
+        defense: 0.70,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.15,
-            shooting3: 0.15,
-            playmaking: 0.15,
-            perimeterDefense: 0.4,
-            interiorDefense: 0.4,
-            rebounding: 0.62
-        }
+            // Shared ratings (0-100 scale)
+            overall: 70.7070707,
+            // Shooting
+            shooting: 70.7070707,
+            shotClose: 70.7070707,
+            shotMid: 70.7070707,
+            shot3pt: 70.7070707,
+            shotIQ: 70.7070707,
+            freeThrow: 70.7070707,
+            offensiveConsistency: 70.7070707,
+            // Inside Scoring
+            insideScoring: 70.7070707,
+            drivingLayup: 70.7070707,
+            standingDunk: 70.7070707,
+            drivingDunk: 70.7070707,
+            drawFoul: 70.7070707,
+            postMoves: 70.7070707,
+            postHook: 70.7070707,
+            postFade: 70.7070707,
+            hands: 70.7070707,
+            // Athleticism
+            athleticism: 70.7070707,
+            speed: 70.7070707,
+            acceleration: 70.7070707,
+            vertical: 70.7070707,
+            strength: 70.7070707,
+            stamina: 70.7070707,
+            hustle: 70.7070707,
+            // Playmaking
+            playmaking: 70.7070707,
+            speedWithBall: 70.7070707,
+            ballHandle: 70.7070707,
+            passingAccuracy: 70.7070707,
+            passingVision: 70.7070707,
+            passingIQ: 70.7070707,
+            // Defense
+            defense: 70.7070707,
+            interiorDefense: 70.7070707,
+            perimeterDefense: 70.7070707,
+            helpDefenseIQ: 70.7070707,
+            lateralQuickness: 70.7070707,
+            passPerception: 70.7070707,
+            steal: 70.7070707,
+            block: 70.7070707,
+            defensiveConsistency: 70.7070707,
+            // Rebounding
+            rebounding: 70.7070707,
+            offensiveRebounding: 70.7070707,
+            defensiveRebounding: 70.7070707,
+            // Mental
+            intangibles: 70.7070707,
+            potential: 70.7070707,
+            // Position Ratings
+            pgRating: 70.7070707,
+            sgRating: 70.7070707,
+            sfRating: 70.7070707,
+            pfRating: 70.7070707,
+            cRating: 70.7070707,
+        },
     },
     {
         number: 6.9,
@@ -400,17 +1286,69 @@ export const players = [
         description: "<b>Offensive talent</b> with the size to take it inside and the skill to shoot from way outside.",
         icons: ["Ballhandling", "Pull-up Threat", "Spacer", "Finisher"],
         shades_of: ["David Roddy"],
-        offense: 0.6,
-        defense: 0.5,
-        aggressive: 0.45,
+        offense: 0.70,
+        defense: 0.70,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.6,
-            shooting3: 0.6,
-            playmaking: 0.6,
-            perimeterDefense: 0.5,
-            interiorDefense: 0.5,
-            rebounding: 0.48
-        }
+            // Shared ratings (0-100 scale)
+            overall: 70.7070707,
+            // Shooting
+            shooting: 70.7070707,
+            shotClose: 70.7070707,
+            shotMid: 70.7070707,
+            shot3pt: 70.7070707,
+            shotIQ: 70.7070707,
+            freeThrow: 70.7070707,
+            offensiveConsistency: 70.7070707,
+            // Inside Scoring
+            insideScoring: 70.7070707,
+            drivingLayup: 70.7070707,
+            standingDunk: 70.7070707,
+            drivingDunk: 70.7070707,
+            drawFoul: 70.7070707,
+            postMoves: 70.7070707,
+            postHook: 70.7070707,
+            postFade: 70.7070707,
+            hands: 70.7070707,
+            // Athleticism
+            athleticism: 70.7070707,
+            speed: 70.7070707,
+            acceleration: 70.7070707,
+            vertical: 70.7070707,
+            strength: 70.7070707,
+            stamina: 70.7070707,
+            hustle: 70.7070707,
+            // Playmaking
+            playmaking: 70.7070707,
+            speedWithBall: 70.7070707,
+            ballHandle: 70.7070707,
+            passingAccuracy: 70.7070707,
+            passingVision: 70.7070707,
+            passingIQ: 70.7070707,
+            // Defense
+            defense: 70.7070707,
+            interiorDefense: 70.7070707,
+            perimeterDefense: 70.7070707,
+            helpDefenseIQ: 70.7070707,
+            lateralQuickness: 70.7070707,
+            passPerception: 70.7070707,
+            steal: 70.7070707,
+            block: 70.7070707,
+            defensiveConsistency: 70.7070707,
+            // Rebounding
+            rebounding: 70.7070707,
+            offensiveRebounding: 70.7070707,
+            defensiveRebounding: 70.7070707,
+            // Mental
+            intangibles: 70.7070707,
+            potential: 70.7070707,
+            // Position Ratings
+            pgRating: 70.7070707,
+            sgRating: 70.7070707,
+            sfRating: 70.7070707,
+            pfRating: 70.7070707,
+            cRating: 70.7070707,
+        },
     },
     {
         number: 2.8999,
@@ -425,17 +1363,69 @@ export const players = [
         description: "<b>Relentless enforcer</b> with elite help instincts and a smooth touch to match his grit.",
         icons: ["Shot Blocking", "Off-Ball Defense", "Sh*t Stirrer", "Ridiculous Upside"],
         shades_of: ["Brook Lopez", 'Myles Turner'],
-        offense: 0.6,
-        defense: 0.75,
-        aggressive: 0.4,
+        offense: 0.74,
+        defense: 0.81,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.6,
-            shooting3: 0.6,
-            playmaking: 0.6,
-            perimeterDefense: 0.75,
-            interiorDefense: 0.75,
-            rebounding: 0.61
-        }
+            // Shared ratings (0-100 scale)
+            overall: 81.0,
+            // Shooting
+            shooting: 77.0,
+            shotClose: 78.0,
+            shotMid: 84.0,
+            shot3pt: 58.0,
+            shotIQ: 84.0,
+            freeThrow: 86.0,
+            offensiveConsistency: 84.0,
+            // Inside Scoring
+            insideScoring: 73.0,
+            drivingLayup: 77.0,
+            standingDunk: 25.0,
+            drivingDunk: 25.0,
+            drawFoul: 72.0,
+            postMoves: 69.0,
+            postHook: 66.0,
+            postFade: 58.0,
+            hands: 87.0,
+            // Athleticism
+            athleticism: 81.0,
+            speed: 81.0,
+            acceleration: 76.0,
+            vertical: 75.0,
+            strength: 86.0,
+            stamina: 84.0,
+            hustle: 92.0,
+            // Playmaking
+            playmaking: 73.0,
+            speedWithBall: 77.0,
+            ballHandle: 64.0,
+            passingAccuracy: 77.0,
+            passingVision: 70.0,
+            passingIQ: 79.0,
+            // Defense
+            defense: 81.0,
+            interiorDefense: 87.0,
+            perimeterDefense: 80.0,
+            helpDefenseIQ: 86.0,
+            lateralQuickness: 80.0,
+            passPerception: 70.0,
+            steal: 73.0,
+            block: 85.0,
+            defensiveConsistency: 93.0,
+            // Rebounding
+            rebounding: 85.0,
+            offensiveRebounding: 82.0,
+            defensiveRebounding: 88.0,
+            // Mental
+            intangibles: 85.0,
+            potential: 83.0,
+            // Position Ratings
+            pgRating: 76.5,
+            sgRating: 77.5,
+            sfRating: 78.5,
+            pfRating: 79.2,
+            cRating: 79.7,
+        },
     },
     {
         number: 2.6,
@@ -450,17 +1440,69 @@ export const players = [
         description: "<b>Blistering guard</b> who thrives in transition and punishes defenses from deep.",
         icons: ["Speed Demon", "Pull-up Threat", "Fast and Loose", "Human Highlight"],
         shades_of: ["Tyrese Maxey", "Immanuel Quickley"],
-        offense: 0.8,
-        defense: 0.45,
-        aggressive: 0.85,
+        offense: 0.81,
+        defense: 0.79,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.8,
-            shooting3: 0.8,
-            playmaking: 0.8,
-            perimeterDefense: 0.45,
-            interiorDefense: 0.45,
-            rebounding: 0.61
-        }
+            // Shared ratings (0-100 scale)
+            overall: 82.0,
+            // Shooting
+            shooting: 81.0,
+            shotClose: 79.0,
+            shotMid: 82.0,
+            shot3pt: 85.0,
+            shotIQ: 79.0,
+            freeThrow: 86.0,
+            offensiveConsistency: 80.0,
+            // Inside Scoring
+            insideScoring: 80.0,
+            drivingLayup: 88.0,
+            standingDunk: 15.0,
+            drivingDunk: 20.0,
+            drawFoul: 84.0,
+            postMoves: 70.0,
+            postHook: 60.0,
+            postFade: 62.0,
+            hands: 85.0,
+            // Athleticism
+            athleticism: 82.0,
+            speed: 90.0,
+            acceleration: 94.0,
+            vertical: 71.0,
+            strength: 72.0,
+            stamina: 85.0,
+            hustle: 84.0,
+            // Playmaking
+            playmaking: 81.0,
+            speedWithBall: 89.0,
+            ballHandle: 84.0,
+            passingAccuracy: 83.0,
+            passingVision: 70.0,
+            passingIQ: 78.0,
+            // Defense
+            defense: 79.0,
+            interiorDefense: 74.0,
+            perimeterDefense: 84.0,
+            helpDefenseIQ: 77.0,
+            lateralQuickness: 86.0,
+            passPerception: 85.0,
+            steal: 82.0,
+            block: 54.0,
+            defensiveConsistency: 96.0,
+            // Rebounding
+            rebounding: 75.0,
+            offensiveRebounding: 70.0,
+            defensiveRebounding: 80.0,
+            // Mental
+            intangibles: 89.0,
+            potential: 70.0,
+            // Position Ratings
+            pgRating: 80.7,
+            sgRating: 80.5,
+            sfRating: 79.9,
+            pfRating: 79.5,
+            cRating: 79.0,
+        },
     },
     {
         number: 6.91,
@@ -475,17 +1517,69 @@ export const players = [
         description: "<b>Confident shooter</b> whose endurance is unmatched.",
         icons: ["Pull-up Threat", "Spacer", "Movement Shooter"],
         shades_of: ["Kevin Huerter", "Joe Harris"],
-        offense: 0.55,
-        defense: 0.55,
+        offense: 0.70,
+        defense: 0.70,
         aggressive: 0.5,
         stats: {
-            shooting2: 0.55,
-            shooting3: 0.55,
-            playmaking: 0.55,
-            perimeterDefense: 0.55,
-            interiorDefense: 0.55,
-            rebounding: 0.53
-        }
+            // Shared ratings (0-100 scale)
+            overall: 70.7070707,
+            // Shooting
+            shooting: 70.7070707,
+            shotClose: 70.7070707,
+            shotMid: 70.7070707,
+            shot3pt: 70.7070707,
+            shotIQ: 70.7070707,
+            freeThrow: 70.7070707,
+            offensiveConsistency: 70.7070707,
+            // Inside Scoring
+            insideScoring: 70.7070707,
+            drivingLayup: 70.7070707,
+            standingDunk: 70.7070707,
+            drivingDunk: 70.7070707,
+            drawFoul: 70.7070707,
+            postMoves: 70.7070707,
+            postHook: 70.7070707,
+            postFade: 70.7070707,
+            hands: 70.7070707,
+            // Athleticism
+            athleticism: 70.7070707,
+            speed: 70.7070707,
+            acceleration: 70.7070707,
+            vertical: 70.7070707,
+            strength: 70.7070707,
+            stamina: 70.7070707,
+            hustle: 70.7070707,
+            // Playmaking
+            playmaking: 70.7070707,
+            speedWithBall: 70.7070707,
+            ballHandle: 70.7070707,
+            passingAccuracy: 70.7070707,
+            passingVision: 70.7070707,
+            passingIQ: 70.7070707,
+            // Defense
+            defense: 70.7070707,
+            interiorDefense: 70.7070707,
+            perimeterDefense: 70.7070707,
+            helpDefenseIQ: 70.7070707,
+            lateralQuickness: 70.7070707,
+            passPerception: 70.7070707,
+            steal: 70.7070707,
+            block: 70.7070707,
+            defensiveConsistency: 70.7070707,
+            // Rebounding
+            rebounding: 70.7070707,
+            offensiveRebounding: 70.7070707,
+            defensiveRebounding: 70.7070707,
+            // Mental
+            intangibles: 70.7070707,
+            potential: 70.7070707,
+            // Position Ratings
+            pgRating: 70.7070707,
+            sgRating: 70.7070707,
+            sfRating: 70.7070707,
+            pfRating: 70.7070707,
+            cRating: 70.7070707,
+        },
     },
     {
         number: 3.51,
@@ -500,17 +1594,69 @@ export const players = [
         description: "<b>Steady small guard</b> who quietly cashes in from mid-range and beyond.",
         icons: ["Spacer", "Feel For the Game"],
         shades_of: ["De'Anthony Melton"],
-        offense: 0.65,
-        defense: 0.4,
-        aggressive: 0.3,
+        offense: 0.70,
+        defense: 0.70,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.65,
-            shooting3: 0.65,
-            playmaking: 0.65,
-            perimeterDefense: 0.4,
-            interiorDefense: 0.4,
-            rebounding: 0.36
-        }
+            // Shared ratings (0-100 scale)
+            overall: 70.7070707,
+            // Shooting
+            shooting: 70.7070707,
+            shotClose: 70.7070707,
+            shotMid: 70.7070707,
+            shot3pt: 70.7070707,
+            shotIQ: 70.7070707,
+            freeThrow: 70.7070707,
+            offensiveConsistency: 70.7070707,
+            // Inside Scoring
+            insideScoring: 70.7070707,
+            drivingLayup: 70.7070707,
+            standingDunk: 70.7070707,
+            drivingDunk: 70.7070707,
+            drawFoul: 70.7070707,
+            postMoves: 70.7070707,
+            postHook: 70.7070707,
+            postFade: 70.7070707,
+            hands: 70.7070707,
+            // Athleticism
+            athleticism: 70.7070707,
+            speed: 70.7070707,
+            acceleration: 70.7070707,
+            vertical: 70.7070707,
+            strength: 70.7070707,
+            stamina: 70.7070707,
+            hustle: 70.7070707,
+            // Playmaking
+            playmaking: 70.7070707,
+            speedWithBall: 70.7070707,
+            ballHandle: 70.7070707,
+            passingAccuracy: 70.7070707,
+            passingVision: 70.7070707,
+            passingIQ: 70.7070707,
+            // Defense
+            defense: 70.7070707,
+            interiorDefense: 70.7070707,
+            perimeterDefense: 70.7070707,
+            helpDefenseIQ: 70.7070707,
+            lateralQuickness: 70.7070707,
+            passPerception: 70.7070707,
+            steal: 70.7070707,
+            block: 70.7070707,
+            defensiveConsistency: 70.7070707,
+            // Rebounding
+            rebounding: 70.7070707,
+            offensiveRebounding: 70.7070707,
+            defensiveRebounding: 70.7070707,
+            // Mental
+            intangibles: 70.7070707,
+            potential: 70.7070707,
+            // Position Ratings
+            pgRating: 70.7070707,
+            sgRating: 70.7070707,
+            sfRating: 70.7070707,
+            pfRating: 70.7070707,
+            cRating: 70.7070707,
+        },
     },
     {
         number: 8.5,
@@ -525,17 +1671,69 @@ export const players = [
         description: "<b>Decisive driver</b> still searching for a rhythm from beyond the arc.",
         icons: ["Fast and Loose", "Ridiculous Upside"],
         shades_of: ["Russell Westbrook"],
-        offense: 0.3,
-        defense: 0.3,
-        aggressive: 0.75,
+        offense: 0.70,
+        defense: 0.70,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.3,
-            shooting3: 0.3,
-            playmaking: 0.3,
-            perimeterDefense: 0.3,
-            interiorDefense: 0.3,
-            rebounding: 0.48
-        }
+            // Shared ratings (0-100 scale)
+            overall: 70.7070707,
+            // Shooting
+            shooting: 70.7070707,
+            shotClose: 70.7070707,
+            shotMid: 70.7070707,
+            shot3pt: 70.7070707,
+            shotIQ: 70.7070707,
+            freeThrow: 70.7070707,
+            offensiveConsistency: 70.7070707,
+            // Inside Scoring
+            insideScoring: 70.7070707,
+            drivingLayup: 70.7070707,
+            standingDunk: 70.7070707,
+            drivingDunk: 70.7070707,
+            drawFoul: 70.7070707,
+            postMoves: 70.7070707,
+            postHook: 70.7070707,
+            postFade: 70.7070707,
+            hands: 70.7070707,
+            // Athleticism
+            athleticism: 70.7070707,
+            speed: 70.7070707,
+            acceleration: 70.7070707,
+            vertical: 70.7070707,
+            strength: 70.7070707,
+            stamina: 70.7070707,
+            hustle: 70.7070707,
+            // Playmaking
+            playmaking: 70.7070707,
+            speedWithBall: 70.7070707,
+            ballHandle: 70.7070707,
+            passingAccuracy: 70.7070707,
+            passingVision: 70.7070707,
+            passingIQ: 70.7070707,
+            // Defense
+            defense: 70.7070707,
+            interiorDefense: 70.7070707,
+            perimeterDefense: 70.7070707,
+            helpDefenseIQ: 70.7070707,
+            lateralQuickness: 70.7070707,
+            passPerception: 70.7070707,
+            steal: 70.7070707,
+            block: 70.7070707,
+            defensiveConsistency: 70.7070707,
+            // Rebounding
+            rebounding: 70.7070707,
+            offensiveRebounding: 70.7070707,
+            defensiveRebounding: 70.7070707,
+            // Mental
+            intangibles: 70.7070707,
+            potential: 70.7070707,
+            // Position Ratings
+            pgRating: 70.7070707,
+            sgRating: 70.7070707,
+            sfRating: 70.7070707,
+            pfRating: 70.7070707,
+            cRating: 70.7070707,
+        },
     },
     {
         number: 1.1,
@@ -550,17 +1748,69 @@ export const players = [
         description: "<b>A highly coveted two-way wing</b>, equally gifted at playmaking on offense and on defense.",
         icons: ["Pull-up Threat", "Passing Virtuoso", "Positional Versatility", "On-Ball Defense"],
         shades_of: ["Paul George", "D'Angelo Russell"],
-        offense: 0.9,
-        defense: 0.8,
+        offense: 0.70,
+        defense: 0.70,
         aggressive: 0.5,
         stats: {
-            shooting2: 0.9,
-            shooting3: 0.9,
-            playmaking: 0.9,
-            perimeterDefense: 0.8,
-            interiorDefense: 0.8,
-            rebounding: 0.68
-        }
+            // Shared ratings (0-100 scale)
+            overall: 70.7070707,
+            // Shooting
+            shooting: 70.7070707,
+            shotClose: 70.7070707,
+            shotMid: 70.7070707,
+            shot3pt: 70.7070707,
+            shotIQ: 70.7070707,
+            freeThrow: 70.7070707,
+            offensiveConsistency: 70.7070707,
+            // Inside Scoring
+            insideScoring: 70.7070707,
+            drivingLayup: 70.7070707,
+            standingDunk: 70.7070707,
+            drivingDunk: 70.7070707,
+            drawFoul: 70.7070707,
+            postMoves: 70.7070707,
+            postHook: 70.7070707,
+            postFade: 70.7070707,
+            hands: 70.7070707,
+            // Athleticism
+            athleticism: 70.7070707,
+            speed: 70.7070707,
+            acceleration: 70.7070707,
+            vertical: 70.7070707,
+            strength: 70.7070707,
+            stamina: 70.7070707,
+            hustle: 70.7070707,
+            // Playmaking
+            playmaking: 70.7070707,
+            speedWithBall: 70.7070707,
+            ballHandle: 70.7070707,
+            passingAccuracy: 70.7070707,
+            passingVision: 70.7070707,
+            passingIQ: 70.7070707,
+            // Defense
+            defense: 70.7070707,
+            interiorDefense: 70.7070707,
+            perimeterDefense: 70.7070707,
+            helpDefenseIQ: 70.7070707,
+            lateralQuickness: 70.7070707,
+            passPerception: 70.7070707,
+            steal: 70.7070707,
+            block: 70.7070707,
+            defensiveConsistency: 70.7070707,
+            // Rebounding
+            rebounding: 70.7070707,
+            offensiveRebounding: 70.7070707,
+            defensiveRebounding: 70.7070707,
+            // Mental
+            intangibles: 70.7070707,
+            potential: 70.7070707,
+            // Position Ratings
+            pgRating: 70.7070707,
+            sgRating: 70.7070707,
+            sfRating: 70.7070707,
+            pfRating: 70.7070707,
+            cRating: 70.7070707,
+        },
     },
 
     {
@@ -577,17 +1827,69 @@ export const players = [
         description: "<b>Unabashed tough-shot maker</b> able to take over a game", // whether he's hot or not
         icons: ["Movement Shooter", "Pull-up Threat", "Spacer", "Fast and Loose"],
         shades_of: ["Norman Powell"],
-        offense: 0.75,
-        defense: 0.65,
-        aggressive: 0.9,
+        offense: 0.70,
+        defense: 0.70,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.75,
-            shooting3: 0.75,
-            playmaking: 0.75,
-            perimeterDefense: 0.65,
-            interiorDefense: 0.65,
-            rebounding: 0.75
-        }
+            // Shared ratings (0-100 scale)
+            overall: 70.7070707,
+            // Shooting
+            shooting: 70.7070707,
+            shotClose: 70.7070707,
+            shotMid: 70.7070707,
+            shot3pt: 70.7070707,
+            shotIQ: 70.7070707,
+            freeThrow: 70.7070707,
+            offensiveConsistency: 70.7070707,
+            // Inside Scoring
+            insideScoring: 70.7070707,
+            drivingLayup: 70.7070707,
+            standingDunk: 70.7070707,
+            drivingDunk: 70.7070707,
+            drawFoul: 70.7070707,
+            postMoves: 70.7070707,
+            postHook: 70.7070707,
+            postFade: 70.7070707,
+            hands: 70.7070707,
+            // Athleticism
+            athleticism: 70.7070707,
+            speed: 70.7070707,
+            acceleration: 70.7070707,
+            vertical: 70.7070707,
+            strength: 70.7070707,
+            stamina: 70.7070707,
+            hustle: 70.7070707,
+            // Playmaking
+            playmaking: 70.7070707,
+            speedWithBall: 70.7070707,
+            ballHandle: 70.7070707,
+            passingAccuracy: 70.7070707,
+            passingVision: 70.7070707,
+            passingIQ: 70.7070707,
+            // Defense
+            defense: 70.7070707,
+            interiorDefense: 70.7070707,
+            perimeterDefense: 70.7070707,
+            helpDefenseIQ: 70.7070707,
+            lateralQuickness: 70.7070707,
+            passPerception: 70.7070707,
+            steal: 70.7070707,
+            block: 70.7070707,
+            defensiveConsistency: 70.7070707,
+            // Rebounding
+            rebounding: 70.7070707,
+            offensiveRebounding: 70.7070707,
+            defensiveRebounding: 70.7070707,
+            // Mental
+            intangibles: 70.7070707,
+            potential: 70.7070707,
+            // Position Ratings
+            pgRating: 70.7070707,
+            sgRating: 70.7070707,
+            sfRating: 70.7070707,
+            pfRating: 70.7070707,
+            cRating: 70.7070707,
+        },
     },
 
     {
@@ -603,17 +1905,69 @@ export const players = [
         description: "<b>Creative offensive playmaker</b> who dominates the post with savvy veteran moves.", // whether he's hot or not
         icons: ["Post Moves", "Passing Virtuoso", "Feel For the Game", "Floor General"],
         shades_of: ["Alperen Sengun", "Nikola Jokic", "Domantis Sabonis"],
-        offense: 0.75,
-        defense: 0.5,
-        aggressive: 0.75,
+        offense: 0.81,
+        defense: 0.76,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.75,
-            shooting3: 0.75,
-            playmaking: 0.75,
-            perimeterDefense: 0.5,
-            interiorDefense: 0.5,
-            rebounding: 0.6
-        }
+            // Shared ratings (0-100 scale)
+            overall: 81.0,
+            // Shooting
+            shooting: 77.0,
+            shotClose: 81.0,
+            shotMid: 77.0,
+            shot3pt: 71.0,
+            shotIQ: 83.0,
+            freeThrow: 80.0,
+            offensiveConsistency: 80.0,
+            // Inside Scoring
+            insideScoring: 83.0,
+            drivingLayup: 85.0,
+            standingDunk: 10.0,
+            drivingDunk: 10.0,
+            drawFoul: 85.0,
+            postMoves: 90.0,
+            postHook: 74.0,
+            postFade: 58.0,
+            hands: 65.0,
+            // Athleticism
+            athleticism: 79.0,
+            speed: 80.0,
+            acceleration: 83.0,
+            vertical: 70.0,
+            strength: 86.0,
+            stamina: 80.0,
+            hustle: 76.0,
+            // Playmaking
+            playmaking: 83.0,
+            speedWithBall: 78.0,
+            ballHandle: 77.0,
+            passingAccuracy: 87.0,
+            passingVision: 88.0,
+            passingIQ: 83.0,
+            // Defense
+            defense: 76.0,
+            interiorDefense: 83.0,
+            perimeterDefense: 77.0,
+            helpDefenseIQ: 72.0,
+            lateralQuickness: 76.0,
+            passPerception: 77.0,
+            steal: 85.0,
+            block: 64.0,
+            defensiveConsistency: 83.0,
+            // Rebounding
+            rebounding: 75.0,
+            offensiveRebounding: 70.0,
+            defensiveRebounding: 80.0,
+            // Mental
+            intangibles: 75.0,
+            potential: 78.0,
+            // Position Ratings
+            pgRating: 79.8,
+            sgRating: 79.0,
+            sfRating: 78.6,
+            pfRating: 78.5,
+            cRating: 78.3,
+        },
     },
 
     {
@@ -629,17 +1983,69 @@ export const players = [
         description: "<b>An almost unfathomably accurate shooter</b>, making him an unquestionably valuable addition for any team.",
         icons: ["Clutch Gene", "Spacer", "Feel For the Game"],
         shades_of: ["Eric Gordon",],
-        offense: 0.75,
-        defense: 0.6,
-        aggressive: 0.25,
+        offense: 0.82,
+        defense: 0.77,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.75,
-            shooting3: 0.75,
-            playmaking: 0.75,
-            perimeterDefense: 0.6,
-            interiorDefense: 0.6,
-            rebounding: 0.46
-        }
+            // Shared ratings (0-100 scale)
+            overall: 81.0,
+            // Shooting
+            shooting: 85.0,
+            shotClose: 74.0,
+            shotMid: 84.0,
+            shot3pt: 89.0,
+            shotIQ: 93.0,
+            freeThrow: 96.0,
+            offensiveConsistency: 90.0,
+            // Inside Scoring
+            insideScoring: 80.0,
+            drivingLayup: 85.0,
+            standingDunk: 10.0,
+            drivingDunk: 10.0,
+            drawFoul: 75.0,
+            postMoves: 73.0,
+            postHook: 77.0,
+            postFade: 75.0,
+            hands: 80.0,
+            // Athleticism
+            athleticism: 77.0,
+            speed: 84.0,
+            acceleration: 82.0,
+            vertical: 61.0,
+            strength: 78.0,
+            stamina: 82.0,
+            hustle: 84.0,
+            // Playmaking
+            playmaking: 80.0,
+            speedWithBall: 83.0,
+            ballHandle: 77.0,
+            passingAccuracy: 83.0,
+            passingVision: 79.0,
+            passingIQ: 80.0,
+            // Defense
+            defense: 77.0,
+            interiorDefense: 82.0,
+            perimeterDefense: 79.0,
+            helpDefenseIQ: 80.0,
+            lateralQuickness: 76.0,
+            passPerception: 73.0,
+            steal: 76.0,
+            block: 70.0,
+            defensiveConsistency: 89.0,
+            // Rebounding
+            rebounding: 75.0,
+            offensiveRebounding: 70.0,
+            defensiveRebounding: 80.0,
+            // Mental
+            intangibles: 89.0,
+            potential: 62.0,
+            // Position Ratings
+            pgRating: 80.5,
+            sgRating: 80.5,
+            sfRating: 79.3,
+            pfRating: 78.3,
+            cRating: 77.6,
+        },
     },
     {
         number: 2.5999,
@@ -654,17 +2060,69 @@ export const players = [
         description: "<b>A dynamic sharpshooter</b> with slick footwork and crafty finishes at the rim—when his shoulder lets him play. ",
         icons: ["Ballhandling", "Pull-up Threat", "Finisher",  "Injury Concerns"],
         shades_of: ["Ty Jerome", "Payton Pritchard"],
-        offense: 0.8,
-        defense: 0.4,
-        aggressive: 0.3,
+        offense: 0.70,
+        defense: 0.70,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.8,
-            shooting3: 0.8,
-            playmaking: 0.8,
-            perimeterDefense: 0.4,
-            interiorDefense: 0.4,
-            rebounding: 0.36
-        }
+            // Shared ratings (0-100 scale)
+            overall: 70.7070707,
+            // Shooting
+            shooting: 70.7070707,
+            shotClose: 70.7070707,
+            shotMid: 70.7070707,
+            shot3pt: 70.7070707,
+            shotIQ: 70.7070707,
+            freeThrow: 70.7070707,
+            offensiveConsistency: 70.7070707,
+            // Inside Scoring
+            insideScoring: 70.7070707,
+            drivingLayup: 70.7070707,
+            standingDunk: 70.7070707,
+            drivingDunk: 70.7070707,
+            drawFoul: 70.7070707,
+            postMoves: 70.7070707,
+            postHook: 70.7070707,
+            postFade: 70.7070707,
+            hands: 70.7070707,
+            // Athleticism
+            athleticism: 70.7070707,
+            speed: 70.7070707,
+            acceleration: 70.7070707,
+            vertical: 70.7070707,
+            strength: 70.7070707,
+            stamina: 70.7070707,
+            hustle: 70.7070707,
+            // Playmaking
+            playmaking: 70.7070707,
+            speedWithBall: 70.7070707,
+            ballHandle: 70.7070707,
+            passingAccuracy: 70.7070707,
+            passingVision: 70.7070707,
+            passingIQ: 70.7070707,
+            // Defense
+            defense: 70.7070707,
+            interiorDefense: 70.7070707,
+            perimeterDefense: 70.7070707,
+            helpDefenseIQ: 70.7070707,
+            lateralQuickness: 70.7070707,
+            passPerception: 70.7070707,
+            steal: 70.7070707,
+            block: 70.7070707,
+            defensiveConsistency: 70.7070707,
+            // Rebounding
+            rebounding: 70.7070707,
+            offensiveRebounding: 70.7070707,
+            defensiveRebounding: 70.7070707,
+            // Mental
+            intangibles: 70.7070707,
+            potential: 70.7070707,
+            // Position Ratings
+            pgRating: 70.7070707,
+            sgRating: 70.7070707,
+            sfRating: 70.7070707,
+            pfRating: 70.7070707,
+            cRating: 70.7070707,
+        },
     },
     {
         number: 2.88,
@@ -679,17 +2137,72 @@ export const players = [
         description: "<b>Outspoken floor general</b> who leverages his muscle on both ends.",
         icons: ["Floor General", "Pull-up Threat", "Sh*t Stirrer", "Injury Concerns"],
         shades_of: ["Eric Bledsoe"],
-        offense: 0.7,
-        defense: 0.7,
-        aggressive: 0.8,
+        offense: 0.77,
+        defense: 0.71,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.7,
-            shooting3: 0.7,
-            playmaking: 0.7,
-            perimeterDefense: 0.7,
-            interiorDefense: 0.7,
-            rebounding: 0.74
-        }
+            // Shared ratings (0-100 scale)
+            overall: 47.0,
+            // Shooting
+            shooting: 80.0,
+            shotClose: 79.0,
+            shotMid: 80.0,
+            shot3pt: 81.0,
+            shotIQ: 83.0,
+            freeThrow: 85.0,
+            offensiveConsistency: 88.0,
+            // Inside Scoring
+            insideScoring: 81.0,
+            drivingLayup: 84.0,
+            standingDunk: 20.0,
+            drivingDunk: 25.0,
+            drawFoul: 87.0,
+            postMoves: 72.0,
+            postHook: 77.0,
+            postFade: 77.0,
+            hands: 87.0,
+            // Athleticism
+            athleticism: 70.7070707,
+            speed: 70.7070707,
+            acceleration: 70.7070707,
+            vertical: 70.7070707,
+            strength: 70.7070707,
+            stamina: 70.7070707,
+            hustle: 70.7070707,
+            // Playmaking
+            playmaking: 70.7070707,
+            speedWithBall: 70.7070707,
+            ballHandle: 70.7070707,
+            passingAccuracy: 70.7070707,
+            passingVision: 70.7070707,
+            passingIQ: 70.7070707,
+            // Defense
+            defense: 71.0,
+            interiorDefense: 70.7070707,
+            perimeterDefense: 70.7070707,
+            helpDefenseIQ: 70.7070707,
+            lateralQuickness: 70.7070707,
+            passPerception: 80.0,
+            steal: 75.0,
+            block: 66.0,
+            defensiveConsistency: 84.0,
+            // Rebounding
+            rebounding: 70.7070707,
+            offensiveRebounding: 70.7070707,
+            defensiveRebounding: 70.7070707,
+            // Mental
+            intangibles: 97.0,
+            potential: 70.7070707,
+            // Position Ratings
+            pgRating: 34.6,
+            sgRating: 46.4,
+            sfRating: 44.8,
+            pfRating: 40.0,
+            cRating: 39.6,
+        },
+        clips: [
+            { title: "Clip 1", url: "https://youtube.com/clip/UgkxKskD7Qk4ayvJaEAvcdqC7ml5KLAOkaIH?si=50cnv40v-EpXOjwv" }
+        ],
     },
     {
         number: 7.01,
@@ -705,17 +2218,72 @@ export const players = [
         description: "<b>Veteran sharpshooter</b> who haunts the perimeter, but is too often a ghost on defense.",
         icons: ["Pull-up Threat", "Spacer", "Artist"],
         shades_of: [""],
-        offense: 0.65,
-        defense: 0.25,
-        aggressive: 0.75,
+        offense: 0.70,
+        defense: 0.70,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.65,
-            shooting3: 0.65,
-            playmaking: 0.65,
-            perimeterDefense: 0.25,
-            interiorDefense: 0.25,
-            rebounding: 0.45
-        }
+            // Shared ratings (0-100 scale)
+            overall: 70,
+            // Shooting
+            shooting: 70,
+            shotClose: 70,
+            shotMid: 70,
+            shot3pt: 70,
+            shotIQ: 70,
+            freeThrow: 70,
+            offensiveConsistency: 70,
+            // Inside Scoring
+            insideScoring: 70,
+            drivingLayup: 70,
+            standingDunk: 25,
+            drivingDunk: 25,
+            drawFoul: 70,
+            postMoves: 50,
+            postHook: 50,
+            postFade: 50,
+            hands: 70,
+            // Athleticism
+            athleticism: 70,
+            speed: 70,
+            acceleration: 70,
+            vertical: 65,
+            strength: 70,
+            stamina: 75,
+            hustle: 75,
+            // Playmaking
+            playmaking: 70,
+            speedWithBall: 70,
+            ballHandle: 70,
+            passingAccuracy: 70,
+            passingVision: 70,
+            passingIQ: 70,
+            // Defense
+            defense: 70,
+            interiorDefense: 70,
+            perimeterDefense: 70,
+            helpDefenseIQ: 70,
+            lateralQuickness: 70,
+            passPerception: 70,
+            steal: 70,
+            block: 70,
+            defensiveConsistency: 70,
+            // Rebounding
+            rebounding: 70,
+            offensiveRebounding: 65,
+            defensiveRebounding: 70,
+            // Mental
+            intangibles: 75,
+            potential: 70,
+            // Position Ratings
+            pgRating: 70,
+            sgRating: 70,
+            sfRating: 70,
+            pfRating: 70,
+            cRating: 70,
+        },
+        clips: [
+            { title: "Clip 1", url: "https://www.youtube.com/watch?v=ibfmYPpgl5w" }
+        ],
     },
     {
         number: 1.999,
@@ -730,17 +2298,69 @@ export const players = [
         description: "<b>Unlikely scoring savant</b> equipped with surprising athleticism and timely outside shooting.",
         icons: ["Pull-up Threat", "Feel For the Game", "Clutch Gene", "Movement Shooter"],
         shades_of: ["Stephen Curry"],
-        offense: 0.85,
-        defense: 0.6,
+        offense: 0.70,
+        defense: 0.70,
         aggressive: 0.5,
         stats: {
-            shooting2: 0.85,
-            shooting3: 0.85,
-            playmaking: 0.85,
-            perimeterDefense: 0.6,
-            interiorDefense: 0.6,
-            rebounding: 0.56
-        }
+            // Shared ratings (0-100 scale)
+            overall: 70.7070707,
+            // Shooting
+            shooting: 70.7070707,
+            shotClose: 70.7070707,
+            shotMid: 70.7070707,
+            shot3pt: 70.7070707,
+            shotIQ: 70.7070707,
+            freeThrow: 70.7070707,
+            offensiveConsistency: 70.7070707,
+            // Inside Scoring
+            insideScoring: 70.7070707,
+            drivingLayup: 70.7070707,
+            standingDunk: 70.7070707,
+            drivingDunk: 70.7070707,
+            drawFoul: 70.7070707,
+            postMoves: 70.7070707,
+            postHook: 70.7070707,
+            postFade: 70.7070707,
+            hands: 70.7070707,
+            // Athleticism
+            athleticism: 70.7070707,
+            speed: 70.7070707,
+            acceleration: 70.7070707,
+            vertical: 70.7070707,
+            strength: 70.7070707,
+            stamina: 70.7070707,
+            hustle: 70.7070707,
+            // Playmaking
+            playmaking: 70.7070707,
+            speedWithBall: 70.7070707,
+            ballHandle: 70.7070707,
+            passingAccuracy: 70.7070707,
+            passingVision: 70.7070707,
+            passingIQ: 70.7070707,
+            // Defense
+            defense: 70.7070707,
+            interiorDefense: 70.7070707,
+            perimeterDefense: 70.7070707,
+            helpDefenseIQ: 70.7070707,
+            lateralQuickness: 70.7070707,
+            passPerception: 70.7070707,
+            steal: 70.7070707,
+            block: 70.7070707,
+            defensiveConsistency: 70.7070707,
+            // Rebounding
+            rebounding: 70.7070707,
+            offensiveRebounding: 70.7070707,
+            defensiveRebounding: 70.7070707,
+            // Mental
+            intangibles: 70.7070707,
+            potential: 70.7070707,
+            // Position Ratings
+            pgRating: 70.7070707,
+            sgRating: 70.7070707,
+            sfRating: 70.7070707,
+            pfRating: 70.7070707,
+            cRating: 70.7070707,
+        },
     },
     {
         number: 3.51,
@@ -755,17 +2375,69 @@ export const players = [
         description: "<b>Bruising backdown punisher</b> who also makes the right reads in the two-man game.",
         icons: ["Post Moves", "Shot Blocking"],
         shades_of: ["Bobby Portis", "Aaron Gordon"],
-        offense: 0.7,
-        defense: 0.65,
-        aggressive: 0.65,
+        offense: 0.70,
+        defense: 0.70,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.7,
-            shooting3: 0.7,
-            playmaking: 0.7,
-            perimeterDefense: 0.65,
-            interiorDefense: 0.65,
-            rebounding: 0.65
-        }
+            // Shared ratings (0-100 scale)
+            overall: 70.7070707,
+            // Shooting
+            shooting: 70.7070707,
+            shotClose: 70.7070707,
+            shotMid: 70.7070707,
+            shot3pt: 70.7070707,
+            shotIQ: 70.7070707,
+            freeThrow: 70.7070707,
+            offensiveConsistency: 70.7070707,
+            // Inside Scoring
+            insideScoring: 70.7070707,
+            drivingLayup: 70.7070707,
+            standingDunk: 70.7070707,
+            drivingDunk: 70.7070707,
+            drawFoul: 70.7070707,
+            postMoves: 70.7070707,
+            postHook: 70.7070707,
+            postFade: 70.7070707,
+            hands: 70.7070707,
+            // Athleticism
+            athleticism: 70.7070707,
+            speed: 70.7070707,
+            acceleration: 70.7070707,
+            vertical: 70.7070707,
+            strength: 70.7070707,
+            stamina: 70.7070707,
+            hustle: 70.7070707,
+            // Playmaking
+            playmaking: 70.7070707,
+            speedWithBall: 70.7070707,
+            ballHandle: 70.7070707,
+            passingAccuracy: 70.7070707,
+            passingVision: 70.7070707,
+            passingIQ: 70.7070707,
+            // Defense
+            defense: 70.7070707,
+            interiorDefense: 70.7070707,
+            perimeterDefense: 70.7070707,
+            helpDefenseIQ: 70.7070707,
+            lateralQuickness: 70.7070707,
+            passPerception: 70.7070707,
+            steal: 70.7070707,
+            block: 70.7070707,
+            defensiveConsistency: 70.7070707,
+            // Rebounding
+            rebounding: 70.7070707,
+            offensiveRebounding: 70.7070707,
+            defensiveRebounding: 70.7070707,
+            // Mental
+            intangibles: 70.7070707,
+            potential: 70.7070707,
+            // Position Ratings
+            pgRating: 70.7070707,
+            sgRating: 70.7070707,
+            sfRating: 70.7070707,
+            pfRating: 70.7070707,
+            cRating: 70.7070707,
+        },
     },
 
     {
@@ -781,17 +2453,146 @@ export const players = [
         description: "<b>Veteran sharpshooter whose athletic finishes and foul-baiting tactics are perpetually threatened by nagging injuries.</b>",
         icons: ["Spacer", "Injury Concerns"],
         shades_of: ["Mikal Bridges"],
-        offense: 0.7,
-        defense: 0.7,
-        aggressive: 0.6,
+        offense: 0.70,
+        defense: 0.70,
+        aggressive: 0.5,
         stats: {
-            shooting2: 0.7,
-            shooting3: 0.7,
-            playmaking: 0.7,
-            perimeterDefense: 0.7,
-            interiorDefense: 0.7,
-            rebounding: 0.66
-        }
+            // Shared ratings (0-100 scale)
+            overall: 70.7070707,
+            // Shooting
+            shooting: 70.7070707,
+            shotClose: 70.7070707,
+            shotMid: 70.7070707,
+            shot3pt: 70.7070707,
+            shotIQ: 70.7070707,
+            freeThrow: 70.7070707,
+            offensiveConsistency: 70.7070707,
+            // Inside Scoring
+            insideScoring: 70.7070707,
+            drivingLayup: 70.7070707,
+            standingDunk: 70.7070707,
+            drivingDunk: 70.7070707,
+            drawFoul: 70.7070707,
+            postMoves: 70.7070707,
+            postHook: 70.7070707,
+            postFade: 70.7070707,
+            hands: 70.7070707,
+            // Athleticism
+            athleticism: 70.7070707,
+            speed: 70.7070707,
+            acceleration: 70.7070707,
+            vertical: 70.7070707,
+            strength: 70.7070707,
+            stamina: 70.7070707,
+            hustle: 70.7070707,
+            // Playmaking
+            playmaking: 70.7070707,
+            speedWithBall: 70.7070707,
+            ballHandle: 70.7070707,
+            passingAccuracy: 70.7070707,
+            passingVision: 70.7070707,
+            passingIQ: 70.7070707,
+            // Defense
+            defense: 70.7070707,
+            interiorDefense: 70.7070707,
+            perimeterDefense: 70.7070707,
+            helpDefenseIQ: 70.7070707,
+            lateralQuickness: 70.7070707,
+            passPerception: 70.7070707,
+            steal: 70.7070707,
+            block: 70.7070707,
+            defensiveConsistency: 70.7070707,
+            // Rebounding
+            rebounding: 70.7070707,
+            offensiveRebounding: 70.7070707,
+            defensiveRebounding: 70.7070707,
+            // Mental
+            intangibles: 70.7070707,
+            potential: 70.7070707,
+            // Position Ratings
+            pgRating: 70.7070707,
+            sgRating: 70.7070707,
+            sfRating: 70.7070707,
+            pfRating: 70.7070707,
+            cRating: 70.7070707,
+        },
+    },
+    {
+        number: 4.0,
+        name: "Christian",
+        team: "Unknown",
+        position: "Forward",
+        height: "5'10\"",
+        weight: "180 lbs",
+        age: 28,
+        season: "4 (Retired)",
+        image: "images/christian.png",
+        description: "<b>Hustle-first veteran</b> whose motor and hands make up for defensive limitations.",
+        icons: ["Hustle", "Hands"],
+        shades_of: ["PJ Tucker"],
+        offense: 0.69,
+        defense: 0.17,
+        aggressive: 0.5,
+        stats: {
+            // Shared ratings (0-100 scale)
+            overall: 60.0,
+            // Shooting
+            shooting: 69.0,
+            shotClose: 72.0,
+            shotMid: 68.0,
+            shot3pt: 66.0,
+            shotIQ: 70.0,
+            freeThrow: 69.0,
+            offensiveConsistency: 92.0,
+            // Inside Scoring
+            insideScoring: 71.0,
+            drivingLayup: 74.0,
+            standingDunk: 10.0,
+            drivingDunk: 15.0,
+            drawFoul: 80.0,
+            postMoves: 68.0,
+            postHook: 58.0,
+            postFade: 64.0,
+            hands: 90.0,
+            // Athleticism
+            athleticism: 80.0,
+            speed: 86.0,
+            acceleration: 80.0,
+            vertical: 64.0,
+            strength: 84.0,
+            stamina: 80.0,
+            hustle: 92.0,
+            // Playmaking
+            playmaking: 70.7070707,
+            speedWithBall: 70.7070707,
+            ballHandle: 70.7070707,
+            passingAccuracy: 70.7070707,
+            passingVision: 70.7070707,
+            passingIQ: 70.7070707,
+            // Defense
+            defense: 17.0,
+            interiorDefense: 70.7070707,
+            perimeterDefense: 70.7070707,
+            helpDefenseIQ: 70.7070707,
+            lateralQuickness: 70.7070707,
+            passPerception: 70.0,
+            steal: 65.0,
+            block: 60.0,
+            defensiveConsistency: 77.0,
+            // Rebounding
+            rebounding: 78.0,
+            offensiveRebounding: 74.0,
+            defensiveRebounding: 81.0,
+            // Mental
+            intangibles: 89.0,
+            potential: 70.7070707,
+            // Position Ratings
+            pgRating: 42.3,
+            sgRating: 55.2,
+            sfRating: 55.3,
+            pfRating: 59.9,
+            cRating: 58.9,
+        },
     },
     // {
     //     number: 8.6,
