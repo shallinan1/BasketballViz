@@ -680,8 +680,8 @@
         };
 
         // Show export modal
-        window.showExportModal = function() {
-            generateExport();
+        window.showExportModal = async function() {
+            await generateExport();
         };
 
         // Close modal
@@ -689,269 +689,40 @@
             document.getElementById(modalId).classList.remove('active');
         };
 
-        // Generate export content - full players.js file
-        function generateExport() {
-            // Apply modifications to player data
-            const exportData = JSON.parse(JSON.stringify(playerData));
+        // Generate export content - fetch original file and only replace changed values
+        async function generateExport() {
+            try {
+                // Fetch the original players.js file
+                const response = await fetch('./players.js');
+                let fileContent = await response.text();
 
-            modifications.forEach((playerMods, playerIndex) => {
-                playerMods.forEach((value, key) => {
-                    exportData[playerIndex].stats[key] = value;
+                // For each modification, find and replace just that stat value
+                modifications.forEach((playerMods, playerIndex) => {
+                    const playerName = playerData[playerIndex].name;
+
+                    playerMods.forEach((newValue, statKey) => {
+                        // Find the player's section by name, then find the stat within it
+                        // We need to be careful to only replace within this player's stats block
+
+                        // Create a regex to find the player block
+                        const escapedName = playerName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                        const playerBlockRegex = new RegExp(
+                            `(name:\\s*["']${escapedName}["'][\\s\\S]*?stats:\\s*\\{[\\s\\S]*?)(${statKey}:\\s*)([\\d.]+)(,?)`,
+                            'g'
+                        );
+
+                        // Replace only within this player's context
+                        fileContent = fileContent.replace(playerBlockRegex, (match, before, statPart, oldVal, comma) => {
+                            return before + statPart + newValue + comma;
+                        });
+                    });
                 });
-            });
 
-            // Generate the full players.js file
-            let code = `// players.js
-// Default stat value - stats with this exact value were not from CSV
-export const DEFAULT_STAT = 70.7070707;
-
-// Helper to check if a stat is a default value
-export const isDefaultStat = (value) => value === DEFAULT_STAT;
-
-// Category formulas from spreadsheet:
-
-// Shooting: (0.8 + offensiveConsistency/500) * 0.5*top1 + 0.35*avg(2nd,3rd) + 0.1*shotIQ + 0.05*freeThrow
-export const computeShooting = (stats) => {
-    const shots = [stats.shotClose, stats.shotMid, stats.shot3pt].sort((a, b) => b - a);
-    const consistencyMult = 0.8 + stats.offensiveConsistency / 500;
-    return Math.round(
-        consistencyMult * 0.5 * shots[0] +
-        0.35 * (shots[1] + shots[2]) / 2 +
-        0.1 * stats.shotIQ +
-        0.05 * stats.freeThrow
-    );
-};
-
-// Inside Scoring: 0.65*top1 + 0.2*avg(2nd,3rd) + 0.05*avg(4th,5th,6th) + 0.05*hands + 0.05*drawFoul
-export const computeInsideScoring = (stats) => {
-    const moves = [
-        stats.drivingLayup, stats.standingDunk, stats.drivingDunk,
-        stats.postMoves, stats.postHook, stats.postFade
-    ].sort((a, b) => b - a);
-    return Math.round(
-        0.65 * moves[0] +
-        0.2 * (moves[1] + moves[2]) / 2 +
-        0.05 * (moves[3] + moves[4] + moves[5]) / 3 +
-        0.05 * stats.hands +
-        0.05 * stats.drawFoul
-    );
-};
-
-// Athleticism: 0.21*speed + 0.21*accel + 0.21*vertical + 0.21*strength + 0.08*stamina + 0.08*hustle
-export const computeAthleticism = (stats) => {
-    return Math.round(
-        0.21 * stats.speed +
-        0.21 * stats.acceleration +
-        0.21 * stats.vertical +
-        0.21 * stats.strength +
-        0.08 * stats.stamina +
-        0.08 * stats.hustle
-    );
-};
-
-// Playmaking: 0.23*speedWithBall + 0.23*ballHandle + 0.23*passAccuracy + 0.23*passVision + 0.08*passIQ
-export const computePlaymaking = (stats) => {
-    return Math.round(
-        0.23 * stats.speedWithBall +
-        0.23 * stats.ballHandle +
-        0.23 * stats.passingAccuracy +
-        0.23 * stats.passingVision +
-        0.08 * stats.passingIQ
-    );
-};
-
-// Defense: (0.8 + defConsistency/500) * weighted formula
-export const computeDefense = (stats) => {
-    const consistencyMult = 0.8 + stats.defensiveConsistency / 500;
-    return Math.round(
-        consistencyMult * (
-            0.37 * Math.max(stats.interiorDefense, stats.perimeterDefense) +
-            0.15 * Math.min(stats.interiorDefense, stats.perimeterDefense) +
-            0.1 * Math.max(stats.steal, stats.block) +
-            0.08 * Math.min(stats.steal, stats.block) +
-            0.1 * stats.helpDefenseIQ +
-            0.1 * stats.lateralQuickness +
-            0.1 * stats.passPerception
-        )
-    );
-};
-
-// Rebounding: average(offReb, defReb)
-export const computeRebounding = (stats) => {
-    return Math.round((stats.offensiveRebounding + stats.defensiveRebounding) / 2);
-};
-
-// Position rating formulas (include intangibles/100 + potential/200)
-// PG: 0.28*S + 0.09*IS + 0.12*A + 0.38*P + 0.08*D + 0.05*R + intangibles/100 + potential/200
-export const computePGRating = (stats) => {
-    const s = computeShooting(stats);
-    const is = computeInsideScoring(stats);
-    const a = computeAthleticism(stats);
-    const p = computePlaymaking(stats);
-    const d = computeDefense(stats);
-    const r = computeRebounding(stats);
-    const base = 0.28 * s + 0.09 * is + 0.12 * a + 0.38 * p + 0.08 * d + 0.05 * r;
-    return Math.round((base + stats.intangibles / 100 + stats.potential / 200) * 10) / 10;
-};
-
-// SG: 0.34*S + 0.12*IS + 0.19*A + 0.16*P + 0.12*D + 0.07*R + intangibles/100 + potential/200
-export const computeSGRating = (stats) => {
-    const s = computeShooting(stats);
-    const is = computeInsideScoring(stats);
-    const a = computeAthleticism(stats);
-    const p = computePlaymaking(stats);
-    const d = computeDefense(stats);
-    const r = computeRebounding(stats);
-    const base = 0.34 * s + 0.12 * is + 0.19 * a + 0.16 * p + 0.12 * d + 0.07 * r;
-    return Math.round((base + stats.intangibles / 100 + stats.potential / 200) * 10) / 10;
-};
-
-// SF: 0.21*S + 0.17*IS + 0.20*A + 0.09*P + 0.20*D + 0.13*R + intangibles/100 + potential/200
-export const computeSFRating = (stats) => {
-    const s = computeShooting(stats);
-    const is = computeInsideScoring(stats);
-    const a = computeAthleticism(stats);
-    const p = computePlaymaking(stats);
-    const d = computeDefense(stats);
-    const r = computeRebounding(stats);
-    const base = 0.21 * s + 0.17 * is + 0.20 * a + 0.09 * p + 0.20 * d + 0.13 * r;
-    return Math.round((base + stats.intangibles / 100 + stats.potential / 200) * 10) / 10;
-};
-
-// PF: 0.10*S + 0.21*IS + 0.24*A + 0.06*P + 0.20*D + 0.19*R + intangibles/100 + potential/200
-export const computePFRating = (stats) => {
-    const s = computeShooting(stats);
-    const is = computeInsideScoring(stats);
-    const a = computeAthleticism(stats);
-    const p = computePlaymaking(stats);
-    const d = computeDefense(stats);
-    const r = computeRebounding(stats);
-    const base = 0.10 * s + 0.21 * is + 0.24 * a + 0.06 * p + 0.20 * d + 0.19 * r;
-    return Math.round((base + stats.intangibles / 100 + stats.potential / 200) * 10) / 10;
-};
-
-// C: 0.06*S + 0.24*IS + 0.20*A + 0.00*P + 0.25*D + 0.25*R + intangibles/100 + potential/200
-export const computeCRating = (stats) => {
-    const s = computeShooting(stats);
-    const is = computeInsideScoring(stats);
-    const a = computeAthleticism(stats);
-    const p = computePlaymaking(stats);
-    const d = computeDefense(stats);
-    const r = computeRebounding(stats);
-    const base = 0.06 * s + 0.24 * is + 0.20 * a + 0.00 * p + 0.25 * d + 0.25 * r;
-    return Math.round((base + stats.intangibles / 100 + stats.potential / 200) * 10) / 10;
-};
-
-// Overall rating: max of all position ratings
-export const computeOverallRating = (stats) => {
-    return Math.round(Math.max(
-        computePGRating(stats),
-        computeSGRating(stats),
-        computeSFRating(stats),
-        computePFRating(stats),
-        computeCRating(stats)
-    ));
-};
-
-// Compute position string based on ratings (e.g., "PG/SG", "SF", "PF/C")
-// Primary position is the max rating, co-positions are within 1 point of max
-export const computePosition = (stats) => {
-    const positions = [
-        { pos: 'PG', rating: computePGRating(stats) },
-        { pos: 'SG', rating: computeSGRating(stats) },
-        { pos: 'SF', rating: computeSFRating(stats) },
-        { pos: 'PF', rating: computePFRating(stats) },
-        { pos: 'C', rating: computeCRating(stats) }
-    ];
-
-    // Sort by rating descending
-    positions.sort((a, b) => b.rating - a.rating);
-    const maxRating = positions[0].rating;
-
-    // Get all positions within 1 point of max
-    const validPositions = positions.filter(p => maxRating - p.rating <= 1);
-
-    return validPositions.map(p => p.pos).join('/');
-};
-
-export const players = [
-`;
-
-            // Generate each player
-            exportData.forEach((player, idx) => {
-                code += `
-    {
-        old_number: ${player.old_number},
-        number: ${player.number},
-        name: "${player.name}",
-        team: "${player.team}",
-        position: "${player.position}",
-        height: "${player.height}",
-        weight: "${player.weight}",
-        age: ${player.age},
-        season: ${player.season},
-        image: "${player.image}",
-        description: ${JSON.stringify(player.description)},
-        icons: ${JSON.stringify(player.icons)},
-        shades_of: ${JSON.stringify(player.shades_of)},
-        offense: ${player.offense},
-        defense: ${player.defense},
-        aggressive: ${player.aggressive},
-        stats: {
-            // Shooting
-            shotClose: ${player.stats.shotClose},
-            shotMid: ${player.stats.shotMid},
-            shot3pt: ${player.stats.shot3pt},
-            shotIQ: ${player.stats.shotIQ},
-            freeThrow: ${player.stats.freeThrow},
-            offensiveConsistency: ${player.stats.offensiveConsistency},
-            // Inside Scoring
-            drivingLayup: ${player.stats.drivingLayup},
-            standingDunk: ${player.stats.standingDunk},
-            drivingDunk: ${player.stats.drivingDunk},
-            drawFoul: ${player.stats.drawFoul},
-            postMoves: ${player.stats.postMoves},
-            postHook: ${player.stats.postHook},
-            postFade: ${player.stats.postFade},
-            hands: ${player.stats.hands},
-            // Athleticism
-            speed: ${player.stats.speed},
-            acceleration: ${player.stats.acceleration},
-            vertical: ${player.stats.vertical},
-            strength: ${player.stats.strength},
-            stamina: ${player.stats.stamina},
-            hustle: ${player.stats.hustle},
-            // Playmaking
-            speedWithBall: ${player.stats.speedWithBall},
-            ballHandle: ${player.stats.ballHandle},
-            passingAccuracy: ${player.stats.passingAccuracy},
-            passingVision: ${player.stats.passingVision},
-            passingIQ: ${player.stats.passingIQ},
-            // Defense
-            interiorDefense: ${player.stats.interiorDefense},
-            perimeterDefense: ${player.stats.perimeterDefense},
-            helpDefenseIQ: ${player.stats.helpDefenseIQ},
-            lateralQuickness: ${player.stats.lateralQuickness},
-            passPerception: ${player.stats.passPerception},
-            steal: ${player.stats.steal},
-            block: ${player.stats.block},
-            defensiveConsistency: ${player.stats.defensiveConsistency},
-            // Rebounding
-            offensiveRebounding: ${player.stats.offensiveRebounding},
-            defensiveRebounding: ${player.stats.defensiveRebounding},
-            // Mental
-            intangibles: ${player.stats.intangibles},
-            potential: ${player.stats.potential}
-        }
-    }${idx < exportData.length - 1 ? ',' : ''}`;
-            });
-
-            code += `
-];
-`;
-
-            document.getElementById('exportContent').value = code;
-            document.getElementById('exportModal').classList.add('active');
+                document.getElementById('exportContent').value = fileContent;
+                document.getElementById('exportModal').classList.add('active');
+            } catch (error) {
+                alert('Error fetching players.js: ' + error.message);
+            }
         }
 
         // Copy export to clipboard
