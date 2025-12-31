@@ -278,19 +278,6 @@
         </table>
     </div>
 
-    <!-- Password Modal -->
-    <div class="modal" id="passwordModal">
-        <div class="modal-content">
-            <h2>Enter Password</h2>
-            <p>Enter the secret password to export changes:</p>
-            <input type="password" id="passwordInput" placeholder="Password">
-            <div class="modal-buttons">
-                <button class="secondary" onclick="closeModal('passwordModal')">Cancel</button>
-                <button onclick="checkPassword()">Submit</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Export Modal -->
     <div class="modal" id="exportModal">
         <div class="modal-content">
@@ -323,92 +310,105 @@
             computePosition
         } from './players.js';
 
-        // Simple hash function for client-side password check
-        // Note: For true security, this should be server-side
-        async function hashPassword(password) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(password);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        // Pre-computed hash of the password (SHA-256)
-        const PASSWORD_HASH = '6a73ea4831812eb3fa8d7aba3c60c841788d5dcf34769eff47451e6c72babe4a';
-
         // Track modifications
         const modifications = new Map();
 
         // Column definitions - ordered to match Excel format exactly
+        // Categories that can be collapsed (collapsed by default)
+        const collapsibleCategories = new Set([
+            'Shooting (S)', 'Inside Scoring (IS)', 'Athleticism (A)',
+            'Playmaking (P)', 'Defense (D)', 'Rebounding (R)'
+        ]);
+        const expandedCategories = new Set(); // Start with all collapsed
+
         const statColumns = [
             // Overall Rating & Position (right after player name)
             { key: '_overall', label: 'Overall Rating', category: 'Overall', overall: true, formula: computeOverallRating },
             { key: '_position', label: 'Position', category: 'Overall', overall: true, formula: computePosition },
 
-            // Position Ratings
+            // Shooting (S)
+            { key: '_shooting', label: 'Overall (S)', category: 'Shooting (S)', computed: true, formula: computeShooting, isGroupHeader: true },
+            { key: 'shotClose', label: 'Shot Close', category: 'Shooting (S)', editable: true, collapsible: true },
+            { key: 'shotMid', label: 'Shot Mid', category: 'Shooting (S)', editable: true, collapsible: true },
+            { key: 'shot3pt', label: 'Shot 3PT', category: 'Shooting (S)', editable: true, collapsible: true },
+            { key: 'shotIQ', label: 'Shot IQ', category: 'Shooting (S)', editable: true, collapsible: true },
+            { key: 'freeThrow', label: 'Free Throw', category: 'Shooting (S)', editable: true, collapsible: true },
+            { key: 'offensiveConsistency', label: 'Offensive Consistency', category: 'Shooting (S)', editable: true, collapsible: true },
+
+            // Inside Scoring (IS)
+            { key: '_insideScoring', label: 'Overall (IS)', category: 'Inside Scoring (IS)', computed: true, formula: computeInsideScoring, isGroupHeader: true },
+            { key: 'drivingLayup', label: 'Driving Layup', category: 'Inside Scoring (IS)', editable: true, collapsible: true },
+            { key: 'standingDunk', label: 'Standing Dunk', category: 'Inside Scoring (IS)', editable: true, collapsible: true },
+            { key: 'drivingDunk', label: 'Driving Dunk', category: 'Inside Scoring (IS)', editable: true, collapsible: true },
+            { key: 'drawFoul', label: 'Draw Foul', category: 'Inside Scoring (IS)', editable: true, collapsible: true },
+            { key: 'postMoves', label: 'Post Moves', category: 'Inside Scoring (IS)', editable: true, collapsible: true },
+            { key: 'postHook', label: 'Post Hook', category: 'Inside Scoring (IS)', editable: true, collapsible: true },
+            { key: 'postFade', label: 'Post Fade', category: 'Inside Scoring (IS)', editable: true, collapsible: true },
+            { key: 'hands', label: 'Hands', category: 'Inside Scoring (IS)', editable: true, collapsible: true },
+
+            // Athleticism (A)
+            { key: '_athleticism', label: 'Overall (A)', category: 'Athleticism (A)', computed: true, formula: computeAthleticism, isGroupHeader: true },
+            { key: 'speed', label: 'Speed', category: 'Athleticism (A)', editable: true, collapsible: true },
+            { key: 'acceleration', label: 'Acceleration', category: 'Athleticism (A)', editable: true, collapsible: true },
+            { key: 'vertical', label: 'Vertical', category: 'Athleticism (A)', editable: true, collapsible: true },
+            { key: 'strength', label: 'Strength', category: 'Athleticism (A)', editable: true, collapsible: true },
+            { key: 'stamina', label: 'Stamina', category: 'Athleticism (A)', editable: true, collapsible: true },
+            { key: 'hustle', label: 'Hustle', category: 'Athleticism (A)', editable: true, collapsible: true },
+
+            // Playmaking (P)
+            { key: '_playmaking', label: 'Overall (P)', category: 'Playmaking (P)', computed: true, formula: computePlaymaking, isGroupHeader: true },
+            { key: 'speedWithBall', label: 'Speed With Ball', category: 'Playmaking (P)', editable: true, collapsible: true },
+            { key: 'ballHandle', label: 'Ball Handle', category: 'Playmaking (P)', editable: true, collapsible: true },
+            { key: 'passingAccuracy', label: 'Passing Accuracy', category: 'Playmaking (P)', editable: true, collapsible: true },
+            { key: 'passingVision', label: 'Passing Vision', category: 'Playmaking (P)', editable: true, collapsible: true },
+            { key: 'passingIQ', label: 'Passing IQ', category: 'Playmaking (P)', editable: true, collapsible: true },
+
+            // Defense (D)
+            { key: '_defense', label: 'Overall (D)', category: 'Defense (D)', computed: true, formula: computeDefense, isGroupHeader: true },
+            { key: 'interiorDefense', label: 'Interior Defense', category: 'Defense (D)', editable: true, collapsible: true },
+            { key: 'perimeterDefense', label: 'Perimeter Defense', category: 'Defense (D)', editable: true, collapsible: true },
+            { key: 'helpDefenseIQ', label: 'Help Defense IQ', category: 'Defense (D)', editable: true, collapsible: true },
+            { key: 'lateralQuickness', label: 'Lateral Quickness', category: 'Defense (D)', editable: true, collapsible: true },
+            { key: 'passPerception', label: 'Pass Perception', category: 'Defense (D)', editable: true, collapsible: true },
+            { key: 'steal', label: 'Steal', category: 'Defense (D)', editable: true, collapsible: true },
+            { key: 'block', label: 'Block', category: 'Defense (D)', editable: true, collapsible: true },
+            { key: 'defensiveConsistency', label: 'Defensive Consistency', category: 'Defense (D)', editable: true, collapsible: true },
+
+            // Rebounding (R)
+            { key: '_rebounding', label: 'Overall (R)', category: 'Rebounding (R)', computed: true, formula: computeRebounding, isGroupHeader: true },
+            { key: 'offensiveRebounding', label: 'Offensive Rebounding', category: 'Rebounding (R)', editable: true, collapsible: true },
+            { key: 'defensiveRebounding', label: 'Defensive Rebounding', category: 'Rebounding (R)', editable: true, collapsible: true },
+
+            // Mental
+            { key: 'intangibles', label: 'Intangibles', category: 'Mental', editable: true },
+            { key: 'potential', label: 'Potential', category: 'Mental', editable: true },
+
+            // Position Ratings (at the END, matching Excel)
             { key: '_pgRating', label: 'PG Rating', category: 'Position Ratings', posRating: true, formula: computePGRating },
             { key: '_sgRating', label: 'SG Rating', category: 'Position Ratings', posRating: true, formula: computeSGRating },
             { key: '_sfRating', label: 'SF Rating', category: 'Position Ratings', posRating: true, formula: computeSFRating },
             { key: '_pfRating', label: 'PF Rating', category: 'Position Ratings', posRating: true, formula: computePFRating },
-            { key: '_cRating', label: 'C Rating', category: 'Position Ratings', posRating: true, formula: computeCRating },
-
-            // Shooting (S)
-            { key: '_shooting', label: 'Overall (S)', category: 'Shooting (S)', computed: true, formula: computeShooting },
-            { key: 'shotClose', label: 'Shot Close', category: 'Shooting (S)', editable: true },
-            { key: 'shotMid', label: 'Shot Mid', category: 'Shooting (S)', editable: true },
-            { key: 'shot3pt', label: 'Shot 3PT', category: 'Shooting (S)', editable: true },
-            { key: 'shotIQ', label: 'Shot IQ', category: 'Shooting (S)', editable: true },
-            { key: 'freeThrow', label: 'Free Throw', category: 'Shooting (S)', editable: true },
-            { key: 'offensiveConsistency', label: 'Offensive Consistency', category: 'Shooting (S)', editable: true },
-
-            // Inside Scoring (IS)
-            { key: '_insideScoring', label: 'Overall (IS)', category: 'Inside Scoring (IS)', computed: true, formula: computeInsideScoring },
-            { key: 'drivingLayup', label: 'Driving Layup', category: 'Inside Scoring (IS)', editable: true },
-            { key: 'standingDunk', label: 'Standing Dunk', category: 'Inside Scoring (IS)', editable: true },
-            { key: 'drivingDunk', label: 'Driving Dunk', category: 'Inside Scoring (IS)', editable: true },
-            { key: 'drawFoul', label: 'Draw Foul', category: 'Inside Scoring (IS)', editable: true },
-            { key: 'postMoves', label: 'Post Moves', category: 'Inside Scoring (IS)', editable: true },
-            { key: 'postHook', label: 'Post Hook', category: 'Inside Scoring (IS)', editable: true },
-            { key: 'postFade', label: 'Post Fade', category: 'Inside Scoring (IS)', editable: true },
-            { key: 'hands', label: 'Hands', category: 'Inside Scoring (IS)', editable: true },
-
-            // Athleticism (A)
-            { key: '_athleticism', label: 'Overall (A)', category: 'Athleticism (A)', computed: true, formula: computeAthleticism },
-            { key: 'speed', label: 'Speed', category: 'Athleticism (A)', editable: true },
-            { key: 'acceleration', label: 'Acceleration', category: 'Athleticism (A)', editable: true },
-            { key: 'vertical', label: 'Vertical', category: 'Athleticism (A)', editable: true },
-            { key: 'strength', label: 'Strength', category: 'Athleticism (A)', editable: true },
-            { key: 'stamina', label: 'Stamina', category: 'Athleticism (A)', editable: true },
-            { key: 'hustle', label: 'Hustle', category: 'Athleticism (A)', editable: true },
-
-            // Playmaking (P)
-            { key: '_playmaking', label: 'Overall (P)', category: 'Playmaking (P)', computed: true, formula: computePlaymaking },
-            { key: 'speedWithBall', label: 'Speed With Ball', category: 'Playmaking (P)', editable: true },
-            { key: 'ballHandle', label: 'Ball Handle', category: 'Playmaking (P)', editable: true },
-            { key: 'passingAccuracy', label: 'Passing Accuracy', category: 'Playmaking (P)', editable: true },
-            { key: 'passingVision', label: 'Passing Vision', category: 'Playmaking (P)', editable: true },
-            { key: 'passingIQ', label: 'Passing IQ', category: 'Playmaking (P)', editable: true },
-
-            // Defense (D)
-            { key: '_defense', label: 'Overall (D)', category: 'Defense (D)', computed: true, formula: computeDefense },
-            { key: 'interiorDefense', label: 'Interior Defense', category: 'Defense (D)', editable: true },
-            { key: 'perimeterDefense', label: 'Perimeter Defense', category: 'Defense (D)', editable: true },
-            { key: 'helpDefenseIQ', label: 'Help Defense IQ', category: 'Defense (D)', editable: true },
-            { key: 'lateralQuickness', label: 'Lateral Quickness', category: 'Defense (D)', editable: true },
-            { key: 'passPerception', label: 'Pass Perception', category: 'Defense (D)', editable: true },
-            { key: 'steal', label: 'Steal', category: 'Defense (D)', editable: true },
-            { key: 'block', label: 'Block', category: 'Defense (D)', editable: true },
-            { key: 'defensiveConsistency', label: 'Defensive Consistency', category: 'Defense (D)', editable: true },
-
-            // Rebounding (R)
-            { key: '_rebounding', label: 'Overall (R)', category: 'Rebounding (R)', computed: true, formula: computeRebounding },
-            { key: 'offensiveRebounding', label: 'Offensive Rebounding', category: 'Rebounding (R)', editable: true },
-            { key: 'defensiveRebounding', label: 'Defensive Rebounding', category: 'Rebounding (R)', editable: true },
-
-            // Mental
-            { key: 'intangibles', label: 'Intangibles', category: 'Mental', editable: true },
-            { key: 'potential', label: 'Potential', category: 'Mental', editable: true }
+            { key: '_cRating', label: 'C Rating', category: 'Position Ratings', posRating: true, formula: computeCRating }
         ];
+
+        // Get visible columns based on collapsed state
+        function getVisibleColumns() {
+            return statColumns.filter(col => {
+                if (!col.collapsible) return true;
+                return expandedCategories.has(col.category);
+            });
+        }
+
+        // Toggle category expansion
+        window.toggleCategory = function(category) {
+            if (expandedCategories.has(category)) {
+                expandedCategories.delete(category);
+            } else {
+                expandedCategories.add(category);
+            }
+            buildHeaders();
+            buildBody();
+        };
 
         // Get unique categories
         const categories = [...new Set(statColumns.map(c => c.category))];
@@ -440,6 +440,7 @@
         // Build table headers
         function buildHeaders() {
             const thead = document.getElementById('tableHead');
+            const visibleColumns = getVisibleColumns();
 
             // Category row
             let categoryRow = '<tr>';
@@ -448,10 +449,15 @@
             let currentCategory = null;
             let categorySpan = 0;
 
-            statColumns.forEach((col, i) => {
+            visibleColumns.forEach((col, i) => {
                 if (col.category !== currentCategory) {
                     if (currentCategory !== null) {
-                        categoryRow += `<th class="category-header" colspan="${categorySpan}">${currentCategory}</th>`;
+                        const isCollapsible = collapsibleCategories.has(currentCategory);
+                        const isExpanded = expandedCategories.has(currentCategory);
+                        const toggle = isCollapsible ? (isExpanded ? ' ▼' : ' ▶') : '';
+                        const clickHandler = isCollapsible ? `onclick="toggleCategory('${currentCategory}')"` : '';
+                        const cursorStyle = isCollapsible ? 'cursor: pointer;' : '';
+                        categoryRow += `<th class="category-header" colspan="${categorySpan}" ${clickHandler} style="${cursorStyle}" title="${isCollapsible ? 'Click to expand/collapse' : ''}">${currentCategory}${toggle}</th>`;
                     }
                     currentCategory = col.category;
                     categorySpan = 1;
@@ -459,16 +465,22 @@
                     categorySpan++;
                 }
 
-                if (i === statColumns.length - 1) {
-                    categoryRow += `<th class="category-header" colspan="${categorySpan}">${currentCategory}</th>`;
+                if (i === visibleColumns.length - 1) {
+                    const isCollapsible = collapsibleCategories.has(currentCategory);
+                    const isExpanded = expandedCategories.has(currentCategory);
+                    const toggle = isCollapsible ? (isExpanded ? ' ▼' : ' ▶') : '';
+                    const clickHandler = isCollapsible ? `onclick="toggleCategory('${currentCategory}')"` : '';
+                    const cursorStyle = isCollapsible ? 'cursor: pointer;' : '';
+                    categoryRow += `<th class="category-header" colspan="${categorySpan}" ${clickHandler} style="${cursorStyle}" title="${isCollapsible ? 'Click to expand/collapse' : ''}">${currentCategory}${toggle}</th>`;
                 }
             });
             categoryRow += '</tr>';
 
             // Column headers row
             let headerRow = '<tr>';
-            statColumns.forEach((col, i) => {
-                headerRow += `<th class="sub-header" data-column="${i}" onclick="window.sortByColumn(${i})">${col.label}</th>`;
+            visibleColumns.forEach((col, i) => {
+                const originalIndex = statColumns.indexOf(col);
+                headerRow += `<th class="sub-header" data-column="${originalIndex}" onclick="window.sortByColumn(${originalIndex})">${col.label}</th>`;
             });
             headerRow += '</tr>';
 
@@ -516,7 +528,7 @@
                 html += '<tr>';
                 html += `<td class="name-cell">${player.name}</td>`;
 
-                statColumns.forEach(col => {
+                getVisibleColumns().forEach(col => {
                     let value;
                     let cellClass = '';
 
@@ -667,32 +679,18 @@
             buildBody();
         };
 
-        // Show export modal (requires password)
+        // Show export modal
         window.showExportModal = function() {
             if (modifications.size === 0) {
                 alert('No changes to export.');
                 return;
             }
-            document.getElementById('passwordModal').classList.add('active');
-            document.getElementById('passwordInput').value = '';
-            document.getElementById('passwordInput').focus();
+            generateExport();
         };
 
         // Close modal
         window.closeModal = function(modalId) {
             document.getElementById(modalId).classList.remove('active');
-        };
-
-        // Check password
-        window.checkPassword = async function() {
-            const password = document.getElementById('passwordInput').value;
-            const inputHash = await hashPassword(password);
-            if (inputHash === PASSWORD_HASH) {
-                closeModal('passwordModal');
-                generateExport();
-            } else {
-                alert('Incorrect password.');
-            }
         };
 
         // Generate export content
@@ -764,13 +762,7 @@
             buildBody();
         });
 
-        // Handle password input enter key
-        document.getElementById('passwordInput').addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                checkPassword();
-            }
-        });
-
+        
         // Initialize
         buildHeaders();
         buildBody();
