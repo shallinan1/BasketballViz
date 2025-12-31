@@ -79,7 +79,7 @@ export const computeRebounding = (stats) => {
 };
 
 // Position Ratings - computed from aggregate stats
-// PG: 0.28*S + 0.08*IS + 0.16*A + 0.36*P + 0.08*D + 0.04*R
+// PG: 0.28*S + 0.09*IS + 0.12*A + 0.38*P + 0.08*D + 0.05*R
 export const computePGRating = (stats) => {
     const s = computeShooting(stats);
     const is = computeInsideScoring(stats);
@@ -87,10 +87,10 @@ export const computePGRating = (stats) => {
     const p = computePlaymaking(stats);
     const d = computeDefense(stats);
     const r = computeRebounding(stats);
-    return Math.round((0.28 * s + 0.08 * is + 0.16 * a + 0.36 * p + 0.08 * d + 0.04 * r) * 10) / 10;
+    return Math.round((0.28 * s + 0.09 * is + 0.12 * a + 0.38 * p + 0.08 * d + 0.05 * r) * 10) / 10;
 };
 
-// SG: 0.34*S + 0.14*IS + 0.19*A + 0.16*P + 0.11*D + 0.06*R
+// SG: 0.35*S + 0.14*IS + 0.17*A + 0.17*P + 0.11*D + 0.06*R
 export const computeSGRating = (stats) => {
     const s = computeShooting(stats);
     const is = computeInsideScoring(stats);
@@ -98,10 +98,10 @@ export const computeSGRating = (stats) => {
     const p = computePlaymaking(stats);
     const d = computeDefense(stats);
     const r = computeRebounding(stats);
-    return Math.round((0.34 * s + 0.14 * is + 0.19 * a + 0.16 * p + 0.11 * d + 0.06 * r) * 10) / 10;
+    return Math.round((0.35 * s + 0.14 * is + 0.17 * a + 0.17 * p + 0.11 * d + 0.06 * r) * 10) / 10;
 };
 
-// SF: 0.21*S + 0.17*IS + 0.20*A + 0.10*P + 0.20*D + 0.12*R
+// SF: 0.21*S + 0.17*IS + 0.20*A + 0.12*P + 0.20*D + 0.10*R
 export const computeSFRating = (stats) => {
     const s = computeShooting(stats);
     const is = computeInsideScoring(stats);
@@ -109,7 +109,7 @@ export const computeSFRating = (stats) => {
     const p = computePlaymaking(stats);
     const d = computeDefense(stats);
     const r = computeRebounding(stats);
-    return Math.round((0.21 * s + 0.17 * is + 0.20 * a + 0.10 * p + 0.20 * d + 0.12 * r) * 10) / 10;
+    return Math.round((0.21 * s + 0.17 * is + 0.20 * a + 0.12 * p + 0.20 * d + 0.10 * r) * 10) / 10;
 };
 
 // PF: 0.11*S + 0.21*IS + 0.24*A + 0.05*P + 0.20*D + 0.19*R
