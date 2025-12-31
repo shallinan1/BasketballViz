@@ -78,8 +78,10 @@ export const computeRebounding = (stats) => {
     return Math.round((stats.offensiveRebounding + stats.defensiveRebounding) / 2);
 };
 
-// Position Ratings - computed from aggregate stats
-// PG: 0.28*S + 0.09*IS + 0.12*A + 0.38*P + 0.08*D + 0.05*R
+// Position Ratings - computed from aggregate stats + intangibles/potential
+// Each position rating includes: base weighted stats + intangibles/100 + potential/200
+
+// PG: 0.28*S + 0.09*IS + 0.12*A + 0.38*P + 0.08*D + 0.05*R + intangibles/100 + potential/200
 export const computePGRating = (stats) => {
     const s = computeShooting(stats);
     const is = computeInsideScoring(stats);
@@ -87,10 +89,11 @@ export const computePGRating = (stats) => {
     const p = computePlaymaking(stats);
     const d = computeDefense(stats);
     const r = computeRebounding(stats);
-    return Math.round((0.28 * s + 0.09 * is + 0.12 * a + 0.38 * p + 0.08 * d + 0.05 * r) * 10) / 10;
+    const base = 0.28 * s + 0.09 * is + 0.12 * a + 0.38 * p + 0.08 * d + 0.05 * r;
+    return Math.round((base + stats.intangibles / 100 + stats.potential / 200) * 10) / 10;
 };
 
-// SG: 0.35*S + 0.14*IS + 0.17*A + 0.17*P + 0.11*D + 0.06*R
+// SG: 0.35*S + 0.14*IS + 0.17*A + 0.17*P + 0.11*D + 0.06*R + intangibles/100 + potential/200
 export const computeSGRating = (stats) => {
     const s = computeShooting(stats);
     const is = computeInsideScoring(stats);
@@ -98,10 +101,11 @@ export const computeSGRating = (stats) => {
     const p = computePlaymaking(stats);
     const d = computeDefense(stats);
     const r = computeRebounding(stats);
-    return Math.round((0.35 * s + 0.14 * is + 0.17 * a + 0.17 * p + 0.11 * d + 0.06 * r) * 10) / 10;
+    const base = 0.35 * s + 0.14 * is + 0.17 * a + 0.17 * p + 0.11 * d + 0.06 * r;
+    return Math.round((base + stats.intangibles / 100 + stats.potential / 200) * 10) / 10;
 };
 
-// SF: 0.21*S + 0.17*IS + 0.20*A + 0.12*P + 0.20*D + 0.10*R
+// SF: 0.21*S + 0.17*IS + 0.20*A + 0.12*P + 0.20*D + 0.10*R + intangibles/100 + potential/200
 export const computeSFRating = (stats) => {
     const s = computeShooting(stats);
     const is = computeInsideScoring(stats);
@@ -109,10 +113,11 @@ export const computeSFRating = (stats) => {
     const p = computePlaymaking(stats);
     const d = computeDefense(stats);
     const r = computeRebounding(stats);
-    return Math.round((0.21 * s + 0.17 * is + 0.20 * a + 0.12 * p + 0.20 * d + 0.10 * r) * 10) / 10;
+    const base = 0.21 * s + 0.17 * is + 0.20 * a + 0.12 * p + 0.20 * d + 0.10 * r;
+    return Math.round((base + stats.intangibles / 100 + stats.potential / 200) * 10) / 10;
 };
 
-// PF: 0.11*S + 0.21*IS + 0.24*A + 0.05*P + 0.20*D + 0.19*R
+// PF: 0.11*S + 0.21*IS + 0.24*A + 0.05*P + 0.20*D + 0.19*R + intangibles/100 + potential/200
 export const computePFRating = (stats) => {
     const s = computeShooting(stats);
     const is = computeInsideScoring(stats);
@@ -120,10 +125,11 @@ export const computePFRating = (stats) => {
     const p = computePlaymaking(stats);
     const d = computeDefense(stats);
     const r = computeRebounding(stats);
-    return Math.round((0.11 * s + 0.21 * is + 0.24 * a + 0.05 * p + 0.20 * d + 0.19 * r) * 10) / 10;
+    const base = 0.11 * s + 0.21 * is + 0.24 * a + 0.05 * p + 0.20 * d + 0.19 * r;
+    return Math.round((base + stats.intangibles / 100 + stats.potential / 200) * 10) / 10;
 };
 
-// C: 0.03*S + 0.24*IS + 0.20*A + 0.03*P + 0.25*D + 0.25*R
+// C: 0.03*S + 0.24*IS + 0.20*A + 0.03*P + 0.25*D + 0.25*R + intangibles/100 + potential/200
 export const computeCRating = (stats) => {
     const s = computeShooting(stats);
     const is = computeInsideScoring(stats);
@@ -131,19 +137,19 @@ export const computeCRating = (stats) => {
     const p = computePlaymaking(stats);
     const d = computeDefense(stats);
     const r = computeRebounding(stats);
-    return Math.round((0.03 * s + 0.24 * is + 0.20 * a + 0.03 * p + 0.25 * d + 0.25 * r) * 10) / 10;
+    const base = 0.03 * s + 0.24 * is + 0.20 * a + 0.03 * p + 0.25 * d + 0.25 * r;
+    return Math.round((base + stats.intangibles / 100 + stats.potential / 200) * 10) / 10;
 };
 
-// Overall rating: round(MAX(position ratings) + Intangibles/100 + Potential/200)
+// Overall rating: simply the max of all position ratings
 export const computeOverallRating = (stats) => {
-    const maxPositionRating = Math.max(
+    return Math.round(Math.max(
         computePGRating(stats),
         computeSGRating(stats),
         computeSFRating(stats),
         computePFRating(stats),
         computeCRating(stats)
-    );
-    return Math.round(maxPositionRating + stats.intangibles / 100 + stats.potential / 200);
+    ));
 };
 
 // Compute position string based on ratings (e.g., "PG/SG", "SF", "PF/C")
