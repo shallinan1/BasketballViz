@@ -610,6 +610,67 @@
       font-family: 'Orbitron', monospace;
     }
 
+    /* 2K MyTeam Style Tier Borders */
+    .tier-bronze {
+      border: 3px solid #CD7F32 !important;
+      box-shadow: 0 0 8px rgba(205, 127, 50, 0.5);
+    }
+    .tier-silver {
+      border: 3px solid #C0C0C0 !important;
+      box-shadow: 0 0 8px rgba(192, 192, 192, 0.5);
+    }
+    .tier-gold {
+      border: 3px solid #FFD700 !important;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    }
+    .tier-emerald {
+      border: 3px solid #50C878 !important;
+      box-shadow: 0 0 10px rgba(80, 200, 120, 0.6);
+    }
+    .tier-sapphire {
+      border: 3px solid #0F52BA !important;
+      box-shadow: 0 0 12px rgba(15, 82, 186, 0.6);
+    }
+    .tier-ruby {
+      border: 3px solid #E0115F !important;
+      box-shadow: 0 0 12px rgba(224, 17, 95, 0.6);
+    }
+    .tier-amethyst {
+      border: 3px solid #9966CC !important;
+      box-shadow: 0 0 14px rgba(153, 102, 204, 0.7);
+    }
+    .tier-diamond {
+      border: 3px solid #B9F2FF !important;
+      box-shadow: 0 0 16px rgba(185, 242, 255, 0.8);
+    }
+    .tier-pink-diamond {
+      border: 3px solid #FF69B4 !important;
+      box-shadow: 0 0 16px rgba(255, 105, 180, 0.8);
+    }
+    .tier-galaxy-opal {
+      border: 3px solid transparent !important;
+      background: linear-gradient(#1e1e2e, #1e1e2e) padding-box,
+                  linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3, #ff0000) border-box;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      animation: rainbow-glow 3s linear infinite;
+    }
+    .tier-dark-matter {
+      border: 3px solid #4a0080 !important;
+      background: linear-gradient(135deg, rgba(26, 10, 46, 0.9), rgba(74, 0, 128, 0.3));
+      box-shadow: 0 0 20px rgba(74, 0, 128, 0.9), inset 0 0 15px rgba(138, 43, 226, 0.3);
+      animation: dark-matter-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes rainbow-glow {
+      0%, 100% { filter: hue-rotate(0deg); }
+      50% { filter: hue-rotate(180deg); }
+    }
+
+    @keyframes dark-matter-pulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(74, 0, 128, 0.9), inset 0 0 15px rgba(138, 43, 226, 0.3); }
+      50% { box-shadow: 0 0 30px rgba(138, 43, 226, 1), inset 0 0 20px rgba(186, 85, 211, 0.5); }
+    }
+
     .player-actions {
       z-index: 100;
     }
@@ -938,6 +999,21 @@
       );
       players.sort((a, b) => getMaxRating(b.stats || {}) - getMaxRating(a.stats || {}));
 
+      // Helper to get tier class based on overall rating (2K MyTeam style)
+      function getTierClass(rating) {
+        if (rating >= 97) return 'tier-dark-matter';
+        if (rating >= 93) return 'tier-galaxy-opal';
+        if (rating >= 90) return 'tier-pink-diamond';
+        if (rating >= 87) return 'tier-diamond';
+        if (rating >= 84) return 'tier-amethyst';
+        if (rating >= 81) return 'tier-ruby';
+        if (rating >= 78) return 'tier-sapphire';
+        if (rating >= 75) return 'tier-emerald';
+        if (rating >= 70) return 'tier-gold';
+        if (rating >= 65) return 'tier-silver';
+        return 'tier-bronze';
+      }
+
       // Helper to get acceptable positions and best rating for a player
       // Uses computePosition which shows primary + co-positions within 1 point of max
       const DEFAULT_STAT = 70.7070707;
@@ -971,6 +1047,11 @@
 
         // Get position info
         const posInfo = getPlayerPositionInfo(player);
+
+        // Apply tier class based on overall rating
+        const tierClass = getTierClass(posInfo.bestRating);
+        playerDiv.classList.add(tierClass);
+        playerDiv.style.borderRadius = '8px';
 
         // Create info overlay with positions and rating
         const infoDiv = document.createElement('div');
@@ -1171,6 +1252,15 @@
         const fitInfo = getPositionFitInfo(player, slotPosition);
         const naturalPosition = computePosition(player.stats || {});
 
+        // Get player's overall rating for tier
+        const posInfo = getPlayerPositionInfo(player);
+        const tierClass = getTierClass(posInfo.bestRating);
+
+        // Remove any existing tier classes from slot
+        slot.classList.remove('tier-bronze', 'tier-silver', 'tier-gold', 'tier-emerald', 'tier-sapphire', 'tier-ruby', 'tier-amethyst', 'tier-diamond', 'tier-pink-diamond', 'tier-galaxy-opal', 'tier-dark-matter');
+        // Add the player's tier class
+        slot.classList.add(tierClass);
+
         slot.innerHTML = `
         <div class="player-container" style="position: relative; text-align: center; display: inline-block;">
             <div class="player-rating-badge ${fitInfo.fitClass}">${positionRating}</div>
@@ -1246,6 +1336,8 @@
       function removePlayerFromSlot(slot) {
         const position = slot.getAttribute('data-slot').split('-')[1];
         slot.innerHTML = position;
+        // Remove tier class when player is removed
+        slot.classList.remove('tier-bronze', 'tier-silver', 'tier-gold', 'tier-emerald', 'tier-sapphire', 'tier-ruby', 'tier-amethyst', 'tier-diamond', 'tier-pink-diamond', 'tier-galaxy-opal', 'tier-dark-matter');
         clearSelections();
         if (document.getElementById('unique-player').checked) {
           enforceUniquePlayers();
@@ -1309,6 +1401,8 @@
           document.querySelectorAll(`[data-slot^="${team}"]`).forEach(slot => {
             const position = slot.getAttribute('data-slot').split('-')[1];
             slot.innerHTML = position;
+            // Remove tier class when clearing
+            slot.classList.remove('tier-bronze', 'tier-silver', 'tier-gold', 'tier-emerald', 'tier-sapphire', 'tier-ruby', 'tier-amethyst', 'tier-diamond', 'tier-pink-diamond', 'tier-galaxy-opal', 'tier-dark-matter');
           });
           removeTeamStats(team);
         });
@@ -1493,6 +1587,8 @@
         document.querySelectorAll(`[data-slot^="${team}"]`).forEach(slot => {
           const position = slot.getAttribute('data-slot').split('-')[1];
           slot.innerHTML = position;
+          // Remove tier class when clearing
+          slot.classList.remove('tier-bronze', 'tier-silver', 'tier-gold', 'tier-emerald', 'tier-sapphire', 'tier-ruby', 'tier-amethyst', 'tier-diamond', 'tier-pink-diamond', 'tier-galaxy-opal', 'tier-dark-matter');
         });
 
         // Make all player divs visible again
