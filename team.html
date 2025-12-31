@@ -671,6 +671,35 @@
       50% { box-shadow: 0 0 30px rgba(138, 43, 226, 1), inset 0 0 20px rgba(186, 85, 211, 0.5); }
     }
 
+    /* Position Filter Buttons */
+    .filter-btn {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: var(--slot-bg);
+      border: 2px solid var(--border-secondary);
+      color: var(--text-secondary);
+    }
+
+    .filter-btn:hover {
+      background: var(--slot-bg-hover);
+      border-color: var(--text-secondary);
+      transform: scale(1.05);
+    }
+
+    .filter-btn.active {
+      background: #06f;
+      border-color: #06f;
+      color: #fff;
+    }
+
+    .filter-btn.active:hover {
+      background: rgba(0, 122, 255, 1);
+    }
+
     .player-actions {
       z-index: 100;
     }
@@ -1545,6 +1574,11 @@
             playerDiv.style.display = 'inline-block';
           }
         });
+
+        // Re-apply position filter after unique player enforcement
+        if (window.applyPositionFilter) {
+          window.applyPositionFilter();
+        }
       }
 
       // Keep all previous code the same, but replace the randomizeTeamSlots function with this fixed version:
@@ -1786,6 +1820,62 @@
         document.getElementById('speedValue').textContent = e.target.value;
       });
 
+      // Position filter functionality
+      let currentPositionFilter = 'ALL';
+
+      function applyPositionFilter() {
+        document.querySelectorAll('#player-list > div').forEach(playerDiv => {
+          const playerId = playerDiv.dataset.id;
+          const player = players.find(p => p.image.includes(playerId));
+          if (!player) return;
+
+          const positionString = computePosition(player.stats || {});
+          const positions = positionString.split('/');
+
+          // Check if player should be visible
+          const isVisible = currentPositionFilter === 'ALL' || positions.includes(currentPositionFilter);
+
+          // Also check if unique player mode is hiding them
+          const isHiddenByUnique = playerDiv.style.display === 'none' && document.getElementById('unique-player').checked;
+
+          if (currentPositionFilter === 'ALL') {
+            // Respect unique player setting
+            if (!isHiddenByUnique || !document.getElementById('unique-player').checked) {
+              playerDiv.style.display = isVisible ? 'inline-block' : 'none';
+            }
+          } else {
+            if (isVisible) {
+              // Check if hidden by unique player mode
+              const selectedIds = new Set();
+              document.querySelectorAll('.slot img').forEach(img => selectedIds.add(img.dataset.id));
+              if (document.getElementById('unique-player').checked && selectedIds.has(playerId)) {
+                playerDiv.style.display = 'none';
+              } else {
+                playerDiv.style.display = 'inline-block';
+              }
+            } else {
+              playerDiv.style.display = 'none';
+            }
+          }
+        });
+      }
+
+      // Set up filter button event listeners
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Update active state
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          // Apply filter
+          currentPositionFilter = btn.dataset.position;
+          applyPositionFilter();
+        });
+      });
+
+      // Make applyPositionFilter available globally so enforceUniquePlayers can use it
+      window.applyPositionFilter = applyPositionFilter;
+
     });
 
     // Function to compute and display team stats
@@ -2015,6 +2105,14 @@
 
     <div class="players">
       <h2>Players</h2>
+      <div class="position-filter" style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px;">
+        <button class="filter-btn active" data-position="ALL">All</button>
+        <button class="filter-btn" data-position="PG">PG</button>
+        <button class="filter-btn" data-position="SG">SG</button>
+        <button class="filter-btn" data-position="SF">SF</button>
+        <button class="filter-btn" data-position="PF">PF</button>
+        <button class="filter-btn" data-position="C">C</button>
+      </div>
       <div class="player-list" id="player-list"></div>
     </div>
   </div>
