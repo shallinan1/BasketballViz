@@ -626,6 +626,35 @@
     .tier-emerald {
       border: 3px solid #50C878 !important;
       box-shadow: 0 0 10px rgba(80, 200, 120, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tier-emerald::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -100%;
+      width: 60%;
+      height: 200%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.15),
+        rgba(80, 200, 120, 0.3),
+        rgba(255, 255, 255, 0.15),
+        transparent
+      );
+      transform: skewX(-20deg);
+      animation: emerald-shine 4s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 15;
+    }
+
+    @keyframes emerald-shine {
+      0% { left: -100%; }
+      20% { left: 150%; }
+      100% { left: 150%; }
     }
     .tier-sapphire {
       border: 3px solid #0F52BA !important;
