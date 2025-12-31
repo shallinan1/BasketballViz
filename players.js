@@ -153,7 +153,10 @@ export const computeOverallRating = (stats) => {
 };
 
 // Compute position string based on ratings (e.g., "PG/SG", "SF", "PF/C")
-// Primary position is the max rating, co-positions are within 1 point of max
+// Uses a budget system: primary position is free, secondary positions cost (maxRating - theirRating)
+// Total budget for secondary positions is 1.0
+// e.g., 95/94.9/94.9 = 3 positions (costs 0.1 + 0.1 = 0.2)
+// e.g., 95/94.5/94.1 = 2 positions (94.5 costs 0.5, 94.1 would cost 0.9, total would exceed 1.0)
 export const computePosition = (stats) => {
     const positions = [
         { pos: 'PG', rating: computePGRating(stats) },
@@ -167,8 +170,20 @@ export const computePosition = (stats) => {
     positions.sort((a, b) => b.rating - a.rating);
     const maxRating = positions[0].rating;
 
-    // Get all positions within 1 point of max
-    const validPositions = positions.filter(p => maxRating - p.rating <= 1);
+    // Budget system: start with primary position, add others while budget allows
+    const BUDGET = 1.0;
+    let budgetUsed = 0;
+    const validPositions = [positions[0]]; // Primary position is always included
+
+    for (let i = 1; i < positions.length; i++) {
+        const cost = maxRating - positions[i].rating;
+        if (budgetUsed + cost <= BUDGET) {
+            validPositions.push(positions[i]);
+            budgetUsed += cost;
+        } else {
+            break; // No point checking lower-rated positions
+        }
+    }
 
     return validPositions.map(p => p.pos).join('/');
 };
