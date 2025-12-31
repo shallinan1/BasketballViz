@@ -1,3 +1,7 @@
 .DS_Store
 node_modules/
 coverage/
+
+# Spreadsheet files
+IMA BBall Dictionary.xlsx
+IMA BBall Dictionary - Sheet1.csv
