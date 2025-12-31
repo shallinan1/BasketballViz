@@ -879,7 +879,7 @@
   </style>
 
   <script type="module">
-    import { players, computePGRating, computeSGRating, computeSFRating, computePFRating, computeCRating } from './players.js';
+    import { players, computePGRating, computeSGRating, computeSFRating, computePFRating, computeCRating, computePosition } from './players.js';
     import { simulateGame, calculateTeamRating } from './gameSimulator.js';
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -931,55 +931,20 @@
       players.sort((a, b) => a.number - b.number);
 
       // Helper to get acceptable positions and best rating for a player
+      // Uses computePosition which shows primary + co-positions within 1 point of max
       const DEFAULT_STAT = 70.7070707;
       function getPlayerPositionInfo(player) {
         const stats = player.stats || {};
-        const positions = [
-          { pos: 'PG', rating: computePGRating(stats) },
-          { pos: 'SG', rating: computeSGRating(stats) },
-          { pos: 'SF', rating: computeSFRating(stats) },
-          { pos: 'PF', rating: computePFRating(stats) },
-          { pos: 'C', rating: computeCRating(stats) }
-        ];
-
-        const ratings = positions.map(p => p.rating);
-        const maxRating = Math.max(...ratings);
-        const minRating = Math.min(...ratings);
-        const spread = maxRating - minRating;
-
-        // If no meaningful differentiation (spread < 3 points), fall back to natural position
-        const hasMeaningfulDifferentiation = spread >= 3;
-
-        if (!hasMeaningfulDifferentiation) {
-          // Fall back to player's natural position field
-          const naturalPos = player.position || 'N/A';
-          // Map natural position to slot positions
-          const posMap = {
-            'Guard': ['PG', 'SG'],
-            'Point Guard': ['PG'],
-            'Shooting Guard': ['SG'],
-            'Forward': ['SF', 'PF'],
-            'Small Forward': ['SF'],
-            'Power Forward': ['PF'],
-            'Wing': ['SG', 'SF'],
-            'Big': ['PF', 'C'],
-            'Center': ['C'],
-            'C': ['C'],
-            'PG': ['PG'],
-            'SG': ['SG'],
-            'SF': ['SF'],
-            'PF': ['PF']
-          };
-          const mappedPositions = posMap[naturalPos] || [naturalPos];
-          return { positions: mappedPositions, bestRating: Math.round(maxRating) };
-        }
-
-        const best = positions.reduce((max, curr) => curr.rating > max.rating ? curr : max);
-        // Acceptable = within 5 points of best
-        const acceptable = positions
-          .filter(p => best.rating - p.rating <= 5)
-          .map(p => p.pos);
-        return { positions: acceptable.length > 0 ? acceptable : [best.pos], bestRating: Math.round(best.rating) };
+        const positionString = computePosition(stats);
+        const positions = positionString.split('/');
+        const bestRating = Math.round(Math.max(
+          computePGRating(stats),
+          computeSGRating(stats),
+          computeSFRating(stats),
+          computePFRating(stats),
+          computeCRating(stats)
+        ));
+        return { positions, bestRating };
       }
 
       // In your script section, modify the player creation part:
@@ -1129,24 +1094,6 @@
         return positions.reduce((best, curr) => curr.rating > best.rating ? curr : best);
       }
 
-      // Map natural position to acceptable slot positions
-      const naturalPosMap = {
-        'Guard': ['PG', 'SG'],
-        'Point Guard': ['PG'],
-        'Shooting Guard': ['SG'],
-        'Forward': ['SF', 'PF'],
-        'Small Forward': ['SF'],
-        'Power Forward': ['PF'],
-        'Wing': ['SG', 'SF'],
-        'Big': ['PF', 'C'],
-        'Center': ['C'],
-        'C': ['C'],
-        'PG': ['PG'],
-        'SG': ['SG'],
-        'SF': ['SF'],
-        'PF': ['PF']
-      };
-
       // Get fit class and OOP indicator based on how close to best position
       function getPositionFitInfo(player, slotPosition) {
         const stats = player.stats || {};
@@ -1167,8 +1114,8 @@
 
         // If no meaningful differentiation, use natural position
         if (spread < 3) {
-          const naturalPos = player.position || 'N/A';
-          const acceptablePositions = naturalPosMap[naturalPos] || [];
+          const naturalPos = computePosition(player.stats || {});
+          const acceptablePositions = naturalPos.split('/');
 
           if (acceptablePositions.includes(slotPosition)) {
             fitClass = 'good-fit';
@@ -1214,7 +1161,7 @@
         const slotPosition = slot.getAttribute('data-slot').split('-')[1];
         const positionRating = Math.round(getPositionRating(player, slotPosition));
         const fitInfo = getPositionFitInfo(player, slotPosition);
-        const naturalPosition = player.position || 'N/A';
+        const naturalPosition = computePosition(player.stats || {});
 
         slot.innerHTML = `
         <div class="player-container" style="position: relative; text-align: center; display: inline-block;">

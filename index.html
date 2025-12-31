@@ -319,7 +319,7 @@
         <div class="player-list" id="player-list"></div>
 
         <script type="module">
-            import { players } from './players.js';
+            import { players, computePosition } from './players.js';
             
             const playerList = document.getElementById('player-list');
         
@@ -399,7 +399,7 @@
         </div>
         <div class="player-image-container">
             <img src="${player.image}" alt="${player.name}">
-            <div class="player-position">${player.position}</div>
+            <div class="player-position">${computePosition(player.stats || {})}</div>
         </div>
         <div class="player-stats">
             <div class="player-stat"><span class="title">HEIGHT</span> <span class="value">${player.height}</span></div>

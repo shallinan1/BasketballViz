@@ -146,6 +146,27 @@ export const computeOverallRating = (stats) => {
     return Math.round(maxPositionRating + stats.intangibles / 100 + stats.potential / 200);
 };
 
+// Compute position string based on ratings (e.g., "PG/SG", "SF", "PF/C")
+// Primary position is the max rating, co-positions are within 1 point of max
+export const computePosition = (stats) => {
+    const positions = [
+        { pos: 'PG', rating: computePGRating(stats) },
+        { pos: 'SG', rating: computeSGRating(stats) },
+        { pos: 'SF', rating: computeSFRating(stats) },
+        { pos: 'PF', rating: computePFRating(stats) },
+        { pos: 'C', rating: computeCRating(stats) }
+    ];
+
+    // Sort by rating descending
+    positions.sort((a, b) => b.rating - a.rating);
+    const maxRating = positions[0].rating;
+
+    // Get all positions within 1 point of max
+    const validPositions = positions.filter(p => maxRating - p.rating <= 1);
+
+    return validPositions.map(p => p.pos).join('/');
+};
+
 export const players = [
 
     {
