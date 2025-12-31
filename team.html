@@ -879,7 +879,7 @@
   </style>
 
   <script type="module">
-    import { players } from './players.js';
+    import { players, computePGRating, computeSGRating, computeSFRating, computePFRating, computeCRating } from './players.js';
     import { simulateGame, calculateTeamRating } from './gameSimulator.js';
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -935,11 +935,11 @@
       function getPlayerPositionInfo(player) {
         const stats = player.stats || {};
         const positions = [
-          { pos: 'PG', rating: stats.pgRating || 0 },
-          { pos: 'SG', rating: stats.sgRating || 0 },
-          { pos: 'SF', rating: stats.sfRating || 0 },
-          { pos: 'PF', rating: stats.pfRating || 0 },
-          { pos: 'C', rating: stats.cRating || 0 }
+          { pos: 'PG', rating: computePGRating(stats) },
+          { pos: 'SG', rating: computeSGRating(stats) },
+          { pos: 'SF', rating: computeSFRating(stats) },
+          { pos: 'PF', rating: computePFRating(stats) },
+          { pos: 'C', rating: computeCRating(stats) }
         ];
 
         const ratings = positions.map(p => p.rating);
@@ -1107,11 +1107,11 @@
       function getPositionRating(player, slotPosition) {
         const stats = player.stats || {};
         const positionMap = {
-          'PG': stats.pgRating,
-          'SG': stats.sgRating,
-          'SF': stats.sfRating,
-          'PF': stats.pfRating,
-          'C': stats.cRating
+          'PG': computePGRating(stats),
+          'SG': computeSGRating(stats),
+          'SF': computeSFRating(stats),
+          'PF': computePFRating(stats),
+          'C': computeCRating(stats)
         };
         return positionMap[slotPosition] || 70;
       }
@@ -1120,11 +1120,11 @@
       function getBestPosition(player) {
         const stats = player.stats || {};
         const positions = [
-          { pos: 'PG', rating: stats.pgRating || 0 },
-          { pos: 'SG', rating: stats.sgRating || 0 },
-          { pos: 'SF', rating: stats.sfRating || 0 },
-          { pos: 'PF', rating: stats.pfRating || 0 },
-          { pos: 'C', rating: stats.cRating || 0 }
+          { pos: 'PG', rating: computePGRating(stats) },
+          { pos: 'SG', rating: computeSGRating(stats) },
+          { pos: 'SF', rating: computeSFRating(stats) },
+          { pos: 'PF', rating: computePFRating(stats) },
+          { pos: 'C', rating: computeCRating(stats) }
         ];
         return positions.reduce((best, curr) => curr.rating > best.rating ? curr : best);
       }
@@ -1151,11 +1151,11 @@
       function getPositionFitInfo(player, slotPosition) {
         const stats = player.stats || {};
         const positions = [
-          { pos: 'PG', rating: stats.pgRating || 0 },
-          { pos: 'SG', rating: stats.sgRating || 0 },
-          { pos: 'SF', rating: stats.sfRating || 0 },
-          { pos: 'PF', rating: stats.pfRating || 0 },
-          { pos: 'C', rating: stats.cRating || 0 }
+          { pos: 'PG', rating: computePGRating(stats) },
+          { pos: 'SG', rating: computeSGRating(stats) },
+          { pos: 'SF', rating: computeSFRating(stats) },
+          { pos: 'PF', rating: computePFRating(stats) },
+          { pos: 'C', rating: computeCRating(stats) }
         ];
 
         const ratings = positions.map(p => p.rating);
@@ -1770,11 +1770,11 @@
 
           // Calculate position-adjusted rating
           const positionMap = {
-            'PG': s.pgRating,
-            'SG': s.sgRating,
-            'SF': s.sfRating,
-            'PF': s.pfRating,
-            'C': s.cRating
+            'PG': computePGRating(s),
+            'SG': computeSGRating(s),
+            'SF': computeSFRating(s),
+            'PF': computePFRating(s),
+            'C': computeCRating(s)
           };
           const positionRating = positionMap[slotPosition] || 70;
           teamOverallSum += positionRating;
