@@ -57,6 +57,8 @@
             overflow-x: auto;
             border: 1px solid #333;
             border-radius: 4px;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
         }
         table {
             border-collapse: collapse;
@@ -69,11 +71,13 @@
             text-align: center;
             min-width: 60px;
         }
-        th {
-            background: #2a2a3e;
+        thead {
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 20;
+        }
+        th {
+            background: #2a2a3e;
             cursor: pointer;
             user-select: none;
         }
@@ -92,13 +96,9 @@
             background: #FF6600 !important;
             color: white;
             font-weight: bold;
-            position: sticky;
-            top: 0;
-            z-index: 11;
         }
         .sub-header {
-            top: 28px !important;
-            z-index: 9 !important;
+            background: #2a2a3e !important;
         }
         td {
             background: #1e1e2e;
@@ -339,64 +339,11 @@
         // Track modifications
         const modifications = new Map();
 
-        // Column definitions
+        // Column definitions - ordered to match Excel format
         const statColumns = [
-            // Shooting
-            { key: 'shotClose', label: 'Close', category: 'Shooting', editable: true },
-            { key: 'shotMid', label: 'Mid', category: 'Shooting', editable: true },
-            { key: 'shot3pt', label: '3PT', category: 'Shooting', editable: true },
-            { key: 'shotIQ', label: 'IQ', category: 'Shooting', editable: true },
-            { key: 'freeThrow', label: 'FT', category: 'Shooting', editable: true },
-            { key: 'offensiveConsistency', label: 'Consist', category: 'Shooting', editable: true },
-            { key: '_shooting', label: 'TOTAL', category: 'Shooting', computed: true, formula: computeShooting },
-
-            // Inside Scoring
-            { key: 'drivingLayup', label: 'Layup', category: 'Inside', editable: true },
-            { key: 'standingDunk', label: 'StDunk', category: 'Inside', editable: true },
-            { key: 'drivingDunk', label: 'DrDunk', category: 'Inside', editable: true },
-            { key: 'drawFoul', label: 'Foul', category: 'Inside', editable: true },
-            { key: 'postMoves', label: 'Post', category: 'Inside', editable: true },
-            { key: 'postHook', label: 'Hook', category: 'Inside', editable: true },
-            { key: 'postFade', label: 'Fade', category: 'Inside', editable: true },
-            { key: 'hands', label: 'Hands', category: 'Inside', editable: true },
-            { key: '_insideScoring', label: 'TOTAL', category: 'Inside', computed: true, formula: computeInsideScoring },
-
-            // Athleticism
-            { key: 'speed', label: 'Speed', category: 'Athletic', editable: true },
-            { key: 'acceleration', label: 'Accel', category: 'Athletic', editable: true },
-            { key: 'vertical', label: 'Vert', category: 'Athletic', editable: true },
-            { key: 'strength', label: 'Str', category: 'Athletic', editable: true },
-            { key: 'stamina', label: 'Stam', category: 'Athletic', editable: true },
-            { key: 'hustle', label: 'Hust', category: 'Athletic', editable: true },
-            { key: '_athleticism', label: 'TOTAL', category: 'Athletic', computed: true, formula: computeAthleticism },
-
-            // Playmaking
-            { key: 'speedWithBall', label: 'SwB', category: 'Playmaking', editable: true },
-            { key: 'ballHandle', label: 'Handle', category: 'Playmaking', editable: true },
-            { key: 'passingAccuracy', label: 'Acc', category: 'Playmaking', editable: true },
-            { key: 'passingVision', label: 'Vision', category: 'Playmaking', editable: true },
-            { key: 'passingIQ', label: 'IQ', category: 'Playmaking', editable: true },
-            { key: '_playmaking', label: 'TOTAL', category: 'Playmaking', computed: true, formula: computePlaymaking },
-
-            // Defense
-            { key: 'interiorDefense', label: 'Int', category: 'Defense', editable: true },
-            { key: 'perimeterDefense', label: 'Peri', category: 'Defense', editable: true },
-            { key: 'helpDefenseIQ', label: 'Help', category: 'Defense', editable: true },
-            { key: 'lateralQuickness', label: 'Lat', category: 'Defense', editable: true },
-            { key: 'passPerception', label: 'Perc', category: 'Defense', editable: true },
-            { key: 'steal', label: 'Stl', category: 'Defense', editable: true },
-            { key: 'block', label: 'Blk', category: 'Defense', editable: true },
-            { key: 'defensiveConsistency', label: 'Consist', category: 'Defense', editable: true },
-            { key: '_defense', label: 'TOTAL', category: 'Defense', computed: true, formula: computeDefense },
-
-            // Rebounding
-            { key: 'offensiveRebounding', label: 'Off', category: 'Rebound', editable: true },
-            { key: 'defensiveRebounding', label: 'Def', category: 'Rebound', editable: true },
-            { key: '_rebounding', label: 'TOTAL', category: 'Rebound', computed: true, formula: computeRebounding },
-
-            // Mental
-            { key: 'intangibles', label: 'Intang', category: 'Mental', editable: true },
-            { key: 'potential', label: 'Potent', category: 'Mental', editable: true },
+            // Overall & Position (right after player name)
+            { key: '_overall', label: 'OVR', category: 'Overall', overall: true, formula: computeOverallRating },
+            { key: '_position', label: 'POS', category: 'Overall', overall: true, formula: computePosition },
 
             // Position Ratings
             { key: '_pgRating', label: 'PG', category: 'Position', posRating: true, formula: computePGRating },
@@ -405,9 +352,62 @@
             { key: '_pfRating', label: 'PF', category: 'Position', posRating: true, formula: computePFRating },
             { key: '_cRating', label: 'C', category: 'Position', posRating: true, formula: computeCRating },
 
-            // Overall
-            { key: '_overall', label: 'OVR', category: 'Overall', overall: true, formula: computeOverallRating },
-            { key: '_position', label: 'POS', category: 'Overall', overall: true, formula: computePosition }
+            // Shooting (TOTAL first, then individual stats)
+            { key: '_shooting', label: 'TOTAL', category: 'Shooting', computed: true, formula: computeShooting },
+            { key: 'shotClose', label: 'Close', category: 'Shooting', editable: true },
+            { key: 'shotMid', label: 'Mid', category: 'Shooting', editable: true },
+            { key: 'shot3pt', label: '3PT', category: 'Shooting', editable: true },
+            { key: 'shotIQ', label: 'IQ', category: 'Shooting', editable: true },
+            { key: 'freeThrow', label: 'FT', category: 'Shooting', editable: true },
+            { key: 'offensiveConsistency', label: 'Consist', category: 'Shooting', editable: true },
+
+            // Inside Scoring (TOTAL first)
+            { key: '_insideScoring', label: 'TOTAL', category: 'Inside', computed: true, formula: computeInsideScoring },
+            { key: 'drivingLayup', label: 'Layup', category: 'Inside', editable: true },
+            { key: 'standingDunk', label: 'StDunk', category: 'Inside', editable: true },
+            { key: 'drivingDunk', label: 'DrDunk', category: 'Inside', editable: true },
+            { key: 'drawFoul', label: 'Foul', category: 'Inside', editable: true },
+            { key: 'postMoves', label: 'Post', category: 'Inside', editable: true },
+            { key: 'postHook', label: 'Hook', category: 'Inside', editable: true },
+            { key: 'postFade', label: 'Fade', category: 'Inside', editable: true },
+            { key: 'hands', label: 'Hands', category: 'Inside', editable: true },
+
+            // Athleticism (TOTAL first)
+            { key: '_athleticism', label: 'TOTAL', category: 'Athletic', computed: true, formula: computeAthleticism },
+            { key: 'speed', label: 'Speed', category: 'Athletic', editable: true },
+            { key: 'acceleration', label: 'Accel', category: 'Athletic', editable: true },
+            { key: 'vertical', label: 'Vert', category: 'Athletic', editable: true },
+            { key: 'strength', label: 'Str', category: 'Athletic', editable: true },
+            { key: 'stamina', label: 'Stam', category: 'Athletic', editable: true },
+            { key: 'hustle', label: 'Hust', category: 'Athletic', editable: true },
+
+            // Playmaking (TOTAL first)
+            { key: '_playmaking', label: 'TOTAL', category: 'Playmaking', computed: true, formula: computePlaymaking },
+            { key: 'speedWithBall', label: 'SwB', category: 'Playmaking', editable: true },
+            { key: 'ballHandle', label: 'Handle', category: 'Playmaking', editable: true },
+            { key: 'passingAccuracy', label: 'Acc', category: 'Playmaking', editable: true },
+            { key: 'passingVision', label: 'Vision', category: 'Playmaking', editable: true },
+            { key: 'passingIQ', label: 'IQ', category: 'Playmaking', editable: true },
+
+            // Defense (TOTAL first)
+            { key: '_defense', label: 'TOTAL', category: 'Defense', computed: true, formula: computeDefense },
+            { key: 'interiorDefense', label: 'Int', category: 'Defense', editable: true },
+            { key: 'perimeterDefense', label: 'Peri', category: 'Defense', editable: true },
+            { key: 'helpDefenseIQ', label: 'Help', category: 'Defense', editable: true },
+            { key: 'lateralQuickness', label: 'Lat', category: 'Defense', editable: true },
+            { key: 'passPerception', label: 'Perc', category: 'Defense', editable: true },
+            { key: 'steal', label: 'Stl', category: 'Defense', editable: true },
+            { key: 'block', label: 'Blk', category: 'Defense', editable: true },
+            { key: 'defensiveConsistency', label: 'Consist', category: 'Defense', editable: true },
+
+            // Rebounding (TOTAL first)
+            { key: '_rebounding', label: 'TOTAL', category: 'Rebound', computed: true, formula: computeRebounding },
+            { key: 'offensiveRebounding', label: 'Off', category: 'Rebound', editable: true },
+            { key: 'defensiveRebounding', label: 'Def', category: 'Rebound', editable: true },
+
+            // Mental
+            { key: 'intangibles', label: 'Intang', category: 'Mental', editable: true },
+            { key: 'potential', label: 'Potent', category: 'Mental', editable: true }
         ];
 
         // Get unique categories
