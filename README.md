@@ -26,17 +26,33 @@ BasketballViz is designed for the IMA (intramural) basketball league, featuring 
 
 ### Team Statistics
 Real-time team ratings displayed when rosters are complete:
+- **Team Overall** - Average of position-adjusted player ratings (shown next to team name)
 - **Offense Rating** - Combined offensive ability
 - **Defense Rating** - Combined defensive ability
 - **Balance Rating** - Team chemistry based on aggression distribution
 
 Ratings are color-coded: Abysmal → Poor → Average → Good → Excellent
 
+### Position Fit System
+Players have position-specific ratings (PG, SG, SF, PF, C) that affect their effectiveness:
+- **Green badge** - Player is at their natural/best position
+- **Yellow badge** - Player is slightly out of position
+- **Red badge + "Out of Pos"** - Player is significantly out of position
+
+The player selection list shows each player's acceptable positions and best rating at a glance.
+
 ### Player Data
 Each player includes:
 - Position, height, weight, age, and season count
 - Offensive and defensive ratings (0-1 scale)
-- Detailed sub-stats: shooting (2pt/3pt), playmaking, perimeter/interior defense, rebounding
+- Detailed stats across categories:
+  - **Shooting**: Close/Mid/3pt shot, Shot IQ, Free Throw, Offensive Consistency
+  - **Inside Scoring**: Layups, Dunks, Post Moves, Draw Foul
+  - **Athleticism**: Speed, Acceleration, Vertical, Strength, Stamina, Hustle
+  - **Playmaking**: Ball Handle, Pass Accuracy/Vision/IQ, Speed with Ball
+  - **Defense**: Interior/Perimeter Defense, Steal, Block, Help Defense IQ
+  - **Rebounding**: Offensive and Defensive Rebounding
+  - **Position Ratings**: PG/SG/SF/PF/C ratings for position fit calculation
 - Trait icons (Clutch Gene, Speed Demon, Shot Blocking, etc.)
 - NBA player comparisons ("Shades of...")
 - Narrative descriptions

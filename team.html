@@ -471,6 +471,141 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
+    /* Player rating badge in slot corner */
+    .player-rating-badge {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.75em;
+      font-weight: 700;
+      z-index: 10;
+      font-family: 'Orbitron', monospace;
+    }
+
+    .player-rating-badge.good-fit {
+      background: rgba(76, 175, 80, 0.9);
+    }
+
+    .player-rating-badge.okay-fit {
+      background: rgba(255, 152, 0, 0.9);
+    }
+
+    .player-rating-badge.bad-fit {
+      background: rgba(244, 67, 54, 0.9);
+    }
+
+    /* Position fit indicator */
+    .position-fit-indicator {
+      position: absolute;
+      bottom: 22px;
+      right: 2px;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 0.5em;
+      font-weight: 700;
+      z-index: 10;
+      text-transform: uppercase;
+    }
+
+    .position-fit-indicator.slight-oop {
+      background: rgba(255, 152, 0, 0.95);
+      color: #fff;
+    }
+
+    .position-fit-indicator.major-oop {
+      background: rgba(244, 67, 54, 0.95);
+      color: #fff;
+      animation: pulse-warning 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-warning {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    /* Player natural position indicator */
+    .player-position-badge {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      background: rgba(0, 102, 255, 0.85);
+      color: #fff;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-size: 0.65em;
+      font-weight: 600;
+      z-index: 10;
+      text-transform: uppercase;
+    }
+
+    /* Team overall rating display */
+    .team-overall {
+      font-size: 1.2em;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-left: 12px;
+      padding: 4px 12px;
+      background: var(--slot-bg);
+      border-radius: 8px;
+      border: 1px solid var(--border-secondary);
+    }
+
+    .team:nth-child(1) .team-overall {
+      color: #06f;
+      border-color: var(--team1-slot-border);
+    }
+
+    .team:nth-child(2) .team-overall {
+      color: #ff453a;
+      border-color: var(--team2-slot-border);
+    }
+
+    .team-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* Player list card styles */
+    .player-card-info {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      right: 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .player-card-positions {
+      background: rgba(0, 102, 255, 0.85);
+      color: #fff;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: 0.55em;
+      font-weight: 600;
+      text-transform: uppercase;
+      max-width: 60%;
+      line-height: 1.2;
+    }
+
+    .player-card-rating {
+      background: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-size: 0.7em;
+      font-weight: 700;
+      font-family: 'Orbitron', monospace;
+    }
+
     .player-actions {
       z-index: 100;
     }
@@ -694,6 +829,58 @@
 
       players.sort((a, b) => a.number - b.number);
 
+      // Helper to get acceptable positions and best rating for a player
+      const DEFAULT_STAT = 70.7070707;
+      function getPlayerPositionInfo(player) {
+        const stats = player.stats || {};
+        const positions = [
+          { pos: 'PG', rating: stats.pgRating || 0 },
+          { pos: 'SG', rating: stats.sgRating || 0 },
+          { pos: 'SF', rating: stats.sfRating || 0 },
+          { pos: 'PF', rating: stats.pfRating || 0 },
+          { pos: 'C', rating: stats.cRating || 0 }
+        ];
+
+        const ratings = positions.map(p => p.rating);
+        const maxRating = Math.max(...ratings);
+        const minRating = Math.min(...ratings);
+        const spread = maxRating - minRating;
+
+        // If no meaningful differentiation (spread < 3 points), fall back to natural position
+        const hasMeaningfulDifferentiation = spread >= 3;
+
+        if (!hasMeaningfulDifferentiation) {
+          // Fall back to player's natural position field
+          const naturalPos = player.position || 'N/A';
+          // Map natural position to slot positions
+          const posMap = {
+            'Guard': ['PG', 'SG'],
+            'Point Guard': ['PG'],
+            'Shooting Guard': ['SG'],
+            'Forward': ['SF', 'PF'],
+            'Small Forward': ['SF'],
+            'Power Forward': ['PF'],
+            'Wing': ['SG', 'SF'],
+            'Big': ['PF', 'C'],
+            'Center': ['C'],
+            'C': ['C'],
+            'PG': ['PG'],
+            'SG': ['SG'],
+            'SF': ['SF'],
+            'PF': ['PF']
+          };
+          const mappedPositions = posMap[naturalPos] || [naturalPos];
+          return { positions: mappedPositions, bestRating: Math.round(maxRating) };
+        }
+
+        const best = positions.reduce((max, curr) => curr.rating > max.rating ? curr : max);
+        // Acceptable = within 5 points of best
+        const acceptable = positions
+          .filter(p => best.rating - p.rating <= 5)
+          .map(p => p.pos);
+        return { positions: acceptable.length > 0 ? acceptable : [best.pos], bestRating: Math.round(best.rating) };
+      }
+
       // In your script section, modify the player creation part:
       players.forEach(player => {
         const playerDiv = document.createElement('div');
@@ -707,6 +894,17 @@
         playerDiv.dataset.id = playerId;
 
         const firstName = player.name.split(' ')[0].toUpperCase();
+
+        // Get position info
+        const posInfo = getPlayerPositionInfo(player);
+
+        // Create info overlay with positions and rating
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'player-card-info';
+        infoDiv.innerHTML = `
+          <span class="player-card-positions">${posInfo.positions.join('/')}</span>
+          <span class="player-card-rating">${posInfo.bestRating}</span>
+        `;
 
         const nameLabelBottom = document.createElement('div');
         nameLabelBottom.innerText = firstName;
@@ -753,6 +951,7 @@
         });
 
         playerDiv.appendChild(img);
+        playerDiv.appendChild(infoDiv);
         playerDiv.appendChild(nameLabelBottom);
         playerList.appendChild(playerDiv);
       });
@@ -765,19 +964,21 @@
             placePlayerInSlot(slot, selectedPlayer);
             clearSelections();
           } else if (selectedSlot && !slot.querySelector('img')) {  // Moving to empty slot
-            const playerContainer = selectedSlot.querySelector('.player-container');
-            if (playerContainer) {
-              playerContainer.style.transform = '';  // Remove scaling
-              playerContainer.style.boxShadow = '';  // Remove shadow
-              const actionsDiv = playerContainer.querySelector('.player-actions');
-              if (actionsDiv) {
-                actionsDiv.style.display = 'none';  // Hide actions
+            // Get the player from the selected slot
+            const img = selectedSlot.querySelector('img');
+            if (img) {
+              const playerId = img.dataset.id;
+              const player = players.find(p => p.image.includes(playerId));
+              if (player) {
+                // Clear the source slot
+                const position = selectedSlot.getAttribute('data-slot').split('-')[1];
+                selectedSlot.innerHTML = position;
+                // Place player in new slot (recalculates position rating)
+                placePlayerInSlot(slot, player);
               }
             }
-            slot.innerHTML = selectedSlot.innerHTML;
-            const position = selectedSlot.getAttribute('data-slot').split('-')[1];
-            selectedSlot.innerHTML = position;
             clearSelections();
+            checkFullTeam();
           } else if (slot.querySelector('img')) {
             if (selectedSlot === slot) {
               clearSelections();
@@ -801,11 +1002,124 @@
         }
       });
 
+      // Helper to get position rating based on slot position
+      function getPositionRating(player, slotPosition) {
+        const stats = player.stats || {};
+        const positionMap = {
+          'PG': stats.pgRating,
+          'SG': stats.sgRating,
+          'SF': stats.sfRating,
+          'PF': stats.pfRating,
+          'C': stats.cRating
+        };
+        return positionMap[slotPosition] || 70;
+      }
+
+      // Get the best position for a player
+      function getBestPosition(player) {
+        const stats = player.stats || {};
+        const positions = [
+          { pos: 'PG', rating: stats.pgRating || 0 },
+          { pos: 'SG', rating: stats.sgRating || 0 },
+          { pos: 'SF', rating: stats.sfRating || 0 },
+          { pos: 'PF', rating: stats.pfRating || 0 },
+          { pos: 'C', rating: stats.cRating || 0 }
+        ];
+        return positions.reduce((best, curr) => curr.rating > best.rating ? curr : best);
+      }
+
+      // Map natural position to acceptable slot positions
+      const naturalPosMap = {
+        'Guard': ['PG', 'SG'],
+        'Point Guard': ['PG'],
+        'Shooting Guard': ['SG'],
+        'Forward': ['SF', 'PF'],
+        'Small Forward': ['SF'],
+        'Power Forward': ['PF'],
+        'Wing': ['SG', 'SF'],
+        'Big': ['PF', 'C'],
+        'Center': ['C'],
+        'C': ['C'],
+        'PG': ['PG'],
+        'SG': ['SG'],
+        'SF': ['SF'],
+        'PF': ['PF']
+      };
+
+      // Get fit class and OOP indicator based on how close to best position
+      function getPositionFitInfo(player, slotPosition) {
+        const stats = player.stats || {};
+        const positions = [
+          { pos: 'PG', rating: stats.pgRating || 0 },
+          { pos: 'SG', rating: stats.sgRating || 0 },
+          { pos: 'SF', rating: stats.sfRating || 0 },
+          { pos: 'PF', rating: stats.pfRating || 0 },
+          { pos: 'C', rating: stats.cRating || 0 }
+        ];
+
+        const ratings = positions.map(p => p.rating);
+        const maxRating = Math.max(...ratings);
+        const minRating = Math.min(...ratings);
+        const spread = maxRating - minRating;
+
+        let fitClass, oopIndicator;
+
+        // If no meaningful differentiation, use natural position
+        if (spread < 3) {
+          const naturalPos = player.position || 'N/A';
+          const acceptablePositions = naturalPosMap[naturalPos] || [];
+
+          if (acceptablePositions.includes(slotPosition)) {
+            fitClass = 'good-fit';
+            oopIndicator = '';
+          } else {
+            // Check if it's adjacent (slight) or far (major)
+            const posOrder = ['PG', 'SG', 'SF', 'PF', 'C'];
+            const slotIdx = posOrder.indexOf(slotPosition);
+            const closestAcceptableIdx = acceptablePositions.map(p => posOrder.indexOf(p));
+            const minDistance = Math.min(...closestAcceptableIdx.map(i => Math.abs(slotIdx - i)));
+
+            if (minDistance <= 1) {
+              fitClass = 'okay-fit';
+              oopIndicator = ''; // Just yellow rating badge, no text
+            } else {
+              fitClass = 'bad-fit';
+              oopIndicator = `<div class="position-fit-indicator major-oop">Out of Pos</div>`;
+            }
+          }
+        } else {
+          // Use actual position ratings
+          const currentRating = getPositionRating(player, slotPosition);
+          const best = getBestPosition(player);
+          const diff = best.rating - currentRating;
+
+          if (diff <= 2) {
+            fitClass = 'good-fit';
+            oopIndicator = '';
+          } else if (diff <= 5) {
+            fitClass = 'okay-fit';
+            oopIndicator = ''; // Just yellow rating badge, no text
+          } else {
+            fitClass = 'bad-fit';
+            oopIndicator = `<div class="position-fit-indicator major-oop">Out of Pos</div>`;
+          }
+        }
+        return { fitClass, oopIndicator };
+      }
+
       // Function to place a player in a slot
       function placePlayerInSlot(slot, player) {
         const playerId = player.image.split('/').pop().replace('.png', '');
+        const slotPosition = slot.getAttribute('data-slot').split('-')[1];
+        const positionRating = Math.round(getPositionRating(player, slotPosition));
+        const fitInfo = getPositionFitInfo(player, slotPosition);
+        const naturalPosition = player.position || 'N/A';
+
         slot.innerHTML = `
         <div class="player-container" style="position: relative; text-align: center; display: inline-block;">
+            <div class="player-rating-badge ${fitInfo.fitClass}">${positionRating}</div>
+            <div class="player-position-badge">${naturalPosition}</div>
+            ${fitInfo.oopIndicator}
             <img src="${player.image}"
                 alt="${player.name}"
                 title="${player.description}"
@@ -816,7 +1130,7 @@
             </div>
             <div class="player-actions" style="display: none; position: absolute; bottom: -30px; width: 100%; text-align: center; background: rgba(0, 0, 0, 0.7); padding: 5px; border-radius: 0 0 5px 5px;">
                 <button class="remove-player" style="padding: 2px 2px; margin: 2px; background: #ff4444; border: none; color: white; border-radius: 3px; cursor: pointer;">
-                    🗑️ Remove
+                    Remove
                 </button>
             </div>
         </div>
@@ -849,21 +1163,21 @@
 
       // Function to swap players between slots
       function swapPlayers(slot1, slot2) {
-        const player1Html = slot1.innerHTML;
-        const player2Html = slot2.innerHTML;
-        slot1.innerHTML = player2Html;
-        slot2.innerHTML = player1Html;
+        // Get player IDs from both slots
+        const img1 = slot1.querySelector('img');
+        const img2 = slot2.querySelector('img');
+        const playerId1 = img1 ? img1.dataset.id : null;
+        const playerId2 = img2 ? img2.dataset.id : null;
 
-        // Reattach event listeners for remove buttons
-        [slot1, slot2].forEach(slot => {
-          const removeBtn = slot.querySelector('.remove-player');
-          if (removeBtn) {
-            removeBtn.addEventListener('click', (e) => {
-              e.stopPropagation();
-              removePlayerFromSlot(slot);
-            });
-          }
-        });
+        // Find the player objects
+        const player1 = playerId1 ? players.find(p => p.image.includes(playerId1)) : null;
+        const player2 = playerId2 ? players.find(p => p.image.includes(playerId2)) : null;
+
+        // Re-place players in swapped slots to recalculate position ratings
+        if (player1 && player2) {
+          placePlayerInSlot(slot1, player2);
+          placePlayerInSlot(slot2, player1);
+        }
 
         if (document.getElementById('unique-player').checked) {
           enforceUniquePlayers();
@@ -1335,17 +1649,34 @@
       let offenseSum = 0;
       let defenseSum = 0;
       let balanceSum = 0;
-      const teamSlots = document.querySelectorAll(`[data-slot^="${team}"] img`);
+      let teamOverallSum = 0;
 
-      teamSlots.forEach(img => {
+      const teamSlots = document.querySelectorAll(`[data-slot^="${team}"]`);
+
+      teamSlots.forEach(slot => {
+        const img = slot.querySelector('img');
+        if (!img) return;
+
         const playerId = img.dataset.id;
         const player = players.find(p => p.image.includes(playerId));
+        const slotPosition = slot.getAttribute('data-slot').split('-')[1];
 
         if (player) {
           const s = player.stats || {};
           offenseSum += (s.offense ?? player.offense) || 0;
           defenseSum += (s.defense ?? player.defense) || 0;
           balanceSum += (s.aggression ?? player.aggressive) || 0;
+
+          // Calculate position-adjusted rating
+          const positionMap = {
+            'PG': s.pgRating,
+            'SG': s.sgRating,
+            'SF': s.sfRating,
+            'PF': s.pfRating,
+            'C': s.cRating
+          };
+          const positionRating = positionMap[slotPosition] || 70;
+          teamOverallSum += positionRating;
         }
       });
 
@@ -1353,6 +1684,15 @@
       const offenseRating = getRatingClassAndLabel(offenseSum);
       const defenseRating = getRatingClassAndLabel(defenseSum);
       const balanceRating = getRatingClassAndLabel(balanceSum)
+
+      // Calculate team overall (average of position-adjusted ratings)
+      const teamOverall = Math.round(teamOverallSum / 5);
+
+      // Update team overall display in header
+      const teamOverallEl = document.getElementById(`${team}-overall`);
+      if (teamOverallEl) {
+        teamOverallEl.textContent = teamOverall;
+      }
 
       const statsDiv = document.getElementById(`${team}-stats`) || document.createElement('div');
       statsDiv.id = `${team}-stats`;
@@ -1373,6 +1713,11 @@
       const statsDiv = document.getElementById(`${team}-stats`);
       if (statsDiv) {
         statsDiv.remove();
+      }
+      // Clear team overall display
+      const teamOverallEl = document.getElementById(`${team}-overall`);
+      if (teamOverallEl) {
+        teamOverallEl.textContent = '';
       }
     }
 
@@ -1450,7 +1795,10 @@
     </div>
     <div class="teams">
       <div class="team">
-        <h2>Ringers</h2>
+        <div class="team-header">
+          <h2>Ringers</h2>
+          <span class="team-overall" id="team1-overall"></span>
+        </div>
         <div class="team-slots">
           <div class="slot" data-slot="team1-PG">PG</div>
           <div class="slot" data-slot="team1-SG">SG</div>
@@ -1460,7 +1808,10 @@
         </div>
       </div>
       <div class="team">
-        <h2>Ballers</h2>
+        <div class="team-header">
+          <h2>Ballers</h2>
+          <span class="team-overall" id="team2-overall"></span>
+        </div>
         <div class="team-slots">
           <div class="slot" data-slot="team2-PG">PG</div>
           <div class="slot" data-slot="team2-SG">SG</div>
