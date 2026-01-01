@@ -274,7 +274,7 @@ export const players = [
             // Shooting
             shotClose: 83,
             shotMid: 82,
-            shot3pt: 80,
+            shot3pt: 83,
             shotIQ: 83,
             freeThrow: 84,
             offensiveConsistency: 84,
@@ -302,19 +302,19 @@ export const players = [
             passingIQ: 85,
             // Defense
             interiorDefense: 85,
-            perimeterDefense: 94,
+            perimeterDefense: 96,
             helpDefenseIQ: 80,
             lateralQuickness: 91,
             passPerception: 83,
-            steal: 93,
+            steal: 96,
             block: 80,
-            defensiveConsistency: 91,
+            defensiveConsistency: 96,
             // Rebounding
             offensiveRebounding: 62,
             defensiveRebounding: 70,
             // Mental
             intangibles: 90,
-            potential: 70
+            potential: 98
         }
     },
     {
@@ -464,7 +464,7 @@ export const players = [
         aggressive: 0.5,
         stats: {
             // Shooting
-            shotClose: 75,
+            shotClose: 77,
             shotMid: 80,
             shot3pt: 83,
             shotIQ: 81,
@@ -476,7 +476,7 @@ export const players = [
             drivingDunk: 20,
             drawFoul: 81,
             postMoves: 62,
-            postHook: 70,
+            postHook: 76,
             postFade: 70,
             hands: 86,
             // Athleticism
@@ -487,26 +487,26 @@ export const players = [
             stamina: 91,
             hustle: 91,
             // Playmaking
-            speedWithBall: 70.7070707,
-            ballHandle: 70.7070707,
-            passingAccuracy: 70.7070707,
-            passingVision: 70.7070707,
-            passingIQ: 70.7070707,
+            speedWithBall: 80,
+            ballHandle: 85,
+            passingAccuracy: 85,
+            passingVision: 85,
+            passingIQ: 93,
             // Defense
-            interiorDefense: 70.7070707,
-            perimeterDefense: 70.7070707,
-            helpDefenseIQ: 70.7070707,
-            lateralQuickness: 70.7070707,
-            passPerception: 71,
-            steal: 82,
-            block: 66,
+            interiorDefense: 81,
+            perimeterDefense: 84,
+            helpDefenseIQ: 84,
+            lateralQuickness: 79,
+            passPerception: 80,
+            steal: 80,
+            block: 84,
             defensiveConsistency: 85,
             // Rebounding
-            offensiveRebounding: 75,
+            offensiveRebounding: 71,
             defensiveRebounding: 80,
             // Mental
             intangibles: 89,
-            potential: 70.7070707
+            potential: 93
         }
     },
     {
@@ -569,7 +569,7 @@ export const players = [
             defensiveRebounding: 78,
             // Mental
             intangibles: 92,
-            potential: 72
+            potential: 86
         },
         clips: [
             { title: "Three", url: "https://youtube.com/clip/UgkxpJ6BWfNVfjXVfu6psoPj0TLOsWTdrqPG?si=BY5-r299-FafZAbo" }
@@ -984,11 +984,11 @@ export const players = [
         stats: {
             // Shooting
             shotClose: 82,
-            shotMid: 80,
-            shot3pt: 72,
+            shotMid: 81,
+            shot3pt: 74,
             shotIQ: 78,
-            freeThrow: 77,
-            offensiveConsistency: 94,
+            freeThrow: 80,
+            offensiveConsistency: 95,
             // Inside Scoring
             drivingLayup: 92,
             standingDunk: 15,
@@ -999,33 +999,33 @@ export const players = [
             postFade: 55,
             hands: 82,
             // Athleticism
-            speed: 89,
+            speed: 90,
             acceleration: 88,
             vertical: 74,
             strength: 75,
             stamina: 96,
             hustle: 98,
             // Playmaking
-            speedWithBall: 88,
-            ballHandle: 78,
+            speedWithBall: 89,
+            ballHandle: 80,
             passingAccuracy: 80,
             passingVision: 73,
             passingIQ: 74,
             // Defense
             interiorDefense: 82,
-            perimeterDefense: 91,
-            helpDefenseIQ: 83,
+            perimeterDefense: 93,
+            helpDefenseIQ: 87,
             lateralQuickness: 87,
             passPerception: 79,
             steal: 80,
-            block: 79,
+            block: 82,
             defensiveConsistency: 98,
             // Rebounding
-            offensiveRebounding: 72,
+            offensiveRebounding: 78,
             defensiveRebounding: 74,
             // Mental
             intangibles: 95,
-            potential: 85
+            potential: 90
         },
         clips: [
             { title: "Drive + Layup", url: "https://youtube.com/clip/UgkxskyBi7g8tjskUsv6RFlfV0fSQ-q_aCyQ?si=7cYp7Fei9NE-j_Xs" }
