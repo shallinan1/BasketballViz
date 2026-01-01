@@ -708,6 +708,7 @@
       15% { left: 150%; }
       100% { left: 150%; }
     }
+    /* RUBY: Flying Sparks */
     .tier-ruby {
       border: 3px solid #E0115F !important;
       box-shadow: 0 0 12px rgba(224, 17, 95, 0.6);
@@ -715,20 +716,16 @@
       overflow: hidden;
     }
 
-    /* Ember sparkle particles */
     .tier-ruby::before {
       content: '';
       position: absolute;
-      inset: 0;
+      width: 100%;
+      height: 100%;
       background:
-        radial-gradient(circle at 20% 30%, rgba(255, 100, 50, 0.9) 0%, transparent 3%),
-        radial-gradient(circle at 70% 20%, rgba(255, 180, 50, 0.8) 0%, transparent 2.5%),
-        radial-gradient(circle at 85% 60%, rgba(255, 120, 30, 0.9) 0%, transparent 3%),
-        radial-gradient(circle at 30% 75%, rgba(255, 150, 50, 0.8) 0%, transparent 2%),
-        radial-gradient(circle at 50% 50%, rgba(255, 80, 30, 0.7) 0%, transparent 2.5%),
-        radial-gradient(circle at 15% 55%, rgba(255, 200, 80, 0.8) 0%, transparent 2%),
-        radial-gradient(circle at 75% 85%, rgba(255, 100, 40, 0.9) 0%, transparent 3%);
-      animation: ember-flicker 2s ease-in-out infinite;
+        radial-gradient(circle at 20% 90%, rgba(255, 150, 50, 0.9) 0%, transparent 4%),
+        radial-gradient(circle at 50% 85%, rgba(255, 100, 30, 0.8) 0%, transparent 3%),
+        radial-gradient(circle at 80% 95%, rgba(255, 180, 60, 0.9) 0%, transparent 3.5%);
+      animation: spark-fly-1 2.5s ease-out infinite;
       pointer-events: none;
       z-index: 1;
     }
@@ -736,24 +733,82 @@
     .tier-ruby::after {
       content: '';
       position: absolute;
-      inset: 0;
+      width: 100%;
+      height: 100%;
       background:
-        radial-gradient(circle at 45% 15%, rgba(255, 140, 40, 0.8) 0%, transparent 2.5%),
-        radial-gradient(circle at 60% 70%, rgba(255, 90, 30, 0.9) 0%, transparent 3%),
-        radial-gradient(circle at 10% 85%, rgba(255, 170, 60, 0.7) 0%, transparent 2%),
-        radial-gradient(circle at 90% 35%, rgba(255, 110, 50, 0.8) 0%, transparent 2.5%),
-        radial-gradient(circle at 35% 45%, rgba(255, 200, 100, 0.7) 0%, transparent 2%);
-      animation: ember-flicker 2s ease-in-out infinite 1s;
+        radial-gradient(circle at 35% 88%, rgba(255, 120, 40, 0.85) 0%, transparent 3.5%),
+        radial-gradient(circle at 65% 92%, rgba(255, 200, 80, 0.8) 0%, transparent 3%);
+      animation: spark-fly-2 3.2s ease-out infinite 0.8s;
       pointer-events: none;
-      z-index: 0;
+      z-index: 1;
     }
 
-    @keyframes ember-flicker {
-      0%, 100% { opacity: 0.3; }
-      25% { opacity: 0.9; }
-      50% { opacity: 0.5; }
-      75% { opacity: 1; }
+    @keyframes spark-fly-1 {
+      0% {
+        transform: translate(0, 0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(15%, -130%) rotate(20deg);
+        opacity: 0;
+      }
     }
+
+    @keyframes spark-fly-2 {
+      0% {
+        transform: translate(0, 0);
+        opacity: 0;
+      }
+      15% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-20%, -140%) rotate(-15deg);
+        opacity: 0;
+      }
+    }
+
+    /* RUBY OPTION 2: Fire with Embers */
+    .tier-ruby-v2 {
+      border: 3px solid #E0115F !important;
+      box-shadow: 0 0 12px rgba(224, 17, 95, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* CSS Fire base */
+    .tier-ruby-v2::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 30% 45% at 25% 100%, rgba(255, 240, 150, 0.8) 0%, rgba(255, 200, 50, 0.5) 30%, transparent 55%),
+        radial-gradient(ellipse 25% 40% at 55% 100%, rgba(255, 255, 180, 0.75) 0%, rgba(255, 220, 80, 0.5) 25%, transparent 50%),
+        radial-gradient(ellipse 28% 48% at 80% 100%, rgba(255, 230, 120, 0.8) 0%, rgba(255, 180, 50, 0.5) 30%, transparent 55%),
+        radial-gradient(ellipse 40% 55% at 20% 100%, rgba(255, 120, 20, 0.7) 0%, rgba(255, 80, 10, 0.4) 40%, transparent 65%),
+        radial-gradient(ellipse 35% 60% at 50% 100%, rgba(255, 140, 30, 0.65) 0%, rgba(255, 100, 20, 0.4) 35%, transparent 60%),
+        radial-gradient(ellipse 38% 50% at 75% 100%, rgba(255, 110, 25, 0.7) 0%, rgba(255, 70, 10, 0.4) 40%, transparent 65%),
+        radial-gradient(ellipse 90% 35% at 50% 100%, rgba(180, 30, 10, 0.6) 0%, rgba(120, 20, 5, 0.3) 50%, transparent 75%);
+      animation: fire-flicker 0.8s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes fire-flicker {
+      0% { transform: scaleY(1); filter: brightness(1); }
+      100% { transform: scaleY(1.08); filter: brightness(1.1); }
+    }
+
+    .ruby-ember {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
     /* AMETHYST OPTION 1: Static Lightning Bolts */
     .tier-amethyst {
       border: 3px solid #9966CC !important;
@@ -1322,7 +1377,7 @@
         if (rating >= 90) return 'tier-pink-diamond';
         if (rating >= 87) return 'tier-diamond';
         if (rating >= 84) return 'tier-amethyst';
-        if (rating >= 81) return 'tier-ruby';
+        if (rating >= 81) return 'tier-ruby-v2';
         if (rating >= 78) return 'tier-sapphire';
         if (rating >= 75) return 'tier-emerald';
         if (rating >= 70) return 'tier-gold';
@@ -1445,6 +1500,8 @@
                 // Clear the source slot
                 const position = selectedSlot.getAttribute('data-slot').split('-')[1];
                 selectedSlot.innerHTML = position;
+                // Remove tier class from source slot
+                selectedSlot.classList.remove('tier-bronze', 'tier-silver', 'tier-gold', 'tier-emerald', 'tier-sapphire', 'tier-ruby', 'tier-ruby-v2', 'tier-amethyst', 'tier-amethyst-v2', 'tier-amethyst-v3', 'tier-diamond', 'tier-pink-diamond', 'tier-galaxy-opal', 'tier-dark-matter');
                 // Place player in new slot (recalculates position rating)
                 placePlayerInSlot(slot, player);
               }
@@ -1574,7 +1631,7 @@
         const tierClass = getTierClass(posInfo.bestRating);
 
         // Remove any existing tier classes from slot
-        slot.classList.remove('tier-bronze', 'tier-silver', 'tier-gold', 'tier-emerald', 'tier-sapphire', 'tier-ruby', 'tier-amethyst', 'tier-diamond', 'tier-pink-diamond', 'tier-galaxy-opal', 'tier-dark-matter');
+        slot.classList.remove('tier-bronze', 'tier-silver', 'tier-gold', 'tier-emerald', 'tier-sapphire', 'tier-ruby', 'tier-ruby-v2', 'tier-amethyst', 'tier-amethyst-v2', 'tier-amethyst-v3', 'tier-diamond', 'tier-pink-diamond', 'tier-galaxy-opal', 'tier-dark-matter');
         // Add the player's tier class
         slot.classList.add(tierClass);
 
@@ -1654,7 +1711,7 @@
         const position = slot.getAttribute('data-slot').split('-')[1];
         slot.innerHTML = position;
         // Remove tier class when player is removed
-        slot.classList.remove('tier-bronze', 'tier-silver', 'tier-gold', 'tier-emerald', 'tier-sapphire', 'tier-ruby', 'tier-amethyst', 'tier-diamond', 'tier-pink-diamond', 'tier-galaxy-opal', 'tier-dark-matter');
+        slot.classList.remove('tier-bronze', 'tier-silver', 'tier-gold', 'tier-emerald', 'tier-sapphire', 'tier-ruby', 'tier-ruby-v2', 'tier-amethyst', 'tier-amethyst-v2', 'tier-amethyst-v3', 'tier-diamond', 'tier-pink-diamond', 'tier-galaxy-opal', 'tier-dark-matter');
         clearSelections();
         if (document.getElementById('unique-player').checked) {
           enforceUniquePlayers();
@@ -1719,7 +1776,7 @@
             const position = slot.getAttribute('data-slot').split('-')[1];
             slot.innerHTML = position;
             // Remove tier class when clearing
-            slot.classList.remove('tier-bronze', 'tier-silver', 'tier-gold', 'tier-emerald', 'tier-sapphire', 'tier-ruby', 'tier-amethyst', 'tier-diamond', 'tier-pink-diamond', 'tier-galaxy-opal', 'tier-dark-matter');
+            slot.classList.remove('tier-bronze', 'tier-silver', 'tier-gold', 'tier-emerald', 'tier-sapphire', 'tier-ruby', 'tier-ruby-v2', 'tier-amethyst', 'tier-amethyst-v2', 'tier-amethyst-v3', 'tier-diamond', 'tier-pink-diamond', 'tier-galaxy-opal', 'tier-dark-matter');
           });
           removeTeamStats(team);
         });
@@ -1910,7 +1967,7 @@
           const position = slot.getAttribute('data-slot').split('-')[1];
           slot.innerHTML = position;
           // Remove tier class when clearing
-          slot.classList.remove('tier-bronze', 'tier-silver', 'tier-gold', 'tier-emerald', 'tier-sapphire', 'tier-ruby', 'tier-amethyst', 'tier-diamond', 'tier-pink-diamond', 'tier-galaxy-opal', 'tier-dark-matter');
+          slot.classList.remove('tier-bronze', 'tier-silver', 'tier-gold', 'tier-emerald', 'tier-sapphire', 'tier-ruby', 'tier-ruby-v2', 'tier-amethyst', 'tier-amethyst-v2', 'tier-amethyst-v3', 'tier-diamond', 'tier-pink-diamond', 'tier-galaxy-opal', 'tier-dark-matter');
         });
 
         // Make all player divs visible again
@@ -2297,6 +2354,8 @@
       });
     });
   </script>
+
+  <script src="emberSystem.js"></script>
 </head>
 
 <body>
