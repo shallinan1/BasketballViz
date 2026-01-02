@@ -374,10 +374,10 @@ export const players = [
             defensiveConsistency: 90,
             // Rebounding
             offensiveRebounding: 90,
-            defensiveRebounding: 92,
+            defensiveRebounding: 94,
             // Mental
             intangibles: 92,
-            potential: 86
+            potential: 91
         },
         clips: [
             { title: "Three-ball on Skyler", url: "https://youtube.com/clip/UgkxXafIb3WPrKtk8CRgbhopqngn0h6Jmznb?si=kHateymgvNyM7n0J" }
@@ -404,7 +404,7 @@ export const players = [
             shotClose: 73,
             shotMid: 77,
             shot3pt: 73,
-            shotIQ: 80,
+            shotIQ: 70,
             freeThrow: 77,
             offensiveConsistency: 82,
             // Inside Scoring
@@ -443,7 +443,7 @@ export const players = [
             defensiveRebounding: 66,
             // Mental
             intangibles: 87,
-            potential: 84
+            potential: 87
         }
     },
     {
@@ -597,7 +597,7 @@ export const players = [
             shotClose: 66,
             shotMid: 72,
             shot3pt: 68,
-            shotIQ: 70,
+            shotIQ: 25,
             freeThrow: 72,
             offensiveConsistency: 94,
             // Inside Scoring
@@ -612,16 +612,16 @@ export const players = [
             // Athleticism
             speed: 87,
             acceleration: 84,
-            vertical: 60,
+            vertical: 55,
             strength: 77,
             stamina: 90,
             hustle: 99,
             // Playmaking
-            speedWithBall: 86,
-            ballHandle: 60,
-            passingAccuracy: 68,
+            speedWithBall: 83,
+            ballHandle: 55,
+            passingAccuracy: 55,
             passingVision: 60,
-            passingIQ: 55,
+            passingIQ: 25,
             // Defense
             interiorDefense: 81,
             perimeterDefense: 81,
