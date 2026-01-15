@@ -1916,9 +1916,15 @@
           const isHiddenByUnique = playerDiv.style.display === 'none' && document.getElementById('unique-player').checked;
 
           if (currentPositionFilter === 'ALL') {
-            // Respect unique player setting
-            if (!isHiddenByUnique || !document.getElementById('unique-player').checked) {
-              playerDiv.style.display = isVisible ? 'inline-block' : 'none';
+            // Respect unique player setting - only keep hidden if actually on a team
+            const selectedIds = new Set();
+            document.querySelectorAll('.slot img').forEach(img => selectedIds.add(img.dataset.id));
+            const isOnTeam = selectedIds.has(playerId);
+
+            if (document.getElementById('unique-player').checked && isOnTeam) {
+              playerDiv.style.display = 'none';
+            } else {
+              playerDiv.style.display = 'inline-block';
             }
           } else {
             if (isVisible) {
