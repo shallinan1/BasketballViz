@@ -54,3 +54,85 @@
 **Need offense?** Declan or KJ > Lance.
 
 **Need size?** Isaac > Logan.
+
+---
+
+## Half 2 Flow Chart
+
+```
+                    ┌─────────────────────┐
+                    │   START OF HALF 2   │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   What's the score? │
+                    └──────────┬──────────┘
+                               │
+          ┌────────────────────┼────────────────────┐
+          │                    │                    │
+          ▼                    ▼                    ▼
+    ┌───────────┐        ┌───────────┐        ┌───────────┐
+    │   DOWN    │        │   CLOSE   │        │    UP     │
+    │  (< -5)   │        │  (-5 to 9)│        │   (10+)   │
+    └─────┬─────┘        └─────┬─────┘        └─────┬─────┘
+          │                    │                    │
+          ▼                    ▼                    ▼
+    ┌───────────┐        ┌───────────┐        ┌───────────┐
+    │ Use "IF   │        │ Use Half 1│        │Lead ≥ 6 × │
+    │   DOWN"   │        │  rotation │        │ mins left?│
+    │ rotation  │        │           │        └─────┬─────┘
+    └───────────┘        └───────────┘              │
+                                              ┌─────┴─────┐
+                                              │           │
+                                              ▼           ▼
+                                            YES          NO
+                                              │           │
+                                              ▼           ▼
+                                        ┌───────────┐ ┌───────────┐
+                                        │ Use "IF   │ │ Use Half 1│
+                                        │    UP"    │ │  rotation │
+                                        │  lineup   │ │           │
+                                        └───────────┘ └───────────┘
+```
+
+---
+
+## Half 2: IF DOWN
+
+*Use when trailing. KJ starts for size and shooting.*
+
+| Time | Lineup | Notes |
+|------|--------|-------|
+| **20:00-12:00** (8 min) | KJ / Josh / Jason / Tyler / Mingma | KJ for size, Mingma/Jason create |
+| **12:00-8:00** (4 min) | Declan / KJ / Jason / Tyler / Mingma | Declan spells Josh |
+| **8:00-4:00** (4 min) | Josh / Lance / Jason / Tyler / Mingma | Lance for defense |
+| **4:00-0:00** (4 min) | KJ / Josh / Jason / Tyler / Mingma | KJ size for closing |
+
+### Minutes (H2 Down)
+
+| Player | Minutes |
+|--------|---------|
+| Jason | 20 |
+| Tyler | 20 |
+| Mingma | 20 |
+| KJ | 16 |
+| Josh | 16 |
+| Declan | 4 |
+| Lance | 4 |
+| Logan | 0 |
+| Isaac | 0 |
+
+---
+
+## Half 2: IF UP
+
+*Use when lead ≥ 6 × minutes remaining (and lead is 10+).*
+
+| Time Left | Lead Needed | Lineup |
+|-----------|-------------|--------|
+| 6 min | 36+ | Declan / Lance / KJ / Logan / Isaac |
+| 5 min | 30+ | Declan / Lance / KJ / Logan / Isaac |
+| 4 min | 24+ | Declan / Lance / KJ / Logan / Isaac |
+| 3 min | 18+ | Declan / Lance / KJ / Logan / Isaac |
+| 2 min | 12+ | Declan / Lance / KJ / Logan / Isaac |
