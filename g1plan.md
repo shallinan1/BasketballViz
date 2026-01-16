@@ -4,10 +4,10 @@
 
 | Time | Lineup | Notes |
 |------|--------|-------|
-| **20:00-12:00** (8 min) | Declan / Josh / Jason / Tyler / Mingma | Balanced - Declan creates, all 5 can shoot, Tyler anchors D. Run PnR, space floor. |
+| **20:00-12:00** (8 min) | Declan / Josh / Jason / Zach / Mingma | Balanced - Declan creates, all 5 can shoot, Zach anchors D. Run PnR, space floor. |
 | **12:00-8:00** (4 min) | Declan / KJ / Jason / Isaac / Mingma | Size - two bigs, crash boards, work inside-out. Slower, avoid switching on screens. |
-| **8:00-4:00** (4 min) | Lance / KJ / Logan / Jason / Tyler | Small/shooters - no true big, space the floor. Push pace, avoid half-court grind. |
-| **4:00-0:00** (4 min) | Josh / Lance / Jason / Tyler / Mingma | Lockdown - Lance + Jason clamp guards, Tyler switches everything, Mingma boards. Get stops, execute. |
+| **8:00-4:00** (4 min) | Lance / KJ / Logan / Jason / Zach | Small/shooters - no true big, space the floor. Push pace, avoid half-court grind. |
+| **4:00-0:00** (4 min) | Josh / Lance / Jason / Zach / Mingma | Lockdown - Lance + Jason clamp guards, Zach switches everything, Mingma boards. Get stops, execute. |
 
 ---
 
@@ -15,8 +15,8 @@
 
 | Clock | OUT | IN |
 |-------|-----|-----|
-| **12:00** | Josh, Tyler | KJ, Isaac |
-| **8:00** | Declan, Isaac, Mingma | Lance, Logan, Tyler |
+| **12:00** | Josh, Zach | KJ, Isaac |
+| **8:00** | Declan, Isaac, Mingma | Lance, Logan, Zach |
 | **4:00** | KJ, Logan | Josh, Mingma |
 
 ---
@@ -26,7 +26,7 @@
 | Player | Minutes |
 |--------|---------|
 | Jason Roberts | 20 |
-| Tyler Baldwin | 16 |
+| Zach | 16 |
 | Mingma Sherpa | 16 |
 | Josh Lee | 12 |
 | Declan Edgecombe | 12 |
@@ -42,7 +42,7 @@
 | Player Out | Sub In | Note |
 |------------|--------|------|
 | Jason | KJ or Lance | KJ for offense, Lance for defense |
-| Tyler | Isaac | Similar size/role |
+| Zach | Isaac | Similar size/role |
 | Mingma | Isaac | Only big man backup |
 | Josh | Lance or KJ | Guard swap |
 | Declan | KJ | Playmaker swap |
@@ -104,17 +104,17 @@
 
 | Time | Lineup | Notes |
 |------|--------|-------|
-| **20:00-12:00** (8 min) | KJ / Josh / Jason / Tyler / Mingma | KJ for size, Mingma/Jason create |
-| **12:00-8:00** (4 min) | Declan / KJ / Jason / Tyler / Mingma | Declan spells Josh |
-| **8:00-4:00** (4 min) | Josh / Lance / Jason / Tyler / Mingma | Lance for defense |
-| **4:00-0:00** (4 min) | KJ / Josh / Jason / Tyler / Mingma | KJ size for closing |
+| **20:00-12:00** (8 min) | KJ / Josh / Jason / Zach / Mingma | KJ for size, Mingma/Jason create |
+| **12:00-8:00** (4 min) | Declan / KJ / Jason / Zach / Mingma | Declan spells Josh |
+| **8:00-4:00** (4 min) | Josh / Lance / Jason / Zach / Mingma | Lance for defense |
+| **4:00-0:00** (4 min) | KJ / Josh / Jason / Zach / Mingma | KJ size for closing |
 
 ### Minutes (H2 Down)
 
 | Player | Minutes |
 |--------|---------|
 | Jason | 20 |
-| Tyler | 20 |
+| Zach | 20 |
 | Mingma | 20 |
 | KJ | 16 |
 | Josh | 16 |
