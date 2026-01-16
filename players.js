@@ -2244,6 +2244,69 @@ export const players = [
             potential: 70.7070707
         }
     },
+    {
+        number: 2.91,
+        name: "Zachary Fitzgerald",
+        team: "Unknown",
+        position: "Forward",
+        height: "5'11\"",
+        weight: "185 lbs",
+        age: 24,
+        season: 1,
+        image: "images/zach.png",
+        description: "<b>Physical rebounder</b> who crashes the boards and knocks down open shots.",
+        icons: ["Rebounding", "Spacer"],
+        shades_of: ["Dwight Howard"],
+        offense: 0.76,
+        defense: 0.75,
+        aggressive: 0.5,
+        stats: {
+            // Shooting (slightly better than Mingma)
+            shotClose: 78,
+            shotMid: 81,
+            shot3pt: 78,
+            shotIQ: 83,
+            freeThrow: 78,
+            offensiveConsistency: 84,
+            // Inside Scoring
+            drivingLayup: 80,
+            standingDunk: 15,
+            drivingDunk: 15,
+            drawFoul: 84,
+            postMoves: 61,
+            postHook: 64,
+            postFade: 61,
+            hands: 87,
+            // Athleticism
+            speed: 77,
+            acceleration: 82,
+            vertical: 72,
+            strength: 85,
+            stamina: 90,
+            hustle: 93,
+            // Playmaking (worse than Mingma)
+            speedWithBall: 74,
+            ballHandle: 70,
+            passingAccuracy: 74,
+            passingVision: 76,
+            passingIQ: 72,
+            // Defense
+            interiorDefense: 76,
+            perimeterDefense: 73,
+            helpDefenseIQ: 77,
+            lateralQuickness: 72,
+            passPerception: 78,
+            steal: 82,
+            block: 82,
+            defensiveConsistency: 90,
+            // Rebounding (slightly better than Mingma)
+            offensiveRebounding: 95,
+            defensiveRebounding: 94,
+            // Mental
+            intangibles: 88,
+            potential: 85
+        }
+    },
     // {
     //     number: 8.6,
     //     name: "Leonard",
