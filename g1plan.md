@@ -2,7 +2,7 @@
 
 **Roster:** Declan, KJ, Jason, Zach, Mingma, Lance, Isaac, Logan, Josh (9 players)
 
-**Out:** Tyler
+**Out:** Tyler, Skyler
 
 ---
 
@@ -12,8 +12,8 @@
 |------|--------|-------|
 | **20:00-12:00** (8 min) | Declan / KJ / Jason / Zach / Mingma | **Balanced.** Elite rebounding (Zach+Mingma). Two playmakers. Jason locks down. Run half-court sets through Declan or Mingma post touches. |
 | **12:00-8:00** (4 min) | Josh / Lance / Jason / Zach / Logan | **Transition + shooting.** Push pace with Josh's speed. Logan spaces the floor. Defensive pressure from Lance+Jason. Less half-court creation - keep it simple. |
-| **8:00-4:00** (4 min) | Josh / Lance / KJ / Zach / Isaac | **Size + spacing.** Tallest lineup (KJ 6'0", Isaac 6'3"). Stretch defense with 3pt shooting. Zach anchors boards. Quick guards attack closeouts. |
-| **4:00-0:00** (4 min) | Declan / Mingma / Jason / Josh / Lance | **Speed + pressure.** Top intangibles for crunch time. Elite perimeter D. Push pace, switch everything. Smaller lineup - may need to box out hard. |
+| **8:00-4:00** (4 min) | Josh / Lance / Declan / Zach / Isaac | **Controlled + size.** Declan runs offense. Zach + Isaac for boards and size. Quick guards attack off dribble. Most balanced bench unit. |
+| **4:00-0:00** (4 min) | KJ / Mingma / Jason / Josh / Lance | **Clutch + shooting.** Top intangibles (Jason, Mingma's Clutch Gene). KJ adds shooting and size. Elite perimeter D. Box out hard - Mingma is the primary rebounder. |
 
 ---
 
@@ -22,8 +22,8 @@
 | Clock | OUT | IN |
 |-------|-----|-----|
 | **12:00** | Declan, Mingma, KJ | Josh, Lance, Logan |
-| **8:00** | Jason, Logan | KJ, Isaac |
-| **4:00** | Isaac, Zach, KJ | Declan, Mingma, Jason |
+| **8:00** | Jason, Logan | Declan, Isaac |
+| **4:00** | Declan, Zach, Isaac | KJ, Mingma, Jason |
 
 ---
 
